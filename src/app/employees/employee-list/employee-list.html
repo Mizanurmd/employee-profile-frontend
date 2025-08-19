@@ -1,0 +1,83 @@
+<div class="container mat-elevation-z8">
+    <h1 style="text-align: center; color: blue;">Employee Profile List</h1>
+    <hr />
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="mobile">
+      <th mat-header-cell *matHeaderCellDef> Mobile </th>
+      <td mat-cell *matCellDef="let element"></td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element">  </td>
+    </ng-container>
+
+    <!-- NID Column -->
+    <ng-container matColumnDef="nid">
+      <th mat-header-cell *matHeaderCellDef> NID </th>
+      <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+
+     <!-- dateOfBirth Column -->
+    <ng-container matColumnDef="dateOfBirth">
+      <th mat-header-cell *matHeaderCellDef>Birth Date</th> 
+      <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+
+     <!-- presentAddress Column -->
+    <ng-container matColumnDef="presentAddress">
+      <th mat-header-cell *matHeaderCellDef> Present Address </th>
+      <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+     <!-- permanentAddress Column -->
+    <ng-container matColumnDef="permanentAddress">
+      <th mat-header-cell *matHeaderCellDef> Permanent Address </th>
+      <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+     <!-- Gender Column -->
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef> Gender </th>
+      <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+     <!-- Skills Column -->
+    <ng-container matColumnDef="skills">
+      <th mat-header-cell *matHeaderCellDef> Skills </th>
+      <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+
+     <!-- highestEducation Column -->
+    <ng-container matColumnDef="highestEducation">
+      <th mat-header-cell *matHeaderCellDef> Education </th>
+      <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+
+     <!-- profileImage Column -->
+    <ng-container matColumnDef="profileImage">
+      <th mat-header-cell *matHeaderCellDef> Photo </th>
+      <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+
+     <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>

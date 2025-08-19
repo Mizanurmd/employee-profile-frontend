@@ -1,0 +1,50 @@
+/* Toolbar container */
+mat-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 16px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  background: #1976d2;   /* Angular Material primary blue */
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Spacer to push items to the right */
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+/* Dashboard title */
+mat-toolbar span:first-child {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+
+mat-toolbar a[mat-button]:hover {
+  color: #ffeb3b;   /* highlight on hover */
+}
+
+/* Raised button */
+mat-toolbar button[mat-raised-button] {
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 4px 14px;
+  background-color: rgb(72, 206, 92);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  mat-toolbar {
+    flex-wrap: wrap;
+    font-size: 1rem;
+  }
+  mat-toolbar a[mat-button],
+  mat-toolbar button[mat-raised-button] {
+    margin-top: 8px;
+  }
+}

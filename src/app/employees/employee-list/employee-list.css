@@ -1,0 +1,106 @@
+/* Container */
+.mat-elevation-z8 {
+    margin: 10px;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: auto;              
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* Table base */
+table[mat-table] {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 640px;             /* keeps columns readable on small screens */
+}
+
+/* Header cells */
+th.mat-header-cell {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f7f7f8;
+  font-weight: 600;
+  color: #374151;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+/* Body cells */
+td.mat-cell {
+  padding: 12px 16px;
+  color: #111827;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Row striping + hover */
+tr.mat-row:nth-child(even) td {
+  background: #fafafa;
+}
+
+tr.mat-row:hover td {
+  background: #eef6ff;
+}
+
+/* Round the header corners */
+th.mat-header-cell:first-child {
+  border-top-left-radius: 12px;
+}
+th.mat-header-cell:last-child {
+  border-top-right-radius: 12px;
+}
+
+/* Column-specific alignment (based on matColumnDef names) */
+th.mat-column-position,
+td.mat-column-position {
+  text-align: center;
+  width: 88px;
+}
+
+th.mat-column-weight,
+td.mat-column-weight {
+  text-align: right;
+  width: 120px;
+}
+
+th.mat-column-symbol,
+td.mat-column-symbol {
+  text-align: left;
+  width: 140px;
+}
+
+/* Paginator */
+mat-paginator {
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 8px 12px;
+}
+
+/* Optional: darker scheme support */
+@media (prefers-color-scheme: dark) {
+  .mat-elevation-z8 {
+    background: #ecedf0;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  }
+  th.mat-header-cell {
+    background: #d3d6dc;
+    color: #e5e7eb;
+    border-bottom-color: #d6dae1;
+  }
+  td.mat-cell {
+    color: #e5e7eb;
+    border-bottom-color: #e4e8ef;
+  }
+  tr.mat-row:nth-child(even) td {
+    background: #94979e;
+  }
+  tr.mat-row:hover td {
+    background: #d5dae6;
+  }
+  mat-paginator {
+    background: #dcdfe6;
+    border-top-color: #e8ecf2;
+  }
+}
