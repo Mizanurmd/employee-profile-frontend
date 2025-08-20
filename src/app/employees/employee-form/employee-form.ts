@@ -46,27 +46,17 @@ import {
 })
 export class EmployeeForm implements OnInit {
   errorText: string = '';
-
   employeeForm!: FormGroup;
   imagePreview: string | null = null;
 
-  employee: Employee = {
-    id: '',
-    name: '',
-    mobile: '',
-    email: '',
-    nid: '',
-    dateOfBirth: '',
-    presentAddress: '',
-    permanentAddress: '',
-    gender: '',
-    highestEducation: '',
-    skills: [],
-    profileImage: null
-  
-  };
-
-  educationOptions: string[] = ['SSC','HSC','Diploma','Bachelor','Masters','PhD'];
+  educationOptions: string[] = [
+    'SSC',
+    'HSC',
+    'Diploma',
+    'Bachelor',
+    'Masters',
+    'PhD',
+  ];
   skillOptions: string[] = ['Communication', 'Leadership', 'IT', 'Teaching'];
 
   constructor(
@@ -74,7 +64,7 @@ export class EmployeeForm implements OnInit {
     private empServ: EmployeeService,
     private router: Router,
     private matDialRef: MatDialogRef<EmployeeForm>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: Employee | null,
     private snackBar: MatSnackBar
   ) {}
 
@@ -93,35 +83,20 @@ export class EmployeeForm implements OnInit {
       profileImage: [null],
     });
 
+    // If editing existing employee
     if (this.data) {
-      this.employeeForm.patchValue(this.data);
+      this.employeeForm.patchValue({
+        ...this.data,
+        dateOfBirth: new Date(this.data.dateOfBirth),
+      });
+
+      // Set preview if image exists
+      if (this.data.profileImage) {
+        this.imagePreview = this.getImageFromBytes(this.data.profileImage);
+      }
     }
   }
- editEmployee(emp: Employee) {
-    this.employeeForm.patchValue({
-      name: emp.name,
-      mobile: emp.mobile,
-      email: emp.email,
-      nid: emp.nid,
-      dateOfBirth: new Date(emp.dateOfBirth),
-      presentAddress: emp.presentAddress,
-      permanentAddress: emp.permanentAddress,
-      gender: emp.gender,
-      highestEducation: emp.highestEducation,
-      skills: emp.skills
-    });
 
-    // Set image preview from byte array or base64 string
-    // if (emp.profileImage) {
-    //   this.imagePreview = this.getImageFromBytes(emp.profileImage);
-    // }
-// If editing, patch values
-    if (this.data) {
-      this.editEmployee(this.data);
-    }
-
-  }
-  
   onSkillChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     const skill = input.value;
@@ -137,7 +112,7 @@ export class EmployeeForm implements OnInit {
     this.employeeForm.get('skills')?.setValue(currentSkills);
   }
 
-  // Convert byte array or base64 string to data URL
+  // Convert byte[] or base64 string to data URL
   getImageFromBytes(bytes: number[] | string | null | undefined): string {
     if (!bytes) return '';
 
@@ -146,19 +121,26 @@ export class EmployeeForm implements OnInit {
     }
 
     // It's a number array
-    const binary = (bytes as number[]).map(b => String.fromCharCode(b)).join('');
+    const binary = (bytes as number[])
+      .map((b) => String.fromCharCode(b))
+      .join('');
     return 'data:image/png;base64,' + btoa(binary);
   }
 
   // Handle new file input
+  onProfileImageChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.employeeForm.patchValue({ profileImage: file });
 
-onProfileImageChange(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files.length > 0) {
-    this.employeeForm.patchValue({ profileImage: input.files[0] });
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
   }
-}
-
 
   openSnackBar(
     message: string,
@@ -167,52 +149,42 @@ onProfileImageChange(event: Event): void {
     horizontalPosition: MatSnackBarHorizontalPosition = 'center',
     verticalPosition: MatSnackBarVerticalPosition = 'top'
   ) {
-    this.snackBar.open(message, action, { duration, horizontalPosition, verticalPosition });
+    this.snackBar.open(message, action, {
+      duration,
+      horizontalPosition,
+      verticalPosition,
+    });
   }
 
-  // checkFormValidity() {
-  //   Object.keys(this.employeeForm.controls).forEach((key) => {
-  //     const control = this.employeeForm.get(key);
-  //     if (control && control.invalid) {
-  //       console.log(this.employeeForm.value);
-  //       const errors = control.errors;
-  //       if (errors) {
-  //         console.error(`Invalid Field: ${key}`, errors);
-  //       }
-  //     }
-  //   });
-  // }
+  submitForm(): void {
+    if (this.employeeForm.valid) {
+      const employee: Employee = this.employeeForm.value;
 
-submitForm(): void {
-  if (this.employeeForm.valid) {
-    const employee: Employee = this.employeeForm.value;
-
-    if (this.data) {
-      // Update employee (if you have a similar endpoint for update)
-      this.empServ.updateEmployee(this.data.id, employee).subscribe({
-        next: (res) => {
-          this.openSnackBar('Employee updated successfully.', 'OK');
-          this.matDialRef.close(true);
-        },
-        error: (err) => console.error('Update Error:', err),
-      });
+      if (this.data) {
+        // Update employee
+        this.empServ.updateEmployee(this.data.id, employee).subscribe({
+          next: () => {
+            this.openSnackBar('Employee updated successfully.', 'OK');
+            this.matDialRef.close(true);
+          },
+          error: (err) => console.error('Update Error:', err),
+        });
+      } else {
+        // Create employee
+        this.empServ.createEmployee(employee).subscribe({
+          next: () => {
+            this.openSnackBar('Employee added successfully.', 'OK');
+            this.matDialRef.close(true);
+          },
+          error: (err) => console.error('Create Error:', err),
+        });
+      }
     } else {
-      // Create new employee
-      this.empServ.createEmployee(employee).subscribe({
-        next: (res) => {
-          this.openSnackBar('Employee added successfully.', 'OK');
-          this.matDialRef.close(true);
-        },
-        error: (err) => console.error('Create Error:', err),
-      });
+      console.error('Form Invalid');
     }
-  } else {
-    console.error('Form Invalid');
-    // this.checkFormValidity(); // prints invalid fields
   }
-}
 
-
+  // close modal
   onNoClick(): void {
     this.matDialRef.close();
   }

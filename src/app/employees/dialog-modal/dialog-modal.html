@@ -1,0 +1,16 @@
+<div class="container">
+  <h2 mat-dialog-title style="text-align: center; font-weight: bold;color: red;margin-top: 5px;;">Confirm Deleted</h2>
+  <hr/>
+  <mat-dialog-content style="text-align: center; color: black;font-weight: bold;"> Are you sure you want to delete? </mat-dialog-content>
+  <hr/>
+  <mat-dialog-actions align="end">
+    <button mat-icon-button class="btn btn-danger" style="margin-right: 5px;" (click)="onCancel()">
+      Cancel
+    </button>
+
+    <button mat-icon-button class="btn btn-danger" (click)="onConfirm()">
+    Delete
+    </button>
+
+  </mat-dialog-actions>
+</div>
