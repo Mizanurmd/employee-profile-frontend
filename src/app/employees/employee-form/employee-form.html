@@ -1,4 +1,7 @@
-<div class="container" style="max-height: 80vh; overflow-y: auto; padding: 16px;">
+<div
+  class="container"
+  style="max-height: 80vh; overflow-y: auto; padding: 16px"
+>
   <div align="right">
     <div>
       <button
@@ -26,7 +29,40 @@
 
         <mat-form-field appearance="outline" style="flex: 1">
           <mat-label>Mobile</mat-label>
-          <input matInput placeholder="Mobile" formControlName="mobile" />
+          <input
+            matInput
+            placeholder="Mobile"
+            formControlName="mobile"
+            type="text"
+          />
+
+          <!-- Required -->
+          <mat-error
+            *ngIf="employeeForm.get('mobile')?.touched && employeeForm.get('mobile')?.hasError('required')"
+          >
+            Mobile number is required
+          </mat-error>
+
+          <!-- Minimum length -->
+          <mat-error
+            *ngIf="employeeForm.get('mobile')?.touched && employeeForm.get('mobile')?.hasError('minlength')"
+          >
+            Mobile number must be at least 10 digits
+          </mat-error>
+
+          <!-- Maximum length -->
+          <mat-error
+            *ngIf="employeeForm.get('mobile')?.touched && employeeForm.get('mobile')?.hasError('maxlength')"
+          >
+            Mobile number cannot exceed 11 digits
+          </mat-error>
+
+          <!-- Only numbers -->
+          <mat-error
+            *ngIf="employeeForm.get('mobile')?.touched && employeeForm.get('mobile')?.hasError('pattern')"
+          >
+            Mobile number must contain only numbers
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -39,7 +75,40 @@
 
         <mat-form-field appearance="outline" style="flex: 1">
           <mat-label>NID</mat-label>
-          <input matInput placeholder="NID NO" formControlName="nid" />
+          <input
+            matInput
+            placeholder="NID NO"
+            formControlName="nid"
+            type="text"
+          />
+
+          <!-- Required -->
+          <mat-error
+            *ngIf="employeeForm.get('nid')?.touched && employeeForm.get('nid')?.hasError('required')"
+          >
+            NID is required
+          </mat-error>
+
+          <!-- Minimum length -->
+          <mat-error
+            *ngIf="employeeForm.get('nid')?.touched && employeeForm.get('nid')?.hasError('minlength')"
+          >
+            NID must be at least 10 digits
+          </mat-error>
+
+          <!-- Maximum length -->
+          <mat-error
+            *ngIf="employeeForm.get('nid')?.touched && employeeForm.get('nid')?.hasError('maxlength')"
+          >
+            NID cannot exceed 17 digits
+          </mat-error>
+
+          <!-- Only numbers -->
+          <mat-error
+            *ngIf="employeeForm.get('nid')?.touched && employeeForm.get('nid')?.hasError('pattern')"
+          >
+            NID must contain only numbers
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -79,10 +148,20 @@
               formControlName="dateOfBirth"
             />
             <mat-datepicker-toggle
-              matIconSuffix
+              matSuffix
               [for]="picker1"
             ></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
+            <mat-error
+              *ngIf="employeeForm.get('dateOfBirth')?.hasError('required')"
+            >
+              Birth Date is required
+            </mat-error>
+            <mat-error
+              *ngIf="employeeForm.get('dateOfBirth')?.hasError('futureDate')"
+            >
+              Birth Date cannot be today or in the future
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -159,7 +238,7 @@
       </div>
 
       <!-- Profile Image -->
-       <img *ngIf="imagePreview" [src]="imagePreview" width="100" height="100" />
+      <img *ngIf="imagePreview" [src]="imagePreview" width="100" height="100" />
       <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 15px">
         <div style="flex: 1; display: flex; align-items: center; gap: 8px">
           <label style="margin: 0">Profile Image:</label>

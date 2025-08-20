@@ -7,6 +7,7 @@ import {
   Validators,
   ReactiveFormsModule,
   FormsModule,
+  FormControl,
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -68,13 +69,40 @@ export class EmployeeForm implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
+  pastDateValidator(control: FormControl) {
+  const inputDate = new Date(control.value);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // ignore time
+  if (inputDate >= today) {
+    return { futureDate: true }; // validation fails
+  }
+  return null; // valid
+}
+
+
   ngOnInit(): void {
     this.employeeForm = this.fb.group({
       name: ['', Validators.required],
-      mobile: ['', Validators.required],
+      mobile: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(11),
+          Validators.pattern('^[0-9]*$'),
+        ],
+      ],
       email: ['', [Validators.required, Validators.email]],
-      nid: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
+      nid: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(17),
+          Validators.pattern('^[0-9]*$'),
+        ],
+      ],
+       dateOfBirth: ['', [Validators.required, this.pastDateValidator]],
       presentAddress: [''],
       permanentAddress: [''],
       gender: ['', Validators.required],

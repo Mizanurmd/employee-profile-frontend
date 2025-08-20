@@ -1,0 +1,106 @@
+/* Container Styling */
+.container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Heading */
+.container h2 {
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+/* Labels */
+.form-group label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+/* Input Fields */
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Input Focus Effect */
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+  outline: none;
+}
+
+/* Error Messages */
+.text-danger {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* Button Styling */
+.btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+/* Primary Button */
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  color: white;
+}
+
+.btn-primary:hover:enabled {
+  background-color: #0056b3;
+}
+
+.btn:disabled {
+  background-color: #9ebce3;
+  cursor: not-allowed;
+}
+
+/* Footer */
+.footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.footer h3 {
+  font-size: 15px;
+  color: #555;
+  font-weight: normal;
+  margin-bottom: 6px;
+}
+
+.footer a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #007bff;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
