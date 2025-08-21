@@ -74,14 +74,17 @@ export class Login {
       const { username, password } = this.loginForm.value;
       this.authService.login(username, password).subscribe({
         next: (response) => {
-          this.openSnackBar('Login is successfully', 'OK');
-          console.table(response);
-          if (response.role === 'ADMIN') {
-            this.router.navigate(['/home']);
+          if (response && response.token) {
+            this.openSnackBar('Login is successfully', 'OK');
+            console.table(response);
+            if (response.role === 'ADMIN') {
+              this.router.navigate(['/home']);
+            } else {
+              this.router.navigate(['/login']);
+            }
           } else {
-            this.router.navigate(['/home']);
+            this.openSnackBar('Invalid username or password', 'Retry');
           }
-          // Successful login handled within AuthService (redirecting to appropriate dashboard)
         },
         error: (error) => {
           this.openSnackBar(
@@ -98,14 +101,11 @@ export class Login {
     }
   }
 
-  // Optionally, you can reset the error message on form changes
   onFormChanges(): void {
     this.loginForm.valueChanges.subscribe(() => {
       this.errorMessage = null;
     });
   }
-
-  // Trigger the form change listener on component initialization
   ngOnInit(): void {
     this.onFormChanges();
   }

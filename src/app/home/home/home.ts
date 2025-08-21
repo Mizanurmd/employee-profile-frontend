@@ -5,6 +5,11 @@ import { EmployeeForm } from '../../employees/employee-form/employee-form';
 import { MatDialog } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { AuthServiceService } from '../../service/auth-service.service';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +20,8 @@ import { AuthServiceService } from '../../service/auth-service.service';
 export class Home implements OnInit {
   constructor(
     private matDialog: MatDialog,
-    private authServ: AuthServiceService // @Inject(MAT_DIALOG_DATA) public data: any,private
+    private authServ: AuthServiceService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {}
@@ -29,8 +35,23 @@ export class Home implements OnInit {
     });
   }
 
+  openSnackBar(
+    message: string,
+    action: string = 'Close',
+    duration: number = 3000,
+    horizontalPosition: MatSnackBarHorizontalPosition = 'center',
+    verticalPosition: MatSnackBarVerticalPosition = 'top'
+  ) {
+    this.snackBar.open(message, action, {
+      duration: duration,
+      horizontalPosition: horizontalPosition,
+      verticalPosition: verticalPosition,
+    });
+  }
+
   //logout method
   logout(): void {
     this.authServ.logout();
+    this.openSnackBar('Successfully logout');
   }
 }
