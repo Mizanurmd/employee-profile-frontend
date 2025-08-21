@@ -52,6 +52,6 @@ export class Home implements OnInit {
   //logout method
   logout(): void {
     this.authServ.logout();
-    this.openSnackBar('Successfully logout');
+    this.openSnackBar('logout Successfully');
   }
 }

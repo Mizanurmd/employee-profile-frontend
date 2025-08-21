@@ -77,7 +77,7 @@ export class Login {
           if (response && response.token) {
             this.openSnackBar('Login is successfully', 'OK');
             console.table(response);
-            if (response.role === 'ADMIN') {
+            if (response.role === 'ADMIN' || response.role === 'USER') {
               this.router.navigate(['/home']);
             } else {
               this.router.navigate(['/login']);
