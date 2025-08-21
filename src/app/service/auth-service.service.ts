@@ -32,9 +32,6 @@ export class AuthServiceService {
 
   // Login user
   login(email: string, password: string): Observable<any> {
-    return this.http
-      .post<any>(`${this.baseUrl}/login`, { email, password })
-  login(email: string, password: string): Observable<any> {
     // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(`${this.baseUrl}/login`, { email, password })
       .pipe(
@@ -45,7 +42,6 @@ export class AuthServiceService {
 
   // Handle login success
   private handleLoginSuccess(response: any): void {
-    this.saveTokens(response.token, response.role, response.refreshToken);
     this.saveTokens(response.token, response.role, response.refreshToken);
     // Redirect user based on their role
     if (response.role === 'ADMIN') {
@@ -58,7 +54,6 @@ export class AuthServiceService {
   // Save JWT tokens in local storage
    saveTokens(accessToken: string, role:string, refreshToken: string): void {
     localStorage.setItem('access_token', accessToken);
-    localStorage.setItem('role', role);
     localStorage.setItem('role', role);
     localStorage.setItem('refresh_token', refreshToken);
   }
@@ -84,8 +79,6 @@ export class AuthServiceService {
     localStorage.removeItem('role');
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
-     localStorage.removeItem('role');
-      localStorage.removeItem('userId');
     localStorage.removeItem('refresh_token');
     this.router.navigate(['/login']);
   }

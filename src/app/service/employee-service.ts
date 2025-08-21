@@ -11,18 +11,6 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  // async saveProject(project: Project): Promise<any> {
-  //   const url = ${this.BASE_URL};
-  //   const headers = new HttpHeaders({
-  //     'Authorization': Bearer ${localStorage.getItem('token')}
-  //   })
-  //   try {
-  //     return this.http.post<any>(url, project, { headers }).toPromise();
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
-
 getEmployees(): Observable<Employee[]> {
     const url = `${this.apiUrl}/all`;
     const headers = new HttpHeaders({

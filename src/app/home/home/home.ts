@@ -15,8 +15,7 @@ import { AuthServiceService } from '../../service/auth-service.service';
 export class Home implements OnInit {
   constructor(
     private matDialog: MatDialog,
-    private authServ: AuthServiceService 
-
+    private authServ: AuthServiceService // @Inject(MAT_DIALOG_DATA) public data: any,private
   ) {}
 
   ngOnInit(): void {}
@@ -30,6 +29,7 @@ export class Home implements OnInit {
     });
   }
 
+  //logout method
   logout(): void {
     this.authServ.logout();
   }
