@@ -58,7 +58,7 @@ export class EmployeeForm implements OnInit {
     'Masters',
     'PhD',
   ];
-  skillOptions: string[] = ['Communication', 'Leadership', 'IT', 'Teaching'];
+  skillOptions: string[] = ['Communication', 'IT', 'Leadership', 'Teaching'];
 
   constructor(
     private fb: FormBuilder,

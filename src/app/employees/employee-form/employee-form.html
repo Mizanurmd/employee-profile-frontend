@@ -13,14 +13,14 @@
         &times;
       </button>
     </div>
-    <h1 style="text-align: center; color: blue">Employee Form</h1>
+    <h1 style="text-align: center; color: blue; margin-bottom: 5px;">EMPLOYEE FORM</h1>
   </div>
 
   <p *ngIf="errorText" class="error-message">{{errorText}}</p>
 
   <form [formGroup]="employeeForm" (ngSubmit)="submitForm()">
     <div class="card p-5 mt-2">
-      <mat-form-field appearance="outline" style="flex: 1">
+      <mat-form-field appearance="outline" style="flex: 1; display: none;">
         <mat-label>Id</mat-label>
         <input matInput placeholder="id" formControlName="id" readonly />
       </mat-form-field>
@@ -115,38 +115,53 @@
       </div>
 
       <!-- Birth Date & Gender -->
-      <div style="display: flex; gap: 16px; flex-wrap: wrap">
-        <div style="flex: 1">
-          <mat-form-field appearance="outline" style="width: 100%">
-            <mat-label>Birth Date*</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker1"
-              formControlName="dateOfBirth"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker1"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-            <mat-error
-              *ngIf="employeeForm.get('dateOfBirth')?.hasError('required')"
-            >
-              Birth Date is required
-            </mat-error>
-            <mat-error
-              *ngIf="employeeForm.get('dateOfBirth')?.hasError('futureDate')"
-            >
-              Birth Date cannot be today or in the future
-            </mat-error>
-          </mat-form-field>
-        </div>
+      <!-- Birth Date & Gender -->
+      <div
+        style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center"
+      >
+        <!-- Birth Date -->
+        <mat-form-field appearance="outline" style="flex: 1">
+          <mat-label>Birth Date*</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            formControlName="dateOfBirth"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
 
-        <div style="flex: 1; display: flex; align-items: center; gap: 16px">
-          <label style="margin: 0"><strong>Gender:</strong></label>
+          <mat-error
+            *ngIf="employeeForm.get('dateOfBirth')?.hasError('required')"
+          >
+            Birth Date is required
+          </mat-error>
+          <mat-error
+            *ngIf="employeeForm.get('dateOfBirth')?.hasError('futureDate')"
+          >
+            Birth Date cannot be today or in the future
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Gender -->
+        <div
+          style="
+            flex: 1 1 0;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            flex-wrap: wrap;
+          "
+        >
+          <label style="margin: 0; white-space: nowrap"
+            ><strong>Gender:</strong></label
+          >
           <mat-radio-group
             formControlName="gender"
-            style="display: flex; gap: 8px"
+            style="display: flex; gap: 5px"
           >
             <mat-radio-button value="Male">Male</mat-radio-button>
             <mat-radio-button value="Female">Female</mat-radio-button>
@@ -162,6 +177,7 @@
           gap: 16px;
           align-items: flex-start;
           flex-wrap: wrap;
+          margin-top: 15px;
         "
       >
         <!-- Education Dropdown -->
@@ -171,7 +187,7 @@
             min-width: 0;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
           "
         >
           <label style="margin: 0"><strong>Education:</strong></label>
