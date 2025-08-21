@@ -14,6 +14,7 @@ export interface User {
 
 export interface AuthenticationResponse {
   token: string;
+  role:string;
   refreshToken: string;
 }
 

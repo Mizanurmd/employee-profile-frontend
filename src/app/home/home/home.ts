@@ -4,6 +4,7 @@ import { EmployeeList } from '../../employees/employee-list/employee-list';
 import { EmployeeForm } from '../../employees/employee-form/employee-form';
 import { MatDialog } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
+import { AuthServiceService } from '../../service/auth-service.service';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +14,9 @@ import { RouterModule } from '@angular/router';
 })
 export class Home implements OnInit {
   constructor(
-    private matDialog: MatDialog
-  ) // @Inject(MAT_DIALOG_DATA) public data: any,
-  {}
+    private matDialog: MatDialog,
+    private authServ: AuthServiceService // @Inject(MAT_DIALOG_DATA) public data: any,private
+  ) {}
 
   ngOnInit(): void {}
 
@@ -26,5 +27,10 @@ export class Home implements OnInit {
         // Handle after close if needed
       }
     });
+  }
+
+  //logout method
+  logout(): void {
+    this.authServ.logout();
   }
 }

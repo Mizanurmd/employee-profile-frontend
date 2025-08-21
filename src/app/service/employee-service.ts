@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Employee } from '../model/employee';
@@ -12,19 +12,43 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
+  // async saveProject(project: Project): Promise<any> {
+  //   const url = ${this.BASE_URL};
+  //   const headers = new HttpHeaders({
+  //     'Authorization': Bearer ${localStorage.getItem('token')}
+  //   })
+  //   try {
+  //     return this.http.post<any>(url, project, { headers }).toPromise();
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
+
 getEmployees(): Observable<Employee[]> {
-  return this.http.get<Employee[]>(`${this.apiUrl}/all`);
-}
+    const url = `${this.apiUrl}/all`;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+    return this.http.get<Employee[]>(url, { headers });
+  }
 
   getEmployeeById(id: string): Observable<Employee> {
-    return this.http.get<Employee>(`${this.apiUrl}/${id}`);
+    const url = `${this.apiUrl}/${id}`;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+    return this.http.get<Employee>(url, {headers});
   }
 
 // EmployeeService
 createEmployee(employeeData: any): Observable<Employee> {
   const formData = new FormData();
+  const url = `${this.apiUrl}/save`;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
 
-  formData.append('id', employeeData.id);
+  // formData.append('id', employeeData.id);
   formData.append('name', employeeData.name);
   formData.append('mobile', employeeData.mobile);
   formData.append('email', employeeData.email);
@@ -48,27 +72,30 @@ createEmployee(employeeData: any): Observable<Employee> {
     formData.append('profileImage', employeeData.profileImage);
   }
 
-  return this.http.post<Employee>(`${this.apiUrl}/save`, formData);
+  return this.http.post<Employee>(url, formData, {headers});
 }
 
 
 
-updateEmployee(id: string, employeeData: Employee): Observable<Employee> {
+updateEmployee(id: string, employeeData: any): Observable<Employee> {
   const formData = new FormData();
+  const url = `${this.apiUrl}/update/${id}`;
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+  });
 
+  // Append all fields
   formData.append('id', employeeData.id);
   formData.append('name', employeeData.name);
   formData.append('mobile', employeeData.mobile);
   formData.append('email', employeeData.email);
   formData.append('nid', employeeData.nid);
 
-  // Convert string date to yyyy-MM-dd
-  let formattedDate = '';
-  if (employeeData.dateOfBirth) {
-    const dob = new Date(employeeData.dateOfBirth); 
-    formattedDate = dob.toISOString().split('T')[0]; 
-  }
-  formData.append('dateOfBirth', formattedDate);
+  // Format date
+  const dob = employeeData.dateOfBirth instanceof Date
+    ? employeeData.dateOfBirth
+    : new Date(employeeData.dateOfBirth);
+  formData.append('dateOfBirth', dob.toISOString().split('T')[0]);
 
   formData.append('presentAddress', employeeData.presentAddress || '');
   formData.append('permanentAddress', employeeData.permanentAddress || '');
@@ -76,17 +103,22 @@ updateEmployee(id: string, employeeData: Employee): Observable<Employee> {
   formData.append('highestEducation', employeeData.highestEducation);
   formData.append('skills', JSON.stringify(employeeData.skills));
 
-  if (employeeData.profileImage) {
+  // Only append profileImage if it's a File object (user changed it)
+  if (employeeData.profileImage instanceof File) {
     formData.append('profileImage', employeeData.profileImage);
   }
 
-  return this.http.put<Employee>(`${this.apiUrl}/update/${id}`, formData);
+  return this.http.put<Employee>(url, formData, { headers });
 }
 
 
 
   deleteEmployee(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    const url = `${this.apiUrl}/${id}`;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+    return this.http.delete<void>(url, {headers});
   }
   
 }

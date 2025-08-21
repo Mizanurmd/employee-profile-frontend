@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
 import { Router } from '@angular/router';
+import { User } from '../model/user';
 
 
 @Injectable({
@@ -14,22 +15,22 @@ export class AuthServiceService {
   constructor(private http: HttpClient, private router: Router) {}
 
   // Register user
-  register(user: any): Observable<any> {
+  register(user: User): Observable<User> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(`${this.baseUrl}/register`, user, { headers })
+    return this.http.post<User>(`${this.baseUrl}/register`, user, { headers })
       .pipe(
         catchError(this.handleError)
       );
       
   }
 
-  checkUsernameExists(username: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/users/exists?username=${username}`);
+  checkUsernameExists(email: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/users/exists?username=${email}`);
   }
   // Login user
-  login(username: string, password: string): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(`${this.baseUrl}/login`, { username, password }, { headers })
+  login(email: string, password: string): Observable<any> {
+    // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(`${this.baseUrl}/login`, { email, password })
       .pipe(
         tap(response => this.handleLoginSuccess(response)),
         catchError(this.handleError)
@@ -38,18 +39,19 @@ export class AuthServiceService {
 
   // Handle login success
   private handleLoginSuccess(response: any): void {
-    this.saveTokens(response.accessToken, response.refreshToken);
+    this.saveTokens(response.token, response.role, response.refreshToken);
     // Redirect user based on their role
     if (response.role === 'ADMIN') {
       this.router.navigate(['/home']);
     } else {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/login']);
     }
   }
 
   // Save JWT tokens in local storage
-   saveTokens(accessToken: string, refreshToken: string): void {
+   saveTokens(accessToken: string, role:string, refreshToken: string): void {
     localStorage.setItem('access_token', accessToken);
+    localStorage.setItem('role', role);
     localStorage.setItem('refresh_token', refreshToken);
   }
 
@@ -71,6 +73,8 @@ export class AuthServiceService {
   // Logout user by clearing the tokens from local storage
   logout(): void {
     localStorage.removeItem('access_token');
+     localStorage.removeItem('role');
+      localStorage.removeItem('userId');
     localStorage.removeItem('refresh_token');
     this.router.navigate(['/login']);
   }

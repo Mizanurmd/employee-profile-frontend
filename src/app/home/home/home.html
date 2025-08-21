@@ -1,16 +1,16 @@
 <mat-toolbar color="primary">
   <span>ADDIE SOFTWARE ASSIGNMENT 2025</span>
   <span class="example-spacer"></span>
-  <button
+  <!-- <button
     mat-raised-button
     class="btn btn-primary"
     style="margin-right: 5px"
     (click)="openEmployeeForm()"
   >
     ADD EMPLOYEE
-  </button>
-  <button mat-raised-button class="btn btn-danger">
-    <a routerLink="/login" mat-raised-link style="color: red;">Logout</a>
+  </button> -->
+  <button mat-raised-button class="btn btn-danger" (click)="logout()">
+   Logout
   </button>
 </mat-toolbar>
 <div>

@@ -70,60 +70,45 @@ export class EmployeeForm implements OnInit {
   ) {}
 
   pastDateValidator(control: FormControl) {
-  const inputDate = new Date(control.value);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // ignore time
-  if (inputDate >= today) {
-    return { futureDate: true }; // validation fails
+    const inputDate = new Date(control.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // ignore time
+    if (inputDate >= today) {
+      return { futureDate: true };
+    }
+    return null;
   }
-  return null; // valid
-}
-
 
   ngOnInit(): void {
-    this.employeeForm = this.fb.group({
-      name: ['', Validators.required],
-      mobile: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(11),
-          Validators.pattern('^[0-9]*$'),
-        ],
-      ],
-      email: ['', [Validators.required, Validators.email]],
-      nid: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(17),
-          Validators.pattern('^[0-9]*$'),
-        ],
-      ],
-       dateOfBirth: ['', [Validators.required, this.pastDateValidator]],
-      presentAddress: [''],
-      permanentAddress: [''],
-      gender: ['', Validators.required],
-      skills: [[]],
-      highestEducation: ['', Validators.required],
-      profileImage: [null],
+  this.employeeForm = this.fb.group({
+    id: [{ value: '', disabled: true }],
+    name: ['', Validators.required],
+    mobile: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+    email: ['', [Validators.required, Validators.email]],
+    nid: ['', [Validators.required, Validators.pattern(/^\d{10}$|^\d{17}$/)]],
+    dateOfBirth: ['', [Validators.required, this.pastDateValidator]],
+    presentAddress: [''],
+    permanentAddress: [''],
+    gender: ['', Validators.required],
+    skills: [[]],
+    highestEducation: ['', Validators.required],
+    profileImage: [null],
+  });
+
+  // Only patch form if editing (data has an ID)
+  if (this.data && this.data.id) {
+    const {dateOfBirth, ...rest } = this.data;
+    this.employeeForm.patchValue({
+      ...rest,
+      dateOfBirth: new Date(dateOfBirth),
     });
 
-    // If editing existing employee
-    if (this.data) {
-      this.employeeForm.patchValue({
-        ...this.data,
-        dateOfBirth: new Date(this.data.dateOfBirth),
-      });
-
-      // Set preview if image exists
-      if (this.data.profileImage) {
-        this.imagePreview = this.getImageFromBytes(this.data.profileImage);
-      }
+    if (this.data.profileImage) {
+      this.imagePreview = this.getImageFromBytes(this.data.profileImage);
     }
   }
+}
+
 
   onSkillChange(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -140,22 +125,13 @@ export class EmployeeForm implements OnInit {
     this.employeeForm.get('skills')?.setValue(currentSkills);
   }
 
-  // Convert byte[] or base64 string to data URL
   getImageFromBytes(bytes: number[] | string | null | undefined): string {
     if (!bytes) return '';
-
-    if (typeof bytes === 'string') {
-      return 'data:image/png;base64,' + bytes;
-    }
-
-    // It's a number array
-    const binary = (bytes as number[])
-      .map((b) => String.fromCharCode(b))
-      .join('');
+    if (typeof bytes === 'string') return 'data:image/png;base64,' + bytes;
+    const binary = (bytes as number[]).map((b) => String.fromCharCode(b)).join('');
     return 'data:image/png;base64,' + btoa(binary);
   }
 
-  // Handle new file input
   onProfileImageChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -184,35 +160,58 @@ export class EmployeeForm implements OnInit {
     });
   }
 
-  submitForm(): void {
-    if (this.employeeForm.valid) {
-      const employee: Employee = this.employeeForm.value;
-
-      if (this.data) {
-        // Update employee
-        this.empServ.updateEmployee(this.data.id, employee).subscribe({
-          next: () => {
-            this.openSnackBar('Employee updated successfully.', 'OK');
-            this.matDialRef.close(true);
-          },
-          error: (err) => console.error('Update Error:', err),
-        });
-      } else {
-        // Create employee
-        this.empServ.createEmployee(employee).subscribe({
-          next: () => {
-            this.openSnackBar('Employee added successfully.', 'OK');
-            this.matDialRef.close(true);
-          },
-          error: (err) => console.error('Create Error:', err),
-        });
-      }
-    } else {
-      console.error('Form Invalid');
-    }
+  
+submitForm(): void {
+  if (!this.employeeForm.valid) {
+    this.openSnackBar(
+      'Form is invalid. Please fill all required fields correctly.',
+      'OK'
+    );
+    return;
   }
 
-  // close modal
+  // Get raw form data (including disabled id)
+  const employee: any = this.employeeForm.getRawValue();
+
+if (this.data && this.data.id) {
+  // UPDATE
+  const employee: any = this.employeeForm.getRawValue();
+  this.empServ.updateEmployee(this.data.id, employee).subscribe({
+    next: (updatedEmployee) => {
+      this.openSnackBar(
+        `Employee updated successfully. ID: ${updatedEmployee.id}`,
+        'OK'
+      );
+      this.matDialRef.close(true);
+    },
+    error: (err) => {
+      console.error('Update Error:', err);
+      this.openSnackBar('Failed to update employee.', 'OK');
+    },
+  });
+}
+ else {
+    // CREATE new employee
+    delete employee.id; // ensure ID is not sent
+    this.empServ.createEmployee(employee).subscribe({
+      next: (createdEmployee) => {
+        this.employeeForm.patchValue({ id: createdEmployee.id });
+        this.openSnackBar(
+          `Employee added successfully. ID: ${createdEmployee.id}`,
+          'OK'
+        );
+        this.matDialRef.close(true);
+      },
+      error: (err) => {
+        console.error('Create Error:', err);
+        this.openSnackBar('Failed to add employee.', 'OK');
+      },
+    });
+  }
+}
+
+
+
   onNoClick(): void {
     this.matDialRef.close();
   }

@@ -20,6 +20,11 @@
 
   <form [formGroup]="employeeForm" (ngSubmit)="submitForm()">
     <div class="card p-5 mt-2">
+      <mat-form-field appearance="outline" style="flex: 1">
+        <mat-label>Id</mat-label>
+        <input matInput placeholder="id" formControlName="id" readonly />
+      </mat-form-field>
+
       <!-- Name & Mobile -->
       <div style="display: flex; gap: 16px">
         <mat-form-field appearance="outline" style="flex: 1">
@@ -43,25 +48,11 @@
             Mobile number is required
           </mat-error>
 
-          <!-- Minimum length -->
-          <mat-error
-            *ngIf="employeeForm.get('mobile')?.touched && employeeForm.get('mobile')?.hasError('minlength')"
-          >
-            Mobile number must be at least 10 digits
-          </mat-error>
-
-          <!-- Maximum length -->
-          <mat-error
-            *ngIf="employeeForm.get('mobile')?.touched && employeeForm.get('mobile')?.hasError('maxlength')"
-          >
-            Mobile number cannot exceed 11 digits
-          </mat-error>
-
           <!-- Only numbers -->
           <mat-error
             *ngIf="employeeForm.get('mobile')?.touched && employeeForm.get('mobile')?.hasError('pattern')"
           >
-            Mobile number must contain only numbers
+            Mobile number must contain only numbers & 11 digits
           </mat-error>
         </mat-form-field>
       </div>
@@ -89,25 +80,11 @@
             NID is required
           </mat-error>
 
-          <!-- Minimum length -->
-          <mat-error
-            *ngIf="employeeForm.get('nid')?.touched && employeeForm.get('nid')?.hasError('minlength')"
-          >
-            NID must be at least 10 digits
-          </mat-error>
-
-          <!-- Maximum length -->
-          <mat-error
-            *ngIf="employeeForm.get('nid')?.touched && employeeForm.get('nid')?.hasError('maxlength')"
-          >
-            NID cannot exceed 17 digits
-          </mat-error>
-
           <!-- Only numbers -->
           <mat-error
             *ngIf="employeeForm.get('nid')?.touched && employeeForm.get('nid')?.hasError('pattern')"
           >
-            NID must contain only numbers
+            NID must contain only numbers & must be either 10 or 17 digits
           </mat-error>
         </mat-form-field>
       </div>

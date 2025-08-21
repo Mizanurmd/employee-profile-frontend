@@ -1,59 +1,72 @@
 <div class="container mat-elevation-z8">
   <h1 style="text-align: center; color: blue">Employee Profile List</h1>
+
+  <!-- Add Button -->
+  <button
+    mat-raised-button
+    color="primary"
+    style="margin-bottom: 10px"
+    (click)="openEmployeeForm()"
+  >
+    ADD EMPLOYEE
+  </button>
+
   <hr />
 
+  <!-- Employee Table -->
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <!-- Name Column -->
+
+    <!-- Name -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell *matCellDef="let element">{{ element.name }}</td>
     </ng-container>
 
-    <!-- Mobile Column -->
+    <!-- Mobile -->
     <ng-container matColumnDef="mobile">
       <th mat-header-cell *matHeaderCellDef>Mobile</th>
       <td mat-cell *matCellDef="let element">{{ element.mobile }}</td>
     </ng-container>
 
-    <!-- Email Column -->
+    <!-- Email -->
     <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef>Email</th>
       <td mat-cell *matCellDef="let element">{{ element.email }}</td>
     </ng-container>
 
-    <!-- NID Column -->
+    <!-- NID -->
     <ng-container matColumnDef="nid">
       <th mat-header-cell *matHeaderCellDef>NID</th>
       <td mat-cell *matCellDef="let element">{{ element.nid }}</td>
     </ng-container>
 
-    <!-- Date of Birth Column -->
+    <!-- Date of Birth -->
     <ng-container matColumnDef="dateOfBirth">
       <th mat-header-cell *matHeaderCellDef>Birth Date</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.dateOfBirth | date:'yyyy-MM-dd' }}
+        {{ element.dateOfBirth | date: 'yyyy-MM-dd' }}
       </td>
     </ng-container>
 
-    <!-- Present Address Column -->
+    <!-- Present Address -->
     <ng-container matColumnDef="presentAddress">
       <th mat-header-cell *matHeaderCellDef>Present Address</th>
       <td mat-cell *matCellDef="let element">{{ element.presentAddress }}</td>
     </ng-container>
 
-    <!-- Permanent Address Column -->
+    <!-- Permanent Address -->
     <ng-container matColumnDef="permanentAddress">
       <th mat-header-cell *matHeaderCellDef>Permanent Address</th>
       <td mat-cell *matCellDef="let element">{{ element.permanentAddress }}</td>
     </ng-container>
 
-    <!-- Gender Column -->
+    <!-- Gender -->
     <ng-container matColumnDef="gender">
       <th mat-header-cell *matHeaderCellDef>Gender</th>
       <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
     </ng-container>
 
-    <!-- Skills Column -->
+    <!-- Skills -->
     <ng-container matColumnDef="skills">
       <th mat-header-cell *matHeaderCellDef>Skills</th>
       <td mat-cell *matCellDef="let element">
@@ -61,13 +74,13 @@
       </td>
     </ng-container>
 
-    <!-- Highest Education Column -->
+    <!-- Highest Education -->
     <ng-container matColumnDef="highestEducation">
       <th mat-header-cell *matHeaderCellDef>Education</th>
       <td mat-cell *matCellDef="let element">{{ element.highestEducation }}</td>
     </ng-container>
 
-    <!-- Profile Image Column -->
+    <!-- Profile Image -->
     <ng-container matColumnDef="profileImage">
       <th mat-header-cell *matHeaderCellDef>Photo</th>
       <td mat-cell *matCellDef="let element">
@@ -80,14 +93,22 @@
       </td>
     </ng-container>
 
-    <!-- Action Column -->
+    <!-- Action -->
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="editEmployee(element)">
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="openEmployeeForm(element)"
+        >
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="deleteEmployee(element)">
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="deleteEmployee(element)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </td>
