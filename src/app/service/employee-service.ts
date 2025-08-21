@@ -4,11 +4,10 @@ import { Observable } from 'rxjs';
 import { Employee } from '../model/employee';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmployeeService {
-
- private apiUrl = 'http://localhost:8081/api/v1/employees'; 
+  private apiUrl = 'http://localhost:8081/api/v1/employees';
 
   constructor(private http: HttpClient) { }
 
@@ -54,23 +53,26 @@ createEmployee(employeeData: any): Observable<Employee> {
   formData.append('email', employeeData.email);
   formData.append('nid', employeeData.nid);
 
-  // Convert dateOfBirth to yyyy-MM-dd
-  let dob: Date | null = null;
-  if (employeeData.dateOfBirth) {
-    dob = employeeData.dateOfBirth instanceof Date ? employeeData.dateOfBirth : new Date(employeeData.dateOfBirth);
-  }
-  const formattedDate = dob ? dob.toISOString().split('T')[0] : '';
-  formData.append('dateOfBirth', formattedDate);
+    // Convert dateOfBirth to yyyy-MM-dd
+    let dob: Date | null = null;
+    if (employeeData.dateOfBirth) {
+      dob =
+        employeeData.dateOfBirth instanceof Date
+          ? employeeData.dateOfBirth
+          : new Date(employeeData.dateOfBirth);
+    }
+    const formattedDate = dob ? dob.toISOString().split('T')[0] : '';
+    formData.append('dateOfBirth', formattedDate);
 
-  formData.append('presentAddress', employeeData.presentAddress || '');
-  formData.append('permanentAddress', employeeData.permanentAddress || '');
-  formData.append('gender', employeeData.gender);
-  formData.append('highestEducation', employeeData.highestEducation);
-  formData.append('skills', JSON.stringify(employeeData.skills));
+    formData.append('presentAddress', employeeData.presentAddress || '');
+    formData.append('permanentAddress', employeeData.permanentAddress || '');
+    formData.append('gender', employeeData.gender);
+    formData.append('highestEducation', employeeData.highestEducation);
+    formData.append('skills', JSON.stringify(employeeData.skills));
 
-  if (employeeData.profileImage) {
-    formData.append('profileImage', employeeData.profileImage);
-  }
+    if (employeeData.profileImage) {
+      formData.append('profileImage', employeeData.profileImage);
+    }
 
   return this.http.post<Employee>(url, formData, {headers});
 }
@@ -97,11 +99,11 @@ updateEmployee(id: string, employeeData: any): Observable<Employee> {
     : new Date(employeeData.dateOfBirth);
   formData.append('dateOfBirth', dob.toISOString().split('T')[0]);
 
-  formData.append('presentAddress', employeeData.presentAddress || '');
-  formData.append('permanentAddress', employeeData.permanentAddress || '');
-  formData.append('gender', employeeData.gender);
-  formData.append('highestEducation', employeeData.highestEducation);
-  formData.append('skills', JSON.stringify(employeeData.skills));
+    formData.append('presentAddress', employeeData.presentAddress || '');
+    formData.append('permanentAddress', employeeData.permanentAddress || '');
+    formData.append('gender', employeeData.gender);
+    formData.append('highestEducation', employeeData.highestEducation);
+    formData.append('skills', JSON.stringify(employeeData.skills));
 
   // Only append profileImage if it's a File object (user changed it)
   if (employeeData.profileImage instanceof File) {
@@ -120,5 +122,4 @@ updateEmployee(id: string, employeeData: any): Observable<Employee> {
     });
     return this.http.delete<void>(url, {headers});
   }
-  
 }

@@ -1,17 +1,19 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
 import { Router } from '@angular/router';
 import { User } from '../model/user';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthServiceService {
-
-  private baseUrl = 'http://localhost:8081/api/v1/auth';  
+  private baseUrl = 'http://localhost:8081/api/v1/auth';
   constructor(private http: HttpClient, private router: Router) {}
 
   // Register user
@@ -27,18 +29,23 @@ export class AuthServiceService {
   checkUsernameExists(email: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.baseUrl}/users/exists?username=${email}`);
   }
+
   // Login user
+  login(email: string, password: string): Observable<any> {
+    return this.http
+      .post<any>(`${this.baseUrl}/login`, { email, password })
   login(email: string, password: string): Observable<any> {
     // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(`${this.baseUrl}/login`, { email, password })
       .pipe(
-        tap(response => this.handleLoginSuccess(response)),
+        tap((response) => this.handleLoginSuccess(response)),
         catchError(this.handleError)
       );
   }
 
   // Handle login success
   private handleLoginSuccess(response: any): void {
+    this.saveTokens(response.token, response.role, response.refreshToken);
     this.saveTokens(response.token, response.role, response.refreshToken);
     // Redirect user based on their role
     if (response.role === 'ADMIN') {
@@ -51,6 +58,7 @@ export class AuthServiceService {
   // Save JWT tokens in local storage
    saveTokens(accessToken: string, role:string, refreshToken: string): void {
     localStorage.setItem('access_token', accessToken);
+    localStorage.setItem('role', role);
     localStorage.setItem('role', role);
     localStorage.setItem('refresh_token', refreshToken);
   }
@@ -73,6 +81,9 @@ export class AuthServiceService {
   // Logout user by clearing the tokens from local storage
   logout(): void {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
      localStorage.removeItem('role');
       localStorage.removeItem('userId');
     localStorage.removeItem('refresh_token');
@@ -82,7 +93,7 @@ export class AuthServiceService {
   // Handle errors from HTTP requests
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
-    
+
     if (error.error instanceof ErrorEvent) {
       // Client-side or network error
       errorMessage = `Client-side error: ${error.error.message}`;
@@ -93,16 +104,10 @@ export class AuthServiceService {
       // Server-side error
       errorMessage = `Server returned code: ${error.status}\nMessage: ${error.message}`;
     }
-  
+
     // Log the full error response for debugging
     console.error('Error details:', error);
-  
+
     return throwError(errorMessage);
   }
-  
 }
-
-
-  
- 
-
