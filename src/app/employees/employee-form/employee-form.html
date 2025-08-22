@@ -41,18 +41,12 @@
             type="text"
           />
 
-          <!-- Required -->
-          <mat-error
-            *ngIf="employeeForm.get('mobile')?.touched && employeeForm.get('mobile')?.hasError('required')"
-          >
-            Mobile number is required
-          </mat-error>
-
+  
           <!-- Only numbers -->
           <mat-error
             *ngIf="employeeForm.get('mobile')?.touched && employeeForm.get('mobile')?.hasError('pattern')"
           >
-            Mobile number must contain only numbers & 11 digits
+            Only numbers & 11 digits
           </mat-error>
         </mat-form-field>
       </div>
@@ -73,18 +67,11 @@
             type="text"
           />
 
-          <!-- Required -->
-          <mat-error
-            *ngIf="employeeForm.get('nid')?.touched && employeeForm.get('nid')?.hasError('required')"
-          >
-            NID is required
-          </mat-error>
-
           <!-- Only numbers -->
           <mat-error
             *ngIf="employeeForm.get('nid')?.touched && employeeForm.get('nid')?.hasError('pattern')"
           >
-            NID must contain only numbers & must be either 10 or 17 digits
+           Only numbers & must be either 10 or 17 digits
           </mat-error>
         </mat-form-field>
       </div>

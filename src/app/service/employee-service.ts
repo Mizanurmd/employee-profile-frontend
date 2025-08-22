@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Employee } from '../model/employee';
@@ -11,13 +11,30 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-getEmployees(): Observable<Employee[]> {
-    const url = `${this.apiUrl}/all`;
+// getEmployees(): Observable<Employee[]> {
+//     const url = `${this.apiUrl}/all`;
+//     const headers = new HttpHeaders({
+//       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+//     });
+//     return this.http.get<Employee[]>(url, { headers });
+//   }
+
+   getEmployees(page: number, size: number, sortBy: string, sortDir: string): Observable<any> {
+    const token = localStorage.getItem('access_token'); 
+
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      Authorization: `Bearer ${token}`
     });
-    return this.http.get<Employee[]>(url, { headers });
-  }
+
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('sortBy', sortBy)
+      .set('sortDir', sortDir);
+
+    return this.http.get<any>(this.apiUrl, { headers, params });
+  } 
+
 
   getEmployeeById(id: string): Observable<Employee> {
     const url = `${this.apiUrl}/${id}`;

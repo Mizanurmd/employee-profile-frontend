@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,7 +10,6 @@ import { Employee } from '../../model/employee';
 import { EmployeeForm } from '../employee-form/employee-form';
 import { DialogModal } from '../dialog-modal/dialog-modal';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-
 
 @Component({
   selector: 'app-employee-list',
@@ -42,6 +41,11 @@ export class EmployeeList implements OnInit, AfterViewInit {
   ];
 
   dataSource = new MatTableDataSource<Employee>([]);
+  totalItems = 0;
+  pageSize = 5;
+  currentPage = 0;
+  sortBy = 'id';
+  sortDir = 'asc';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -55,7 +59,11 @@ export class EmployeeList implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.paginator.page.subscribe((event: PageEvent) => {
+      this.currentPage = event.pageIndex;
+      this.pageSize = event.pageSize;
+      this.loadEmployees();
+    });
   }
 
   // Open Form for Create or Edit
@@ -67,7 +75,7 @@ export class EmployeeList implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.loadEmployees(); 
+        this.loadEmployees();
       }
     });
   }
@@ -75,25 +83,26 @@ export class EmployeeList implements OnInit, AfterViewInit {
   // Convert base64 / bytes to image
   getImageFromBytes(bytes: any): string {
     if (!bytes) return '';
-    return typeof bytes === 'string'
-      ? `data:image/png;base64,${bytes}`
-      : '';
+    return typeof bytes === 'string' ? `data:image/png;base64,${bytes}` : '';
   }
 
   // Load Employees
   loadEmployees(): void {
-    this.empService.getEmployees().subscribe({
-      next: (res) => {
-        this.dataSource.data = res.map((emp) => ({
-          ...emp,
-          skills:
-            typeof emp.skills === 'string'
-              ? JSON.parse(emp.skills)
-              : emp.skills,
-        }));
-      },
-      error: (err) => console.error('Error fetching employees:', err),
-    });
+    this.empService
+      .getEmployees(this.currentPage, this.pageSize, this.sortBy, this.sortDir)
+      .subscribe({
+        next: (res) => {
+          this.dataSource.data = res.employees.map((emp: any) => ({
+            ...emp,
+            skills:
+              typeof emp.skills === 'string'
+                ? JSON.parse(emp.skills)
+                : emp.skills,
+          }));
+          this.totalItems = res.totalItems;
+        },
+        error: (err) => console.error('Error fetching employees:', err),
+      });
   }
 
   // Delete Employee
