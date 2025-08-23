@@ -121,4 +121,37 @@ export class EmployeeList implements OnInit, AfterViewInit {
       }
     });
   }
+
+   // Report all employees function
+getAllEmployeesReport(format: string) {
+  this.empService.allEmployeesReport(format).subscribe({
+    next: (data: Blob) => {
+      const file = new Blob([data], { type: 'application/pdf' });
+      const fileURL = window.URL.createObjectURL(file);
+      window.open(fileURL); // opens in new tab
+    },
+    error: (err) => {
+      console.error('Error downloading report:', err);
+    }
+  });
+}
+
+// Get report by id
+getEmployeeReportById(id: string, format: string) {
+  this.empService.employeeReportById(id, format).subscribe({
+    next: (data: Blob) => {
+      const file = new Blob([data], { type: 'application/pdf' });
+      const fileURL = window.URL.createObjectURL(file);
+      window.open(fileURL); 
+    },
+    error: (err) => {
+      console.error('Error downloading employee report:', err);
+    }
+  });
+}
+
+
+
+
+
 }
