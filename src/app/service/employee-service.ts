@@ -125,6 +125,33 @@ export class EmployeeService {
     return this.http.delete<void>(url, { headers });
   }
 
+  // Search employees with optional filters and pagination
+  searchEmployees(
+    name?: string,
+    mobile?: string,
+    email?: string,
+    subject?: string,
+    page: number = 0,
+    size: number = 10
+  ): Observable<any> {
+    const token = localStorage.getItem('access_token');
+
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size);
+
+    if (name) params = params.set('name', name);
+    if (mobile) params = params.set('mobile', mobile);
+    if (email) params = params.set('email', email);
+    if (subject) params = params.set('subject', subject);
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get<any>(`${this.apiUrl}/search`, { params, headers });
+  }
+
   // Report all employees
   allEmployeesReport(format: string): Observable<Blob> {
   const token = localStorage.getItem('access_token');
@@ -134,7 +161,7 @@ export class EmployeeService {
 
   return this.http.get(`${this.reportApiUrl}/${format}`, {
     headers,
-    responseType: 'blob' as 'json'  // force blob
+    responseType: 'blob' as 'json' 
   })as Observable<Blob>;
 }
 

@@ -1,5 +1,5 @@
 <div class="container mat-elevation-z8">
-  <h1 style="text-align: center; color: blue">Employee Profile List</h1>
+  <h1 style="text-align: center; color: rgb(101, 9, 35)">EMPLOYEE PROFILE LIST</h1>
 
   <!-- Add Button -->
   <button mat-raised-button color="primary" style="margin-bottom: 10px" (click)="openEmployeeForm()">
@@ -13,102 +13,57 @@
 
   <hr />
 
-  <!-- Employee Table -->
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<!-- Search Form -->
+<form [formGroup]="searchForm" (ngSubmit)="search()" class="row g-2 mb-3">
+  <div class="col">
+    <input formControlName="name" placeholder="Name" class="form-control">
+  </div>
+  <div class="col">
+    <input formControlName="mobile" placeholder="Mobile" class="form-control">
+  </div>
+  <div class="col">
+    <input formControlName="email" placeholder="Email" class="form-control">
+  </div>
+  <div class="col">
+    <input formControlName="subject" placeholder="Subject" class="form-control">
+  </div>
+  <div class="col">
+    <button type="submit" class="btn btn-primary">Search</button>
+  </div>
+</form>
 
-    <!-- Name -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-    </ng-container>
+<!-- Employee Table -->
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    <!-- Mobile -->
-    <ng-container matColumnDef="mobile">
-      <th mat-header-cell *matHeaderCellDef>Mobile</th>
-      <td mat-cell *matCellDef="let element">{{ element.mobile }}</td>
-    </ng-container>
+  <!-- Columns -->
+  <ng-container matColumnDef="name"><th mat-header-cell *matHeaderCellDef>Name</th><td mat-cell *matCellDef="let element">{{element.name}}</td></ng-container>
+  <ng-container matColumnDef="mobile"><th mat-header-cell *matHeaderCellDef>Mobile</th><td mat-cell *matCellDef="let element">{{element.mobile}}</td></ng-container>
+  <ng-container matColumnDef="email"><th mat-header-cell *matHeaderCellDef>Email</th><td mat-cell *matCellDef="let element">{{element.email}}</td></ng-container>
+  <ng-container matColumnDef="nid"><th mat-header-cell *matHeaderCellDef>NID</th><td mat-cell *matCellDef="let element">{{element.nid}}</td></ng-container>
+  <ng-container matColumnDef="dateOfBirth"><th mat-header-cell *matHeaderCellDef>DOB</th><td mat-cell *matCellDef="let element">{{element.dateOfBirth}}</td></ng-container>
+  <ng-container matColumnDef="presentAddress"><th mat-header-cell *matHeaderCellDef>Present Address</th><td mat-cell *matCellDef="let element">{{element.presentAddress}}</td></ng-container>
+  <ng-container matColumnDef="permanentAddress"><th mat-header-cell *matHeaderCellDef>Permanent Address</th><td mat-cell *matCellDef="let element">{{element.permanentAddress}}</td></ng-container>
+  <ng-container matColumnDef="gender"><th mat-header-cell *matHeaderCellDef>Gender</th><td mat-cell *matCellDef="let element">{{element.gender}}</td></ng-container>
+  <ng-container matColumnDef="skills"><th mat-header-cell *matHeaderCellDef>Skills</th><td mat-cell *matCellDef="let element">{{element.skills}}</td></ng-container>
+  <ng-container matColumnDef="highestEducation"><th mat-header-cell *matHeaderCellDef>Education</th><td mat-cell *matCellDef="let element">{{element.highestEducation}}</td></ng-container>
+  <ng-container matColumnDef="profileImage"><th mat-header-cell *matHeaderCellDef>Profile</th><td mat-cell *matCellDef="let element"><img [src]="getImageFromBytes(element.profileImage)" width="50"/></td></ng-container>
 
-    <!-- Email -->
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-    </ng-container>
+  <!-- Action Column -->
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Action</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary" (click)="openEmployeeForm(element)"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button color="warn" (click)="deleteEmployee(element)"><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button color="accent" (click)="getEmployeeReportById(element.id,'pdf')"><mat-icon>picture_as_pdf</mat-icon></button>
+    </td>
+  </ng-container>
 
-    <!-- NID -->
-    <ng-container matColumnDef="nid">
-      <th mat-header-cell *matHeaderCellDef>NID</th>
-      <td mat-cell *matCellDef="let element">{{ element.nid }}</td>
-    </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
 
-    <!-- Date of Birth -->
-    <ng-container matColumnDef="dateOfBirth">
-      <th mat-header-cell *matHeaderCellDef>Birth Date</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.dateOfBirth | date: 'yyyy-MM-dd' }}
-      </td>
-    </ng-container>
+<!-- Paginator -->
+<mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
 
-    <!-- Present Address -->
-    <ng-container matColumnDef="presentAddress">
-      <th mat-header-cell *matHeaderCellDef>Present Address</th>
-      <td mat-cell *matCellDef="let element">{{ element.presentAddress }}</td>
-    </ng-container>
 
-    <!-- Permanent Address -->
-    <ng-container matColumnDef="permanentAddress">
-      <th mat-header-cell *matHeaderCellDef>Permanent Address</th>
-      <td mat-cell *matCellDef="let element">{{ element.permanentAddress }}</td>
-    </ng-container>
-
-    <!-- Gender -->
-    <ng-container matColumnDef="gender">
-      <th mat-header-cell *matHeaderCellDef>Gender</th>
-      <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
-    </ng-container>
-
-    <!-- Skills -->
-    <ng-container matColumnDef="skills">
-      <th mat-header-cell *matHeaderCellDef>Skills</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.skills?.join(', ') }}
-      </td>
-    </ng-container>
-
-    <!-- Highest Education -->
-    <ng-container matColumnDef="highestEducation">
-      <th mat-header-cell *matHeaderCellDef>Education</th>
-      <td mat-cell *matCellDef="let element">{{ element.highestEducation }}</td>
-    </ng-container>
-
-    <!-- Profile Image -->
-    <ng-container matColumnDef="profileImage">
-      <th mat-header-cell *matHeaderCellDef>Photo</th>
-      <td mat-cell *matCellDef="let element">
-        <img *ngIf="element.profileImage" [src]="getImageFromBytes(element.profileImage)" width="50" height="50" />
-      </td>
-    </ng-container>
-
-    <!-- Action -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef>Action</th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="openEmployeeForm(element)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="deleteEmployee(element)">
-          <mat-icon>delete</mat-icon>
-        </button>
-         <button mat-icon-button color="warn" (click)="getEmployeeReportById(element.id,'pdf')">
-          <mat-icon>download</mat-icon>
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  <!-- Paginator -->
-  <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" aria-label="Select page"
-    showFirstLastButtons>
-  </mat-paginator>
 </div>

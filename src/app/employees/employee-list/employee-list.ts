@@ -4,12 +4,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { EmployeeService } from '../../service/employee-service';
 import { Employee } from '../../model/employee';
 import { EmployeeForm } from '../employee-form/employee-form';
 import { DialogModal } from '../dialog-modal/dialog-modal';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-employee-list',
@@ -20,24 +21,16 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
     MatPaginator,
     MatButtonModule,
     MatIconModule,
+    ReactiveFormsModule
   ],
   templateUrl: './employee-list.html',
-  styleUrls: ['./employee-list.css'],
+  styleUrls: ['./employee-list.css']
 })
 export class EmployeeList implements OnInit, AfterViewInit {
+
   displayedColumns: string[] = [
-    'name',
-    'mobile',
-    'email',
-    'nid',
-    'dateOfBirth',
-    'presentAddress',
-    'permanentAddress',
-    'gender',
-    'skills',
-    'highestEducation',
-    'profileImage',
-    'action',
+    'name', 'mobile', 'email', 'nid', 'dateOfBirth', 'presentAddress',
+    'permanentAddress', 'gender', 'skills', 'highestEducation', 'profileImage', 'action'
   ];
 
   dataSource = new MatTableDataSource<Employee>([]);
@@ -47,12 +40,22 @@ export class EmployeeList implements OnInit, AfterViewInit {
   sortBy = 'id';
   sortDir = 'asc';
 
+  searchForm: FormGroup;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private empService: EmployeeService,
-    private matDialog: MatDialog
-  ) {}
+    private matDialog: MatDialog,
+    private fb: FormBuilder
+  ) {
+    this.searchForm = this.fb.group({
+      name: [''],
+      mobile: [''],
+      email: [''],
+      subject: ['']
+    });
+  }
 
   ngOnInit(): void {
     this.loadEmployees();
@@ -66,92 +69,83 @@ export class EmployeeList implements OnInit, AfterViewInit {
     });
   }
 
-  // Open Form for Create or Edit
-  openEmployeeForm(employee?: Employee): void {
-    const dialogRef = this.matDialog.open(EmployeeForm, {
-      width: '700px',
-      data: employee || null,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === true) {
-        this.loadEmployees();
-      }
-    });
-  }
-
-  // Convert base64 / bytes to image
-  getImageFromBytes(bytes: any): string {
-    if (!bytes) return '';
-    return typeof bytes === 'string' ? `data:image/png;base64,${bytes}` : '';
-  }
-
-  // Load Employees
   loadEmployees(): void {
-    this.empService
-      .getEmployees(this.currentPage, this.pageSize, this.sortBy, this.sortDir)
+    const { name, mobile, email, subject } = this.searchForm.value;
+
+    this.empService.searchEmployees(name, mobile, email, subject, this.currentPage, this.pageSize)
       .subscribe({
         next: (res) => {
-          this.dataSource.data = res.employees.map((emp: any) => ({
+          this.dataSource.data = res.content.map((emp: any) => ({
             ...emp,
-            skills:
-              typeof emp.skills === 'string'
-                ? JSON.parse(emp.skills)
-                : emp.skills,
+            skills: typeof emp.skills === 'string' ? JSON.parse(emp.skills) : emp.skills
           }));
-          this.totalItems = res.totalItems;
+          this.totalItems = res.totalElements;
         },
-        error: (err) => console.error('Error fetching employees:', err),
+        error: (err) => console.error('Error fetching employees:', err)
       });
   }
 
-  // Delete Employee
+  search(): void {
+    this.currentPage = 0;
+    this.loadEmployees();
+  }
+
+  goToPage(pageIndex: number): void {
+    this.currentPage = pageIndex;
+    this.loadEmployees();
+  }
+
+  openEmployeeForm(employee?: Employee): void {
+    const dialogRef = this.matDialog.open(EmployeeForm, {
+      width: '700px',
+      data: employee || null
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) this.loadEmployees();
+    });
+  }
+
   deleteEmployee(emp: Employee): void {
     const dialogRef = this.matDialog.open(DialogModal, {
       width: '350px',
-      data: emp,
+      data: emp
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.empService.deleteEmployee(emp.id).subscribe({
           next: () => this.loadEmployees(),
-          error: (err) => console.error('Error deleting employee:', err),
+          error: (err) => console.error('Error deleting employee:', err)
         });
       }
     });
   }
 
-   // Report all employees function
-getAllEmployeesReport(format: string) {
-  this.empService.allEmployeesReport(format).subscribe({
-    next: (data: Blob) => {
-      const file = new Blob([data], { type: 'application/pdf' });
-      const fileURL = window.URL.createObjectURL(file);
-      window.open(fileURL); // opens in new tab
-    },
-    error: (err) => {
-      console.error('Error downloading report:', err);
-    }
-  });
-}
+  getImageFromBytes(bytes: any): string {
+    if (!bytes) return '';
+    return typeof bytes === 'string' ? `data:image/png;base64,${bytes}` : '';
+  }
 
-// Get report by id
-getEmployeeReportById(id: string, format: string) {
-  this.empService.employeeReportById(id, format).subscribe({
-    next: (data: Blob) => {
-      const file = new Blob([data], { type: 'application/pdf' });
-      const fileURL = window.URL.createObjectURL(file);
-      window.open(fileURL); 
-    },
-    error: (err) => {
-      console.error('Error downloading employee report:', err);
-    }
-  });
-}
+  getAllEmployeesReport(format: string): void {
+    this.empService.allEmployeesReport(format).subscribe({
+      next: (data: Blob) => {
+        const file = new Blob([data], { type: 'application/pdf' });
+        const fileURL = window.URL.createObjectURL(file);
+        window.open(fileURL);
+      },
+      error: (err) => console.error('Error downloading report:', err)
+    });
+  }
 
-
-
-
-
+  getEmployeeReportById(id: string, format: string): void {
+    this.empService.employeeReportById(id, format).subscribe({
+      next: (data: Blob) => {
+        const file = new Blob([data], { type: 'application/pdf' });
+        const fileURL = window.URL.createObjectURL(file);
+        window.open(fileURL);
+      },
+      error: (err) => console.error('Error downloading employee report:', err)
+    });
+  }
 }
