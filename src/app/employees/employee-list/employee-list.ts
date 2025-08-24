@@ -11,6 +11,8 @@ import { EmployeeService } from '../../service/employee-service';
 import { Employee } from '../../model/employee';
 import { EmployeeForm } from '../employee-form/employee-form';
 import { DialogModal } from '../dialog-modal/dialog-modal';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-employee-list',
@@ -21,16 +23,26 @@ import { DialogModal } from '../dialog-modal/dialog-modal';
     MatPaginator,
     MatButtonModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormFieldModule,
   ],
   templateUrl: './employee-list.html',
-  styleUrls: ['./employee-list.css']
+  styleUrls: ['./employee-list.css'],
 })
 export class EmployeeList implements OnInit, AfterViewInit {
-
   displayedColumns: string[] = [
-    'name', 'mobile', 'email', 'nid', 'dateOfBirth', 'presentAddress',
-    'permanentAddress', 'gender', 'skills', 'highestEducation', 'profileImage', 'action'
+    'name',
+    'mobile',
+    'email',
+    'nid',
+    'dateOfBirth',
+    'presentAddress',
+    'permanentAddress',
+    'gender',
+    'skills',
+    'highestEducation',
+    'profileImage',
+    'action',
   ];
 
   dataSource = new MatTableDataSource<Employee>([]);
@@ -53,7 +65,7 @@ export class EmployeeList implements OnInit, AfterViewInit {
       name: [''],
       mobile: [''],
       email: [''],
-      subject: ['']
+      subject: [''],
     });
   }
 
@@ -70,35 +82,60 @@ export class EmployeeList implements OnInit, AfterViewInit {
   }
 
   loadEmployees(): void {
-    const { name, mobile, email, subject } = this.searchForm.value;
+    this.search();
 
-    this.empService.searchEmployees(name, mobile, email, subject, this.currentPage, this.pageSize)
-      .subscribe({
-        next: (res) => {
-          this.dataSource.data = res.content.map((emp: any) => ({
-            ...emp,
-            skills: typeof emp.skills === 'string' ? JSON.parse(emp.skills) : emp.skills
-          }));
-          this.totalItems = res.totalElements;
-        },
-        error: (err) => console.error('Error fetching employees:', err)
+    //live search
+    this.searchForm.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe(() => {
+        this.currentPage = 0;
+        this.search();
       });
   }
 
   search(): void {
-    this.currentPage = 0;
-    this.loadEmployees();
+    const { name, mobile, email, subject } = this.searchForm.value;
+    // If all fields empty, send empty string
+    const keyword = [name, mobile, email, subject]
+      .filter((v) => v && v.trim() !== '')
+      .join(' ');
+
+    this.empService
+      .searchEmployees(
+        name,
+        mobile,
+        email,
+        subject,
+        this.currentPage,
+        this.pageSize
+      )
+      .subscribe({
+        next: (res) => {
+          this.dataSource.data = res.content.map((emp: any) => ({
+            ...emp,
+            skills:
+              typeof emp.skills === 'string'
+                ? JSON.parse(emp.skills)
+                : emp.skills,
+          }));
+          this.totalItems = res.totalElements;
+        },
+        error: (err) => console.error('Error fetching employees:', err),
+      });
   }
 
-  goToPage(pageIndex: number): void {
-    this.currentPage = pageIndex;
-    this.loadEmployees();
+  // page change
+  onPageChange(event: PageEvent): void {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.search();
   }
 
+  //open add from
   openEmployeeForm(employee?: Employee): void {
     const dialogRef = this.matDialog.open(EmployeeForm, {
       width: '700px',
-      data: employee || null
+      data: employee || null,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -106,27 +143,30 @@ export class EmployeeList implements OnInit, AfterViewInit {
     });
   }
 
+  //delete
   deleteEmployee(emp: Employee): void {
     const dialogRef = this.matDialog.open(DialogModal, {
       width: '350px',
-      data: emp
+      data: emp,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.empService.deleteEmployee(emp.id).subscribe({
           next: () => this.loadEmployees(),
-          error: (err) => console.error('Error deleting employee:', err)
+          error: (err) => console.error('Error deleting employee:', err),
         });
       }
     });
   }
 
+  //image
   getImageFromBytes(bytes: any): string {
     if (!bytes) return '';
     return typeof bytes === 'string' ? `data:image/png;base64,${bytes}` : '';
   }
 
+  // get all employees report
   getAllEmployeesReport(format: string): void {
     this.empService.allEmployeesReport(format).subscribe({
       next: (data: Blob) => {
@@ -134,10 +174,11 @@ export class EmployeeList implements OnInit, AfterViewInit {
         const fileURL = window.URL.createObjectURL(file);
         window.open(fileURL);
       },
-      error: (err) => console.error('Error downloading report:', err)
+      error: (err) => console.error('Error downloading report:', err),
     });
   }
 
+  // single employee report
   getEmployeeReportById(id: string, format: string): void {
     this.empService.employeeReportById(id, format).subscribe({
       next: (data: Blob) => {
@@ -145,7 +186,7 @@ export class EmployeeList implements OnInit, AfterViewInit {
         const fileURL = window.URL.createObjectURL(file);
         window.open(fileURL);
       },
-      error: (err) => console.error('Error downloading employee report:', err)
+      error: (err) => console.error('Error downloading employee report:', err),
     });
   }
 }
