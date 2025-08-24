@@ -4,8 +4,8 @@
   margin: 80px auto;
   padding: 30px;
   background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  border-radius: 30px;
+  box-shadow: 0 6px 16px black;
   text-align: center;
   font-family: Arial, sans-serif;
 }
@@ -26,10 +26,10 @@
 
 /* Labels */
 .form-group label {
-  font-weight: 500;
+  font-weight: bold;
   display: block;
   margin-bottom: 6px;
-  color: #444;
+  color:black;
 }
 
 /* Input Fields */

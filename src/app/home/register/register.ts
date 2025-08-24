@@ -22,6 +22,7 @@ import {
 } from '@angular/material/snack-bar';
 import { AuthServiceService } from '../../service/auth-service.service';
 import { usernameValidator } from '../../model/user';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-register',
@@ -35,7 +36,8 @@ import { usernameValidator } from '../../model/user';
     MatToolbarModule,
     MatCardModule,
     MatDialogModule,
-    RouterModule
+    RouterModule,
+    MatIconModule,
   ],
   templateUrl: './register.html',
   styleUrl: './register.css',

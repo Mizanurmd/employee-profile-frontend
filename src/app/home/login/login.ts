@@ -19,18 +19,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthServiceService } from '../../service/auth-service.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     FormsModule,
-
     ReactiveFormsModule,
-    NgIf,
     MatButtonModule,
-
     RouterModule,
+    MatIconModule,
+    NgIf
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',

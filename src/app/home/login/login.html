@@ -1,50 +1,38 @@
 <div class="container">
-  <h2>Login</h2>
+
+  <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: px;">
+    <mat-icon style="color: #64083d; font-weight: bold;">login</mat-icon>
+    <h2 style="margin: 0; color: #6a0938;">Login</h2>
+  </div>
+
+  <br />
+
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <div class="form-group">
       <label for="username">User Email</label>
-      <input
-        id="username"
-        formControlName="username"
-        type="text"
-        class="form-control"
-      />
-      <div
-        *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
-      >
+      <input id="username" formControlName="username" type="text" class="form-control" placeholder="Enter Email" />
+      <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
         <small class="text-danger">Username is required.</small>
       </div>
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input
-        id="password"
-        formControlName="password"
-        type="password"
-        class="form-control"
-      />
-      <div
-        *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-      >
+      <input id="password" formControlName="password" type="password" class="form-control"
+        placeholder="Enter Password" />
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
         <small class="text-danger">Password is required.</small>
       </div>
     </div>
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="loginForm.invalid"
-    >
-      Login
+    <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center"
+      [disabled]="loginForm.invalid" style="gap: 6px;">
+      <mat-icon style="color: #fff; font-weight: bold;">login</mat-icon>
+      <span style="font-weight: bold;">Login</span>
     </button>
+
     <div *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</div>
   </form>
   <div class="footer">
-    <a
-      mat-button
-      routerLink="/register"
-      class="link-success"
-      style="font-weight: bold"
-      >Don't your registration?Click for Register</a
-    >
+    <a mat-button routerLink="/register" class="link-success" style="font-weight: bold">Registration? or Click for
+      Registeration</a>
   </div>
 </div>
