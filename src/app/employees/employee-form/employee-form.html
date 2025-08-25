@@ -1,38 +1,41 @@
-<div
-  class="container"
-  style="max-height: 80vh; overflow-y: auto; padding: 16px"
->
-  <div align="right">
-    <div>
-      <button
-        mat-raised-button
-        class="btn btn-danger"
-        type="button"
-        (click)="onNoClick()"
-      >
-        &times;
-      </button>
-    </div>
-    <h1 style="text-align: center; color: blue; margin-bottom: 5px;">EMPLOYEE FORM</h1>
+<div class="mat-elevation-z8">
+  <!-- Close button -->
+  <div style="text-align: right; font-weight: bold">
+    <button mat-raised-button color="warn" type="button" (click)="onNoClick()">
+      &times;
+    </button>
   </div>
 
-  <p *ngIf="errorText" class="error-message">{{errorText}}</p>
+  <!-- Form Title -->
+  <h1 class="form-title">EMPLOYEE FORM</h1>
+
+  <!-- Global error -->
+  <p *ngIf="errorText" class="error-message">{{ errorText }}</p>
 
   <form [formGroup]="employeeForm" (ngSubmit)="submitForm()">
-    <div class="card p-5 mt-2">
-      <mat-form-field appearance="outline" style="flex: 1; display: none;">
+    <div class="employee-card">
+      <!-- Hidden ID field -->
+      <mat-form-field appearance="outline" style="display: none">
         <mat-label>Id</mat-label>
-        <input matInput placeholder="id" formControlName="id" readonly />
+        <input matInput formControlName="id" readonly />
       </mat-form-field>
 
       <!-- Name & Mobile -->
-      <div style="display: flex; gap: 16px">
-        <mat-form-field appearance="outline" style="flex: 1">
+      <div class="form-row">
+        <mat-form-field appearance="outline">
           <mat-label>Employee Name</mat-label>
           <input matInput placeholder="Employee Name" formControlName="name" />
+          <mat-error
+            *ngIf="employeeForm.get('name')?.touched &&
+            (employeeForm.get('name')?.hasError('required') ||
+             employeeForm.get('name')?.hasError('minlength') ||
+             employeeForm.get('name')?.hasError('maxlength'))"
+          >
+            User name must be between 3 and 100 characters
+          </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" style="flex: 1">
+        <mat-form-field appearance="outline">
           <mat-label>Mobile</mat-label>
           <input
             matInput
@@ -40,11 +43,9 @@
             formControlName="mobile"
             type="text"
           />
-
-  
-          <!-- Only numbers -->
           <mat-error
-            *ngIf="employeeForm.get('mobile')?.touched && employeeForm.get('mobile')?.hasError('pattern')"
+            *ngIf="employeeForm.get('mobile')?.touched &&
+            employeeForm.get('mobile')?.hasError('pattern')"
           >
             Only numbers & 11 digits
           </mat-error>
@@ -52,13 +53,19 @@
       </div>
 
       <!-- Email & NID -->
-      <div style="display: flex; gap: 16px">
-        <mat-form-field appearance="outline" style="flex: 1">
+      <div class="form-row">
+        <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input matInput placeholder="Email" formControlName="email" />
+          <mat-error
+            *ngIf="employeeForm.get('email')?.touched &&
+            employeeForm.get('email')?.hasError('pattern')"
+          >
+            Please enter a valid email
+          </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" style="flex: 1">
+        <mat-form-field appearance="outline">
           <mat-label>NID</mat-label>
           <input
             matInput
@@ -66,48 +73,57 @@
             formControlName="nid"
             type="text"
           />
-
-          <!-- Only numbers -->
           <mat-error
-            *ngIf="employeeForm.get('nid')?.touched && employeeForm.get('nid')?.hasError('pattern')"
+            *ngIf="employeeForm.get('nid')?.touched &&
+            employeeForm.get('nid')?.hasError('pattern')"
           >
-           Only numbers & must be either 10 or 17 digits
+            Only numbers & must be 10 or 17 digits
           </mat-error>
         </mat-form-field>
       </div>
 
       <!-- Present & Permanent Address -->
-      <div style="display: flex; gap: 16px; flex-wrap: wrap">
-        <div style="flex: 1">
-          <mat-form-field appearance="outline" style="width: 100%">
-            <mat-label>Present Address</mat-label>
-            <input
-              matInput
-              placeholder="Present Address"
-              formControlName="presentAddress"
-            />
-          </mat-form-field>
-        </div>
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Present Address</mat-label>
+          <input
+            matInput
+            placeholder="Present Address"
+            formControlName="presentAddress"
+          />
 
-        <div style="flex: 1">
-          <mat-form-field appearance="outline" style="width: 100%">
-            <mat-label>Permanent Address</mat-label>
-            <input
-              matInput
-              placeholder="Permanent Address"
-              formControlName="permanentAddress"
-            />
-          </mat-form-field>
-        </div>
+          <mat-error
+            *ngIf="employeeForm.get('presentAddress')?.touched &&
+            (employeeForm.get('presentAddress')?.hasError('required') ||
+             employeeForm.get('presentAddress')?.hasError('minlength') ||
+             employeeForm.get('presentAddress')?.hasError('maxlength'))"
+          >
+            Present Address must be between 3 and 200 characters
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Permanent Address</mat-label>
+          <input
+            matInput
+            placeholder="Permanent Address"
+            formControlName="permanentAddress"
+          />
+
+          <mat-error
+            *ngIf="employeeForm.get('permanentAddress')?.touched &&
+            (employeeForm.get('permanentAddress')?.hasError('required') ||
+            employeeForm.get('permanentAddress')?.hasError('minlength') ||
+             employeeForm.get('permanentAddress')?.hasError('maxlength'))"
+          >
+            Permanet Address must be between 3 and 200 characters
+          </mat-error>
+        </mat-form-field>
       </div>
 
       <!-- Birth Date & Gender -->
-      <!-- Birth Date & Gender -->
-      <div
-        style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center"
-      >
-        <!-- Birth Date -->
-        <mat-form-field appearance="outline" style="flex: 1">
+      <div class="form-row" style="align-items: center">
+        <mat-form-field appearance="outline">
           <mat-label>Birth Date*</mat-label>
           <input
             matInput
@@ -119,7 +135,6 @@
             [for]="picker1"
           ></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
-
           <mat-error
             *ngIf="employeeForm.get('dateOfBirth')?.hasError('required')"
           >
@@ -132,23 +147,14 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- Gender -->
         <div
-          style="
-            flex: 1 1 0;
-            min-width: 0;
-            display: flex;
-            align-items: center;
-            gap: 2px;
-            flex-wrap: wrap;
-          "
+          style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap"
+          class="gender"
         >
-          <label style="margin: 0; white-space: nowrap"
-            ><strong>Gender:</strong></label
-          >
+          <label class="section-label">Gender:</label>
           <mat-radio-group
             formControlName="gender"
-            style="display: flex; gap: 5px"
+            style="display: flex; gap: 10px"
           >
             <mat-radio-button value="Male">Male</mat-radio-button>
             <mat-radio-button value="Female">Female</mat-radio-button>
@@ -158,31 +164,19 @@
       </div>
 
       <!-- Education & Skills -->
-      <div
-        style="
-          display: flex;
-          gap: 16px;
-          align-items: flex-start;
-          flex-wrap: wrap;
-          margin-top: 15px;
-        "
-      >
-        <!-- Education Dropdown -->
+      <div class="form-row" style="align-items: flex-start">
         <div
           style="
-            flex: 1 1 0;
-            min-width: 0;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            flex: 1;
+            min-width: 250px;
           "
+          class="education"
         >
-          <label style="margin: 0"><strong>Education:</strong></label>
-          <select
-            id="highestEducation"
-            class="form-control"
-            formControlName="highestEducation"
-          >
+          <label class="section-label">Education:</label>
+          <select class="form-control" formControlName="highestEducation">
             <option value="">Select option</option>
             <option *ngFor="let edu of educationOptions" [value]="edu">
               {{ edu }}
@@ -190,54 +184,39 @@
           </select>
         </div>
 
-        <!-- Skills Checkboxes -->
-        <div
-          style="
-            flex: 1 1 0;
-            min-width: 0;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-          "
-        >
-          <label style="margin: 0"><strong>Skills:</strong></label>
-          <div
-            *ngFor="let skill of skillOptions"
-            style="display: flex; align-items: center; gap: 4px"
-          >
-            <input
-              type="checkbox"
-              [value]="skill"
-              (change)="onSkillChange($event)"
-              [checked]="employeeForm.value.skills?.includes(skill)"
-            />
-            <span>{{ skill }}</span>
+        <div class="skills-container">
+          <label class="section-label">Skills:</label>
+          <div class="skills">
+            <div *ngFor="let skill of skillOptions">
+              <input
+                type="checkbox"
+                [value]="skill"
+                (change)="onSkillChange($event)"
+                [checked]="employeeForm.value.skills?.includes(skill)"
+              />
+              <span>{{ skill }}</span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Profile Image -->
-      <img *ngIf="imagePreview" [src]="imagePreview" width="100" height="100" />
-      <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 15px">
-        <div style="flex: 1; display: flex; align-items: center; gap: 8px">
-          <label style="margin: 0">Profile Image:</label>
-          <input type="file" (change)="onProfileImageChange($event)" />
-          <span *ngIf="employeeForm.value.profileImage">
-            {{ employeeForm.value.profileImage.name }}
-          </span>
-        </div>
+      <div
+        class="form-row"
+        style="align-items: center; margin-top: 10px; margin-bottom: 20px"
+      >
+        <label class="section-label">Profile Image:</label>
+        <input type="file" (change)="onProfileImageChange($event)" />
+        <span *ngIf="employeeForm.value.profileImage"
+          >{{ employeeForm.value.profileImage.name }}</span
+        >
       </div>
 
+      <img *ngIf="imagePreview" [src]="imagePreview" class="profile-preview" />
+
       <!-- Submit Button -->
-      <div class="text-center mt-3">
-        <button
-          mat-raised-button
-          color="primary"
-          style="margin-left: 10px"
-          class="m-2"
-          type="submit"
-        >
+      <div style="text-align: center; margin-top: 15px">
+        <button mat-raised-button color="primary" type="submit">
           {{ data ? 'Update' : 'Save' }}
         </button>
       </div>

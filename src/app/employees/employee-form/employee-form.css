@@ -1,0 +1,115 @@
+/* Container */
+.mat-elevation-z8 {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 16px;
+  background: #f9f9f9;
+}
+
+/* Card styling */
+.employee-card {
+  padding: 20px;
+  margin-top: 10px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* Flex rows for inputs */
+.form-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Each field flexes equally */
+.form-row > * {
+  flex: 1;
+  min-width: 250px; /* prevents shrinking too much */
+}
+
+/* Section labels */
+.section-label {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* Form title */
+.form-title {
+  text-align: center;
+  color: blue;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Add spacing below each mat-form-field */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+/* Optional: extra spacing for mat-error */
+mat-error {
+  font-size: 13px;
+}
+
+.gender {
+  width: 100%;
+  margin-bottom: 16px;
+}
+.education {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.skills-container {
+  display: flex;
+  align-items: flex-start; /* label aligned with top row of checkboxes */
+  gap: 8px; /* reduce gap between label and checkboxes */
+  flex-wrap: wrap;
+}
+
+.skills-container .section-label {
+  width: 100px;
+  font-weight: bold;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skills > div {
+  flex: 0 0 48%; 
+  display: flex;
+  align-items: center;
+  gap: 4px; 
+  margin-bottom: 20px;
+}
+
+
+/* Profile image preview */
+.profile-preview {
+  display: block;
+  margin-top: 10px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+}

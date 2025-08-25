@@ -14,7 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { EmployeeService } from '../../service/employee-service';
@@ -80,35 +80,63 @@ export class EmployeeForm implements OnInit {
   }
 
   ngOnInit(): void {
-  this.employeeForm = this.fb.group({
-    id: [{ value: '', disabled: true }],
-    name: ['', Validators.required],
-    mobile: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
-    email: ['', [Validators.required, Validators.email]],
-    nid: ['', [Validators.required, Validators.pattern(/^\d{10}$|^\d{17}$/)]],
-    dateOfBirth: ['', [Validators.required, this.pastDateValidator]],
-    presentAddress: [''],
-    permanentAddress: [''],
-    gender: ['', Validators.required],
-    skills: [[]],
-    highestEducation: ['', Validators.required],
-    profileImage: [null],
-  });
-
-  // Only patch form if editing (data has an ID)
-  if (this.data && this.data.id) {
-    const {dateOfBirth, ...rest } = this.data;
-    this.employeeForm.patchValue({
-      ...rest,
-      dateOfBirth: new Date(dateOfBirth),
+    this.employeeForm = this.fb.group({
+      id: [{ value: '', disabled: true }],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(200),
+        ],
+      ],
+      mobile: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'
+          ),
+        ],
+      ],
+      nid: ['', [Validators.required, Validators.pattern(/^\d{10}$|^\d{17}$/)]],
+      dateOfBirth: ['', [Validators.required, this.pastDateValidator]],
+      presentAddress: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(200),
+        ],
+      ],
+      permanentAddress: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(200),
+        ],
+      ],
+      gender: ['', Validators.required],
+      skills: [[]],
+      highestEducation: ['', Validators.required],
+      profileImage: [null],
     });
 
-    if (this.data.profileImage) {
-      this.imagePreview = this.getImageFromBytes(this.data.profileImage);
+    // Only patch form if editing (data has an ID)
+    if (this.data && this.data.id) {
+      const { dateOfBirth, ...rest } = this.data;
+      this.employeeForm.patchValue({
+        ...rest,
+        dateOfBirth: new Date(dateOfBirth),
+      });
+
+      if (this.data.profileImage) {
+        this.imagePreview = this.getImageFromBytes(this.data.profileImage);
+      }
     }
   }
-}
-
 
   onSkillChange(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -128,7 +156,9 @@ export class EmployeeForm implements OnInit {
   getImageFromBytes(bytes: number[] | string | null | undefined): string {
     if (!bytes) return '';
     if (typeof bytes === 'string') return 'data:image/png;base64,' + bytes;
-    const binary = (bytes as number[]).map((b) => String.fromCharCode(b)).join('');
+    const binary = (bytes as number[])
+      .map((b) => String.fromCharCode(b))
+      .join('');
     return 'data:image/png;base64,' + btoa(binary);
   }
 
@@ -160,57 +190,53 @@ export class EmployeeForm implements OnInit {
     });
   }
 
-  
-submitForm(): void {
-  if (!this.employeeForm.valid) {
-    this.openSnackBar(
-      'Form is invalid. Please fill all required fields correctly.',
-      'OK'
-    );
-    return;
-  }
-
-  // Get raw form data (including disabled id)
-  const employee: any = this.employeeForm.getRawValue();
-
-if (this.data && this.data.id) {
-  // UPDATE
-  const employee: any = this.employeeForm.getRawValue();
-  this.empServ.updateEmployee(this.data.id, employee).subscribe({
-    next: (updatedEmployee) => {
+  submitForm(): void {
+    if (!this.employeeForm.valid) {
       this.openSnackBar(
-        `Employee updated successfully. ID: ${updatedEmployee.id}`,
+        'Form is invalid. Please fill all required fields correctly.',
         'OK'
       );
-      this.matDialRef.close(true);
-    },
-    error: (err) => {
-      console.error('Update Error:', err);
-      this.openSnackBar('Failed to update employee.', 'OK');
-    },
-  });
-}
- else {
-    // CREATE new employee
-    delete employee.id; // ensure ID is not sent
-    this.empServ.createEmployee(employee).subscribe({
-      next: (createdEmployee) => {
-        this.employeeForm.patchValue({ id: createdEmployee.id });
-        this.openSnackBar(
-          `Employee added successfully. ID: ${createdEmployee.id}`,
-          'OK'
-        );
-        this.matDialRef.close(true);
-      },
-      error: (err) => {
-        console.error('Create Error:', err);
-        this.openSnackBar('Failed to add employee.', 'OK');
-      },
-    });
+      return;
+    }
+
+    // Get raw form data (including disabled id)
+    const employee: any = this.employeeForm.getRawValue();
+
+    if (this.data && this.data.id) {
+      // UPDATE
+      const employee: any = this.employeeForm.getRawValue();
+      this.empServ.updateEmployee(this.data.id, employee).subscribe({
+        next: (updatedEmployee) => {
+          this.openSnackBar(
+            `Employee updated successfully. ID: ${updatedEmployee.id}`,
+            'OK'
+          );
+          this.matDialRef.close(true);
+        },
+        error: (err) => {
+          console.error('Update Error:', err);
+          this.openSnackBar('Failed to update employee.', 'OK');
+        },
+      });
+    } else {
+      // CREATE new employee
+      delete employee.id; // ensure ID is not sent
+      this.empServ.createEmployee(employee).subscribe({
+        next: (createdEmployee) => {
+          this.employeeForm.patchValue({ id: createdEmployee.id });
+          this.openSnackBar(
+            `Employee added successfully. ID: ${createdEmployee.id}`,
+            'OK'
+          );
+          this.matDialRef.close(true);
+        },
+        error: (err) => {
+          console.error('Create Error:', err);
+          this.openSnackBar('Failed to add employee.', 'OK');
+        },
+      });
+    }
   }
-}
-
-
 
   onNoClick(): void {
     this.matDialRef.close();
