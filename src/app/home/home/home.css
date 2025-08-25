@@ -7,9 +7,9 @@ mat-toolbar {
   font-weight: 600;
   font-size: 1.1rem;
   letter-spacing: 0.5px;
-  background: #1976d2;   /* Angular Material primary blue */
+  background: #1976d2;   
   color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: black;
 }
 
 /* Spacer to push items to the right */
@@ -25,16 +25,14 @@ mat-toolbar span:first-child {
 }
 
 
-mat-toolbar a[mat-button]:hover {
-  color: #ffeb3b;   /* highlight on hover */
-}
 
 /* Raised button */
 mat-toolbar button[mat-raised-button] {
   font-weight: 600;
-  border-radius: 6px;
+  border-radius: 15px;
+  color:whitesmoke;
   padding: 4px 14px;
-  background-color: rgb(72, 206, 92);
+  background-color:rgb(96, 11, 11);
 }
 
 /* Responsive tweaks */
