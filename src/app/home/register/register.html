@@ -1,14 +1,24 @@
 <!-- registration.component.html -->
 <div class="container mt-5">
-
-  <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: px;">
-    <mat-icon style="color: #3820ea; font-weight: bold;">people</mat-icon>
-    <h2 style="margin: 0; color: #3820ea;">Register</h2>
+  <div
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-top: px;
+    "
+  >
+    <mat-icon style="color: #3820ea; font-weight: bold">people</mat-icon>
+    <h2 style="margin: 0; color: #3820ea">Register</h2>
   </div>
 
-  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="form-group">
-
-    <div class="form-group">
+  <form
+    [formGroup]="registrationForm"
+    (ngSubmit)="onSubmit()"
+    class="form-group"
+  >
+    <!-- <div class="form-group">
       <label for="name">Name:</label>
       <input id="name" formControlName="name" type="text" class="form-control" placeholder="Enter your name" />
       <div
@@ -16,36 +26,55 @@
         class="text-danger">
         min = 2, max = 100, Name must be between 2 and 100 characters
       </div>
-    </div>
+    </div> -->
 
     <div class="form-group">
       <label for="username">Username:</label>
-      <input id="username" formControlName="username" type="text" class="form-control"
-        placeholder="Enter your username" />
+      <input
+        id="username"
+        formControlName="username"
+        type="text"
+        class="form-control"
+        placeholder="Enter your username"
+      />
       <div
         *ngIf="registrationForm.get('username')?.invalid && (registrationForm.get('username')?.dirty || registrationForm.get('username')?.touched)"
-        class="text-danger">
+        class="text-danger"
+      >
         min = 3, max = 50, Username must be between 3 and 50 characters
       </div>
     </div>
 
     <div class="form-group">
       <label for="email">Email:</label>
-      <input id="email" formControlName="email" type="email" class="form-control" placeholder="Enter your email" />
+      <input
+        id="email"
+        formControlName="email"
+        type="email"
+        class="form-control"
+        placeholder="Enter your email"
+      />
       <div
         *ngIf="registrationForm.get('email')?.invalid && (registrationForm.get('email')?.dirty || registrationForm.get('email')?.touched)"
-        class="text-danger">
+        class="text-danger"
+      >
         A valid email is required.
       </div>
     </div>
 
     <div class="form-group">
       <label for="password">Password:</label>
-      <input id="password" formControlName="password" type="password" class="form-control"
-        placeholder="Enter your password" />
+      <input
+        id="password"
+        formControlName="password"
+        type="password"
+        class="form-control"
+        placeholder="Enter your password"
+      />
       <div
         *ngIf="registrationForm.get('password')?.invalid && (registrationForm.get('password')?.dirty || registrationForm.get('password')?.touched)"
-        class="text-danger">
+        class="text-danger"
+      >
         min = 6, Password must be at least 8 characters long
       </div>
     </div>
@@ -59,8 +88,13 @@
 
     <button type="submit" class="btn btn-primary">Register</button>
   </form>
-  <div class="footer" style="text-align: center;">
-    <a mat-button routerLink="/login" class="link-success" style="font-weight: bold;">Register? Click for Login</a>
+  <div class="footer" style="text-align: center">
+    <a
+      mat-button
+      routerLink="/login"
+      class="link-success"
+      style="font-weight: bold"
+      >Register? Click for Login</a
+    >
   </div>
-
 </div>

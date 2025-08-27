@@ -16,24 +16,24 @@ export class AuthServiceService {
   private baseUrl = 'http://localhost:8081/api/v1/auth';
   constructor(private http: HttpClient, private router: Router) {}
 
+  // Check if email exists (for async validator)
+  checkEmail(email: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${this.baseUrl}/users/exists?email=${email}`
+    );
+  }
   // Register user
   register(user: User): Observable<User> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<User>(`${this.baseUrl}/register`, user, { headers })
-      .pipe(
-        catchError(this.handleError)
-      );
-      
-  }
-
-  checkUsernameExists(email: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/users/exists?username=${email}`);
+    return this.http
+      .post<User>(`${this.baseUrl}/register`, user)
+      .pipe(catchError(this.handleError));
   }
 
   // Login user
   login(email: string, password: string): Observable<any> {
     // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(`${this.baseUrl}/login`, { email, password })
+    return this.http
+      .post<any>(`${this.baseUrl}/login`, { email, password })
       .pipe(
         tap((response) => this.handleLoginSuccess(response)),
         catchError(this.handleError)
@@ -52,7 +52,7 @@ export class AuthServiceService {
   }
 
   // Save JWT tokens in local storage
-   saveTokens(accessToken: string, role:string, refreshToken: string): void {
+  saveTokens(accessToken: string, role: string, refreshToken: string): void {
     localStorage.setItem('access_token', accessToken);
     localStorage.setItem('role', role);
     localStorage.setItem('refresh_token', refreshToken);

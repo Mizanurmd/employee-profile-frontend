@@ -21,8 +21,8 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { AuthServiceService } from '../../service/auth-service.service';
-import { usernameValidator } from '../../model/user';
 import { MatIconModule } from '@angular/material/icon';
+import { emailExistsValidator } from '../../validations/email';
 
 @Component({
   selector: 'app-register',
@@ -54,29 +54,19 @@ export class Register {
     private snackBar: MatSnackBar
   ) {
     this.registrationForm = this.fb.group({
-      name: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(100),
-        ],
-      ],
       username: [
         '',
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(50),
-          ],
-          asyncValidators: [usernameValidator(this.authServ)],
-          updateOn: 'blur', // Validate on blur
-        },
+
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
       ],
       email: [
         '',
         [Validators.required, Validators.email, Validators.maxLength(100)],
+        [emailExistsValidator(this.authServ)],
       ],
       password: [
         '',
@@ -109,23 +99,33 @@ export class Register {
   // ========== Method to openSnackBar end==========
 
   onSubmit(): void {
-    if (this.registrationForm.valid) {
-      const user = this.registrationForm.value;
-      this.authServ.register(user).subscribe({
-        next: (response) => {
-          this.openSnackBar('User registered successfully', 'OK');
-          console.log('User registration is successfully', response);
-          // Navigate to a different route or show a success message
-          this.router.navigate(['/login']);
-        },
-        error: (error) => {
-          this.openSnackBar('Something is wrong.........', 'Try again');
-          console.error('Error registering user', error);
-        },
-      });
-    } else {
-      this.openSnackBar('Registration is not successfull', 'Try again');
-      this.router.navigate(['/register']);
+    const emailControl = this.registrationForm.get('email');
+
+    if (this.registrationForm.invalid || emailControl?.pending) {
+      this.registrationForm.markAllAsTouched();
+      return;
     }
+
+    const user = this.registrationForm.value;
+
+    this.authServ.register(user).subscribe({
+      next: (response: any) => {
+        // If backend returned duplicate email in JSON body
+        if (response.statusCode === 409) {
+          this.openSnackBar('Email is already in use', 'OK');
+          return;
+        }
+
+        // Success case
+        if (response.statusCode === 200) {
+          this.openSnackBar('User registered successfully', 'OK');
+          this.router.navigate(['/login']);
+        }
+      },
+      error: (error) => {
+        this.openSnackBar('Something went wrong', 'Try again');
+        console.error('Error registering user', error);
+      },
+    });
   }
 }

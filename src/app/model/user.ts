@@ -4,11 +4,11 @@ import { AuthServiceService } from "../service/auth-service.service";
 
 export interface User {
   id?: number;
-  name?: string;
   username: string;
   email: string;
   password: string;
   role?: string;
+  statusCode:200;
   
 }
 
@@ -19,11 +19,11 @@ export interface AuthenticationResponse {
 }
 
 // ======usernameValidator function here===============
-export function usernameValidator(authServ: AuthServiceService): AsyncValidatorFn {
-  return (control: AbstractControl): any => {
-    return authServ.checkUsernameExists(control.value).pipe(
-      map(isTaken => (isTaken ? { usernameTaken: true } : null)),
-      catchError(() => of(null))
-    );
-  };
-}
+// export function usernameEmailValidator(authServ: AuthServiceService): AsyncValidatorFn {
+//   return (control: AbstractControl): any => {
+//     return authServ.checkUsernameExists(control.value).pipe(
+//       map(isTaken => (isTaken ? { usernameTaken: true } : null)),
+//       catchError(() => of(null))
+//     );
+//   };
+// }
