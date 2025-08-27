@@ -18,13 +18,16 @@ import {
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
+  role: string | null = null;
   constructor(
     private matDialog: MatDialog,
     private authServ: AuthServiceService,
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.role = this.authServ.getRole();
+  }
 
   openEmployeeForm(): void {
     const dialogRef = this.matDialog.open(EmployeeForm);

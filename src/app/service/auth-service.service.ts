@@ -58,6 +58,10 @@ export class AuthServiceService {
     localStorage.setItem('refresh_token', refreshToken);
   }
 
+  // get role
+  getRole(): string | null {
+    return localStorage.getItem('role');
+  }
   // Retrieve the access token from local storage
   getAccessToken(): string | null {
     return localStorage.getItem('access_token');
