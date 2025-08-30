@@ -1,0 +1,67 @@
+<div class="mat-elevation-z8">
+  <button mat-raised-button>
+    <a routerLink="/home">Back</a>
+  </button>
+  <h1 style="text-align: center; color: royalblue; font-weight: bold;">
+    Teacher List
+  </h1>
+
+  <table mat-table [dataSource]="dataSource" class="full-width-table">
+
+    <!-- Teacher Id Column -->
+    <ng-container matColumnDef="teacherId">
+      <th mat-header-cell *matHeaderCellDef> Teacher ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.teacherId}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Mobile Column -->
+    <ng-container matColumnDef="mobile">
+      <th mat-header-cell *matHeaderCellDef> Mobile </th>
+      <td mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <!-- NID Column -->
+    <ng-container matColumnDef="nid">
+      <th mat-header-cell *matHeaderCellDef> NID </th>
+      <td mat-cell *matCellDef="let element"> {{element.nid}} </td>
+    </ng-container>
+
+    <!-- Date of Birth Column -->
+    <ng-container matColumnDef="dateOfBirth">
+      <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+      <td mat-cell *matCellDef="let element">  </td>
+    </ng-container>
+
+    <!-- Present Address Column -->
+    <ng-container matColumnDef="presentAddress">
+      <th mat-header-cell *matHeaderCellDef> Present Address </th>
+      <td mat-cell *matCellDef="let element"> {{element.presentAddress}} </td>
+    </ng-container>
+
+    <!-- Permanent Address Column -->
+    <ng-container matColumnDef="permanentAddress">
+      <th mat-header-cell *matHeaderCellDef> Permanent Address </th>
+      <td mat-cell *matCellDef="let element"> {{element.permanentAddress}} </td>
+    </ng-container>
+
+    <!-- Header & Row Definitions -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+   <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>

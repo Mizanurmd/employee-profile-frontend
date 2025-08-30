@@ -1,0 +1,14 @@
+/* Raised button */
+button[mat-raised-button] {
+  margin-top: 10px;
+  font-weight: 600;
+  border-radius: 15px;
+  color: whitesmoke;
+  padding: 4px 14px;
+  background-color: rgb(96, 11, 11);
+  text-decoration: none;
+}
+
+table {
+  width: 100%;
+}

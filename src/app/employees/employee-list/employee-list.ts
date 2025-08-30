@@ -83,7 +83,6 @@ export class EmployeeList implements OnInit, AfterViewInit {
 
   loadEmployees(): void {
     this.search();
-
     //live search
     this.searchForm.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())

@@ -1,5 +1,9 @@
 <mat-toolbar color="primary">
   <span>ADDIE SOFTWARE ASSIGNMENT 2025</span>
+  <button mat-raised-button style="margin-left: 15px; font-weight: bold;">
+    <a routerLink="/teacher" style="text-decoration: none;">Teacher</a>
+  </button>
+
   <span class="example-spacer"></span>
   <span style="margin-right: 10px; color: chartreuse;">Role : {{ role }}</span>
   <button mat-raised-button color="warn" (click)="logout()">
