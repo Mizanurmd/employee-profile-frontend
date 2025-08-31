@@ -1,5 +1,6 @@
-<div class="container">
-  <h1 style="text-align: center; margin-top: 10px;margin-bottom: 10px; color: rgb(24, 100, 186)">
+<div class="mat-elevation-z8">
+  <div class="header">
+  <h1>
     EMPLOYEE PROFILE LIST
   </h1>
 
@@ -13,11 +14,16 @@
     (click)="getAllEmployeesReport('pdf')">
     <mat-icon>download</mat-icon>Download PDF
   </button>
+</div>
+  <hr class="divider" />
 
-  <hr />
 
-  <!-- Search Form -->
-  <form [formGroup]="searchForm" (ngSubmit)="search()" class="row g-2 mb-3">
+  <!-- Employee Table -->
+   <div class="table-wrapper">
+      <!-- Search Form -->
+   
+  <div class="container">
+    <form [formGroup]="searchForm" (ngSubmit)="search()" class="row g-2 mb-3">
     <div class="col">
       <input formControlName="name" placeholder="🔍 Search by name" class="form-control" mat-icon="search" />
     </div>
@@ -32,9 +38,9 @@
       <input formControlName="subject" placeholder="🔍 Search by subject" class="form-control" />
     </div>
   </form>
+  </div>
 
-  <!-- Employee Table -->
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" >
     <!-- Columns -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">Name
@@ -130,7 +136,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-
+</div>
   <!-- Paginator -->
   <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageSizeOptions]="[5,10,20]"
     showFirstLastButtons></mat-paginator>

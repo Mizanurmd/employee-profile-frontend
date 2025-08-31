@@ -5,10 +5,11 @@ import { Router, RouterModule } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-teacher-list',
-  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, RouterModule],
+  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, RouterModule, MatIconModule, MatButtonModule],
   templateUrl: './teacher-list.html',
   styleUrl: './teacher-list.css',
 })

@@ -1,3 +1,13 @@
+.back-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  font-weight: bold;
+  margin-top: 10px;
+  color:rgb(50, 50, 194) ;
+}
+
 /* Raised button */
 button[mat-raised-button] {
   margin-top: 10px;
@@ -5,10 +15,16 @@ button[mat-raised-button] {
   border-radius: 15px;
   color: whitesmoke;
   padding: 4px 14px;
-  background-color: rgb(96, 11, 11);
+  background-color: rgb(53, 53, 189);
   text-decoration: none;
 }
 
 table {
   width: 100%;
+}
+
+table th[mat-header-cell] {
+  background-color: black;
+  text-align: center;
+  color: whitesmoke;
 }

@@ -10,10 +10,11 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [MatToolbarModule, EmployeeList, RouterModule],
+  imports: [MatToolbarModule, EmployeeList, RouterModule, NgIf],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -28,6 +29,13 @@ export class Home implements OnInit {
   ngOnInit(): void {
     this.role = this.authServ.getRole();
   }
+
+   isExpanded: boolean = false;
+// toggle menu
+  toggleMenu() {
+    this.isExpanded = !this.isExpanded;
+  }
+
 
   openEmployeeForm(): void {
     const dialogRef = this.matDialog.open(EmployeeForm);

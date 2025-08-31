@@ -1,0 +1,25 @@
+
+.header h1{
+    text-align: center;
+    color: rgb(14, 81, 125);
+    margin-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+.table-wrapper{
+    max-height: 400px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+table {
+  width: 100%;
+}
+/* Divider style */
+.divider {
+  margin-top: 10px;
+  height: 3px;
+  background-color: orange;
+  border: none;
+}
+
+

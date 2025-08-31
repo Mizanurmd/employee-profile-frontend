@@ -1,15 +1,46 @@
-<mat-toolbar color="primary">
-  <span>ADDIE SOFTWARE ASSIGNMENT 2025</span>
-  <button mat-raised-button style="margin-left: 15px; font-weight: bold;">
-    <a routerLink="/teacher" style="text-decoration: none;">Teacher</a>
-  </button>
+<div class="container">
+  <!-- Start Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">DASHBOARD</div>
 
-  <span class="example-spacer"></span>
-  <span style="margin-right: 10px; color: chartreuse;">Role : {{ role }}</span>
-  <button mat-raised-button color="warn" (click)="logout()">
-    Logout
-  </button>
-</mat-toolbar>
-<div>
-  <app-employee-list></app-employee-list>
+    <nav class="menu">
+      <!-- Toggle Menu -->
+      <div>
+        <div (click)="toggleMenu()" class="menu-item">
+          <span>Management</span>
+          <ng-container *ngIf="isExpanded; else collapsed">
+            <i class="pi pi-chevron-down"></i>
+          </ng-container>
+          <ng-template #collapsed>
+            <i class="pi pi-chevron-up"></i>
+          </ng-template>
+        </div>
+        <div *ngIf="isExpanded" class="submenu">
+          <a routerLink="/teacher" class="submenu-item">Teacher</a>
+          <a routerLink="/student" class="submenu-item">Student</a>
+          <a routerLink="/course" class="submenu-item">Course</a>
+        </div>
+      </div>
+
+      <!-- Static Menu -->
+      <a routerLink="/dashboard" class="menu-item">Dashboard</a>
+      <a routerLink="/report" class="menu-item">Reports</a>
+      <a routerLink="/settings" class="menu-item">Settings</a>
+
+      <!-- Logout -->
+      <button class="menu-item btn btn-danger"  (click)="logout()">Logout</button>
+    </nav>
+  </aside>
+
+  <!-- End Sidebar -->
+<div style="background-color: #1e0f6a;"></div>
+  <!-- Start Main content -->
+  <main class="main">
+  
+      <app-employee-list></app-employee-list>
+
+    <hr class="divider" />
+  </main>
+
+  <!-- End Main content -->
 </div>

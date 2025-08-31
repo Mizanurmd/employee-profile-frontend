@@ -1,48 +1,112 @@
-/* Toolbar container */
-mat-toolbar {
+/* Reset body margin/padding */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Layout */
+.container {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 0 16px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
-  background: #1976d2;   
-  color: #ffffff;
-  box-shadow: black;
+  min-height: 100vh;
+  min-width: 95%;
+  max-width: 100%;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
 }
 
-/* Spacer to push items to the right */
-.example-spacer {
-  flex: 1 1 auto;
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #1e1e2f;
+  color: white;
+  flex-shrink: 0;
 }
 
-/* Dashboard title */
-mat-toolbar span:first-child {
-  font-size: 1.25rem;
+.sidebar-header {
+  padding: 20px;
+  font-size: 20px;
   font-weight: bold;
-  text-transform: uppercase;
+  border-bottom: 1px solid #444;
+  text-align: center;
 }
 
-
-
-/* Raised button */
-mat-toolbar button[mat-raised-button] {
-  font-weight: 600;
-  border-radius: 15px;
-  color:whitesmoke;
-  padding: 4px 14px;
-  background-color:rgb(96, 11, 11);
+/* Menu */
+.menu {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
-/* Responsive tweaks */
-@media (max-width: 768px) {
-  mat-toolbar {
-    flex-wrap: wrap;
-    font-size: 1rem;
-  }
-  mat-toolbar a[mat-button],
-  mat-toolbar button[mat-raised-button] {
-    margin-top: 8px;
-  }
+.menu-item {
+  margin-left: 15px;
+  margin-top: 5px;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.menu-item:hover {
+  background-color: #333;
+}
+
+/* Submenu */
+.submenu {
+  margin-left: 15px;
+  margin-top: 5px;
+  display: block;
+  font-size: 14px;
+  padding: 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.submenu-item {
+  display: block;
+  font-size: 14px;
+  padding: 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.submenu-item:hover {
+ background-color: rgb(10, 60, 118);
+}
+
+.menu-item {
+  display: block;
+  font-size: 14px;
+  padding: 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  border-radius: 8px;
+}
+.menu-item:hover {
+  background-color: rgb(10, 60, 118);
+}
+
+/* Main content */
+.main {
+  flex: 1; /* take remaining space next to sidebar */
+  margin-right: 0;
+  padding: 15px 0 10px 10px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: hidden; /* prevent horizontal scroll on main itself */
+}
+
+/* Divider style */
+.divider {
+  margin-top: 10px;
+  height: 3px;
+  background-color: orange;
+  border: none;
 }

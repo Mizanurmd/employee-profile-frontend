@@ -1,13 +1,30 @@
-<div class="mat-elevation-z8">
-  <button mat-raised-button>
-    <a routerLink="/home">Back</a>
-  </button>
-  <h1 style="text-align: center; color: royalblue; font-weight: bold;">
+<div class="container mat-elevation-z8">
+  
+    <a routerLink="/home" class="back-link">
+  <mat-icon>arrow_back</mat-icon>Back
+</a>
+
+
+
+  <div>
+    <!-- Start title -->
+    <div class="title">
+      <h1 style="text-align: center; color: royalblue; font-weight: bold;">
     Teacher List
   </h1>
+  <!-- Add Button -->
+  <button mat-raised-button style="margin-bottom: 10px">
+    <mat-icon>add</mat-icon>
+    ADD TEACHER
+  </button>
+  <!-- Download  Button -->
+  <button mat-raised-button style="margin-bottom: 10px; margin-left: 8px">
+    <mat-icon>download</mat-icon>Download PDF
+  </button>
+  </div>
+  <!-- End title -->
 
-  <table mat-table [dataSource]="dataSource" class="full-width-table">
-
+    <table mat-table [dataSource]="dataSource" class="full-width-table">
     <!-- Teacher Id Column -->
     <ng-container matColumnDef="teacherId">
       <th mat-header-cell *matHeaderCellDef> Teacher ID </th>
@@ -64,4 +81,8 @@
                  showFirstLastButtons
                  aria-label="Select page of periodic elements">
   </mat-paginator>
+
+  </div>
+
+
 </div>
