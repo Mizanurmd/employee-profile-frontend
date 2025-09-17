@@ -18,7 +18,7 @@ export class TeacherService {
     sortBy: string,
     sortDir: string
   ): Observable<TeacherPage> {
-     const url = `${this.baseURl}/all`;
+    const url = `${this.baseURl}/all`;
     const token = localStorage.getItem('access_token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
@@ -30,5 +30,15 @@ export class TeacherService {
       .set('sortDir', sortDir);
 
     return this.http.get<TeacherPage>(url, { headers, params });
+  }
+
+  //save teacher
+  saveTeacher(formData:FormData): Observable<Teacher> {
+    const url = `${this.baseURl}/save`;
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<Teacher>(url, formData, { headers });
   }
 }

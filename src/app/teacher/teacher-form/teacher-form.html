@@ -18,7 +18,7 @@
     </h1>
 
     <div class="form">
-      <form action="">
+      <form [formGroup]="teacher" (ngSubmit)="onSave()">
         <!-- Start Name & Gender fields -->
         <div class="container">
           <!-- Name Field -->
@@ -26,21 +26,22 @@
             <mat-label>Name</mat-label>
             <input
               matInput
-              #input
+              formControlName="name"
               maxlength="50"
               placeholder="Enter your name"
-              (input)="onInput($event)"
             />
-            <mat-hint align="end">{{value().length}}/50</mat-hint>
+            <mat-hint align="end">
+              {{ teacher.get('name')?.value?.length || 0 }}/50
+            </mat-hint>
           </mat-form-field>
 
           <!-- Gender field -->
           <mat-form-field appearance="outline">
             <mat-label>Select Gender</mat-label>
-            <mat-select>
-              <mat-option value="male">MALE</mat-option>
-              <mat-option value="female">FEMALE</mat-option>
-              <mat-option value="other">OTHER</mat-option>
+            <mat-select formControlName="gender">
+              <mat-option value="MALE">MALE</mat-option>
+              <mat-option value="FEMALE">FEMALE</mat-option>
+              <mat-option value="OTHER">OTHER</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -51,20 +52,20 @@
           <!-- Skills Field -->
           <mat-form-field appearance="outline">
             <mat-label>Select Skills</mat-label>
-            <mat-select multiple>
-              <mat-option *ngFor="let sk of skillList" [value]="sk"
-                >{{sk}}</mat-option
-              >
+            <mat-select multiple formControlName="skills">
+              <mat-option *ngFor="let sk of skillList" [value]="sk">
+                {{ sk }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
 
           <!-- Education field -->
           <mat-form-field appearance="outline">
-            <mat-label>Select Hieghest Education</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let edu of educationList" [value]="edu"
-                >{{edu}}</mat-option
-              >
+            <mat-label>Select Highest Education</mat-label>
+            <mat-select formControlName="highestEducation">
+              <mat-option *ngFor="let edu of educationList" [value]="edu">
+                {{ edu }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -77,18 +78,23 @@
             <mat-label>Mobile</mat-label>
             <input
               matInput
-              #input
+              formControlName="mobile"
               maxlength="11"
               placeholder="01608200000"
-              (input)="onInput($event)"
             />
-            <mat-hint align="end">{{value().length}}/11</mat-hint>
+            <mat-hint align="end">
+              {{ teacher.get('mobile')?.value?.length || 0 }}/11
+            </mat-hint>
           </mat-form-field>
 
           <!-- Email field -->
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
-            <input matInput email placeholder="example@gmail.com" />
+            <input
+              matInput
+              formControlName="email"
+              placeholder="example@gmail.com"
+            />
           </mat-form-field>
         </div>
         <!-- End Mobile & Email fields -->
@@ -100,24 +106,22 @@
             <mat-label>National ID (NID)</mat-label>
             <input
               matInput
-              #input
+              formControlName="nid"
               maxlength="17"
               placeholder="10 or 17 digit NID NO"
-              (input)="onInput($event)"
             />
-            <mat-hint align="end">{{value().length}}/17</mat-hint>
+            <mat-hint align="end">
+              {{ teacher.get('nid')?.value?.length || 0 }}/17
+            </mat-hint>
           </mat-form-field>
 
           <!-- Date of Birth field -->
           <mat-form-field appearance="outline">
             <mat-label>Select Date of Birth</mat-label>
-            <input matInput [matDatepicker]="picker" />
+            <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" />
             <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker=""></mat-datepicker>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
         <!-- End NID & Date of Birth fields -->
@@ -129,45 +133,44 @@
             <mat-label>Present Address</mat-label>
             <textarea
               matInput
-              #input
+              formControlName="presentAddress"
               maxlength="200"
-              placeholder="Enter your name"
-              (input)="onInput($event)"
+              placeholder="Enter your address"
             ></textarea>
-            <mat-hint align="end">{{value().length}}/200</mat-hint>
+            <mat-hint align="end">
+              {{ teacher.get('presentAddress')?.value?.length || 0 }}/200
+            </mat-hint>
           </mat-form-field>
 
           <!-- Permanent Address Field -->
           <mat-form-field appearance="outline" hintLabel="Max 200 characters">
-            <mat-label>Present Address</mat-label>
+            <mat-label>Permanent Address</mat-label>
             <textarea
               matInput
-              #input
+              formControlName="permanentAddress"
               maxlength="200"
-              placeholder="Enter your name"
-              (input)="onInput($event)"
+              placeholder="Enter your address"
             ></textarea>
-            <mat-hint align="end">{{value().length}}/200</mat-hint>
+            <mat-hint align="end">
+              {{ teacher.get('permanentAddress')?.value?.length || 0 }}/200
+            </mat-hint>
           </mat-form-field>
         </div>
-        <!-- End Presnet & Permanent Address fields -->
+        <!-- End Present & Permanent Address fields -->
 
         <!-- Profile Image -->
         <div class="container" style="margin-top: 10px; margin-bottom: 10px">
           <label class="section-label">Profile Image:</label>
-          <input type="file" />
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" />
         </div>
-
-        <!-- End Image fields -->
 
         <!-- Start button -->
         <div class="btnButton" style="text-align: center; font-weight: bold">
-          <button mat-raised-button color="primary">Save</button>
-          <button mat-raised-button color="warn" (click)="onNoClick()">
+          <button mat-raised-button color="primary" type="submit">Save</button>
+          <button mat-raised-button color="warn" type="button" (click)="onNoClick()">
             Cancel
           </button>
         </div>
-        <!-- End button -->
       </form>
     </div>
   </div>
