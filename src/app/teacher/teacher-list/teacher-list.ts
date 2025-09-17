@@ -18,12 +18,16 @@ export class TeacherList implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
     'teacherId',
     'name',
+    'gender',
+    'skills',
+    'highestEducation',
     'mobile',
     'email',
     'nid',
     'dateOfBirth',
     'presentAddress',
     'permanentAddress',
+    'actions',
   ];
   dataSource = new MatTableDataSource<Teacher>([]);
 

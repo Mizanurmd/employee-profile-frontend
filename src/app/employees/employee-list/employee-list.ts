@@ -13,7 +13,7 @@ import { EmployeeForm } from '../employee-form/employee-form';
 import { DialogModal } from '../dialog-modal/dialog-modal';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 @Component({
   selector: 'app-employee-list',
   standalone: true,
@@ -25,6 +25,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatIconModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatProgressBarModule
   ],
   templateUrl: './employee-list.html',
   styleUrls: ['./employee-list.css'],

@@ -19,12 +19,23 @@ button[mat-raised-button] {
   text-decoration: none;
 }
 
-table {
-  width: 100%;
+.table-wrapper {
+  max-height: 400px;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 
-table th[mat-header-cell] {
+table th {
   background-color: black;
   text-align: center;
+  white-space: nowrap;
+  font-weight: bold;
   color: whitesmoke;
+}
+
+table td {
+  border-bottom:1px solid rgb(102, 215, 4);
+  text-align: center;
+  white-space: nowrap;
+  
 }

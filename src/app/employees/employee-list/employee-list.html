@@ -1,143 +1,165 @@
 <div class="mat-elevation-z8">
+   <div class="marquee-container">
+    <div class="marquee-content">
+      Md. Mizanur Rahman(Full Stack Java Developer) Computer Network Systems
+      (CNS) Limited, Dhaka, Bangladesh, at Plot No. 323 and 326, Block E,
+      Bashundhara.
+    </div>
+  </div>
+  
   <div class="header">
-  <h1>
-    EMPLOYEE PROFILE LIST
-  </h1>
+    <h1>EMPLOYEE PROFILE LIST</h1>
 
-  <!-- Add Button -->
-  <button mat-raised-button color="primary" style="margin-bottom: 10px" (click)="openEmployeeForm()">
-    <mat-icon>add</mat-icon>
-    ADD EMPLOYEE
-  </button>
-  <!-- Download  Button -->
-  <button mat-raised-button color="primary" style="margin-bottom: 10px; margin-left: 8px"
-    (click)="getAllEmployeesReport('pdf')">
-    <mat-icon>download</mat-icon>Download PDF
-  </button>
-</div>
+    <!-- Add Button -->
+    <button
+      mat-raised-button
+      color="primary"
+      style="margin-bottom: 10px"
+      (click)="openEmployeeForm()"
+    >
+      <mat-icon>add</mat-icon>
+      ADD EMPLOYEE
+    </button>
+    <!-- Download  Button -->
+    <button
+      mat-raised-button
+      color="primary"
+      style="margin-bottom: 10px; margin-left: 8px"
+      (click)="getAllEmployeesReport('pdf')"
+    >
+      <mat-icon>download</mat-icon>Download PDF
+    </button>
+  </div>
+ 
+  <mat-progress-bar mode="buffer"></mat-progress-bar>
+
   <hr class="divider" />
 
-
   <!-- Employee Table -->
-   <div class="table-wrapper">
-      <!-- Search Form -->
-   
-  <div class="container">
-    <form [formGroup]="searchForm" (ngSubmit)="search()" class="row g-2 mb-3">
-    <div class="col">
-      <input formControlName="name" placeholder="🔍 Search by name" class="form-control" mat-icon="search" />
+  <div class="table-wrapper">
+    <!-- Search Form -->
+
+    <div class="container">
+      <form [formGroup]="searchForm" (ngSubmit)="search()" class="row g-2 mb-3">
+        <div class="col">
+          <input
+            formControlName="name"
+            placeholder="🔍 Search by name"
+            class="form-control"
+            mat-icon="search"
+          />
+        </div>
+
+        <div class="col">
+          <input
+            formControlName="mobile"
+            placeholder="🔍 Search by mobile"
+            class="form-control"
+          />
+        </div>
+        <div class="col">
+          <input
+            formControlName="email"
+            placeholder="🔍 Search by email"
+            class="form-control"
+          />
+        </div>
+        <div class="col">
+          <input
+            formControlName="subject"
+            placeholder="🔍 Search by subject"
+            class="form-control"
+          />
+        </div>
+      </form>
     </div>
 
-    <div class="col">
-      <input formControlName="mobile" placeholder="🔍 Search by mobile" class="form-control" />
-    </div>
-    <div class="col">
-      <input formControlName="email" placeholder="🔍 Search by email" class="form-control" />
-    </div>
-    <div class="col">
-      <input formControlName="subject" placeholder="🔍 Search by subject" class="form-control" />
-    </div>
-  </form>
+    <table mat-table [dataSource]="dataSource">
+      <!-- Columns -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="mobile">
+        <th mat-header-cell *matHeaderCellDef>Mobile</th>
+        <td mat-cell *matCellDef="let element">{{element.mobile}}</td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{element.email}}</td>
+      </ng-container>
+      <ng-container matColumnDef="nid">
+        <th mat-header-cell *matHeaderCellDef>NID</th>
+        <td mat-cell *matCellDef="let element">{{element.nid}}</td>
+      </ng-container>
+      <ng-container matColumnDef="dateOfBirth">
+        <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+        <td mat-cell *matCellDef="let element">{{element.dateOfBirth}}</td>
+      </ng-container>
+      <ng-container matColumnDef="presentAddress">
+        <th mat-header-cell *matHeaderCellDef>Present Address</th>
+        <td mat-cell *matCellDef="let element">{{element.presentAddress}}</td>
+      </ng-container>
+      <ng-container matColumnDef="permanentAddress">
+        <th mat-header-cell *matHeaderCellDef>Permanent Address</th>
+        <td mat-cell *matCellDef="let element">{{element.permanentAddress}}</td>
+      </ng-container>
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef>Gender</th>
+        <td mat-cell *matCellDef="let element">{{element.gender}}</td>
+      </ng-container>
+      <ng-container matColumnDef="skills">
+        <th mat-header-cell *matHeaderCellDef>Skills</th>
+        <td mat-cell *matCellDef="let element">{{element.skills}}</td>
+      </ng-container>
+      <ng-container matColumnDef="highestEducation">
+        <th mat-header-cell *matHeaderCellDef>Education</th>
+        <td mat-cell *matCellDef="let element">{{element.highestEducation}}</td>
+      </ng-container>
+      <ng-container matColumnDef="profileImage">
+        <th mat-header-cell *matHeaderCellDef>Profile</th>
+        <td mat-cell *matCellDef="let element">
+          <img [src]="getImageFromBytes(element.profileImage)" width="50" />
+        </td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="openEmployeeForm(element)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="deleteEmployee(element)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="accent"
+            (click)="getEmployeeReportById(element.id,'pdf')"
+          >
+            <mat-icon>picture_as_pdf</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
   </div>
-
-  <table mat-table [dataSource]="dataSource" >
-    <!-- Columns -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">Name
-      </th>
-      <td mat-cell *matCellDef="let element" style="padding: 12px; border-bottom: 1px solid #ddd;">{{element.name}}</td>
-    </ng-container>
-    <ng-container matColumnDef="mobile">
-      <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">
-        Mobile</th>
-      <td mat-cell *matCellDef="let element" style="padding: 12px; border-bottom: 1px solid #ddd;">
-        {{element.mobile}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">
-        Email</th>
-      <td mat-cell *matCellDef="let element" style="padding: 12px; border-bottom: 1px solid #ddd;">
-        {{element.email}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="nid">
-      <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">NID
-      </th>
-      <td mat-cell *matCellDef="let element" style="padding: 12px; border-bottom: 1px solid #ddd;">{{element.nid}}</td>
-    </ng-container>
-    <ng-container matColumnDef="dateOfBirth">
-      <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">DOB
-      </th>
-      <td mat-cell *matCellDef="let element" style="padding: 12px; border-bottom: 1px solid #ddd;">
-        {{element.dateOfBirth}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="presentAddress">
-      <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">
-        Present Address</th>
-      <td mat-cell *matCellDef="let element" style="padding: 12px; border-bottom: 1px solid #ddd;">
-        {{element.presentAddress}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="permanentAddress">
-      <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">
-        Permanent Address</th>
-      <td mat-cell *matCellDef="let element" style="padding: 12px; border-bottom: 1px solid #ddd;">
-        {{element.permanentAddress}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="gender">
-      <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">
-        Gender</th>
-      <td mat-cell *matCellDef="let element" style="padding: 12px; border-bottom: 1px solid #ddd;">
-        {{element.gender}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="skills">
-      <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">
-        Skills</th>
-      <td mat-cell *matCellDef="let element" style="padding: 12px; border-bottom: 1px solid #ddd;">
-        {{element.skills}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="highestEducation">
-      <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">
-        Education</th>
-      <td mat-cell *matCellDef="let element" style="padding: 12px; border-bottom: 1px solid #ddd;">
-        {{element.highestEducation}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="profileImage">
-      <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">
-        Profile</th>
-      <td mat-cell *matCellDef="let element" style="padding: 12px; border-bottom: 1px solid #ddd;">
-        <img [src]="getImageFromBytes(element.profileImage)" width="50" />
-      </td>
-    </ng-container>
-
-    <!-- Action Column -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef style="background: #000; color: #fff; padding: 12px; font-weight: 600;">
-        Action</th>
-      <td mat-cell *matCellDef="let element" style="padding: 12px; border-bottom: 1px solid #ddd;">
-        <button mat-icon-button color="primary" (click)="openEmployeeForm(element)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="deleteEmployee(element)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button mat-icon-button color="accent" (click)="getEmployeeReportById(element.id,'pdf')">
-          <mat-icon>picture_as_pdf</mat-icon>
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-</div>
   <!-- Paginator -->
-  <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageSizeOptions]="[5,10,20]"
-    showFirstLastButtons></mat-paginator>
+  <mat-paginator
+    [length]="totalItems"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5,10,20]"
+    showFirstLastButtons
+  ></mat-paginator>
 </div>
