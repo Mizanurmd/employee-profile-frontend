@@ -1,0 +1,21 @@
+.form {
+  max-height: 450px;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+mat-form-field {
+  width: 48%;
+  margin-left: 2%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+.btnButton {
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+.btnButton button {
+  margin-left: 8px;
+  border-radius: 15px;
+  font-weight: bold;
+}

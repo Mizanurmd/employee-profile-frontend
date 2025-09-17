@@ -6,10 +6,19 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { TeacherForm } from '../teacher-form/teacher-form';
 
 @Component({
   selector: 'app-teacher-list',
-  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, RouterModule, MatIconModule, MatButtonModule],
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatButtonModule,
+    RouterModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
   templateUrl: './teacher-list.html',
   styleUrl: './teacher-list.css',
 })
@@ -27,6 +36,7 @@ export class TeacherList implements OnInit, AfterViewInit {
     'dateOfBirth',
     'presentAddress',
     'permanentAddress',
+    'profileImagePath',
     'actions',
   ];
   dataSource = new MatTableDataSource<Teacher>([]);
@@ -38,7 +48,11 @@ export class TeacherList implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private teacherServ: TeacherService, private router: Router) {}
+  constructor(
+    private teacherServ: TeacherService,
+    private router: Router,
+    private matDialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.loadAllTeacher();
@@ -47,7 +61,7 @@ export class TeacherList implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-
+  // load all teahcer data
   loadAllTeacher() {
     this.teacherServ
       .getAllTeacher(this.page, this.size, this.sortBy, this.sortDir)
@@ -61,5 +75,17 @@ export class TeacherList implements OnInit, AfterViewInit {
           console.error('Error loading teachers:', err);
         },
       });
+  }
+
+  // Open Add teacher form modal
+  openTeacherAddForm() {
+    const dialogRef = this.matDialog.open(TeacherForm, {
+      width: '750px',
+      height: '600px',
+    });
+
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   if (result === true) this.loadAllTeacher();
+    // });
   }
 }
