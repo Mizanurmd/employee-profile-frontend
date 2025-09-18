@@ -33,7 +33,7 @@ export class TeacherService {
   }
 
   //save teacher
-  saveTeacher(formData:FormData): Observable<Teacher> {
+  saveTeacher(formData: FormData): Observable<Teacher> {
     const url = `${this.baseURl}/save`;
     const token = localStorage.getItem('access_token');
     const headers = new HttpHeaders({

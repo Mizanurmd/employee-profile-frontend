@@ -21,12 +21,12 @@ export interface Teacher {
 }
 
 export interface TeacherRequestDto {
-  id?: number; 
+  id?: number;
   name: string;
   mobile: string;
   email: string;
   nid: string;
-  dateOfBirth: string; 
+  dateOfBirth: string;
   presentAddress?: string;
   permanentAddress?: string;
   gender: Gender;

@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { TeacherForm } from '../teacher-form/teacher-form';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-teacher-list',
@@ -18,6 +19,7 @@ import { TeacherForm } from '../teacher-form/teacher-form';
     RouterModule,
     MatIconModule,
     MatButtonModule,
+    NgIf
   ],
   templateUrl: './teacher-list.html',
   styleUrl: './teacher-list.css',

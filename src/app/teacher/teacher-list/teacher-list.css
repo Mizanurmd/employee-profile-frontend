@@ -5,7 +5,7 @@
   align-items: center;
   font-weight: bold;
   margin-top: 10px;
-  color:rgb(50, 50, 194) ;
+  color: rgb(50, 50, 194);
 }
 
 /* Raised button */
@@ -34,8 +34,7 @@ table th {
 }
 
 table td {
-  border-bottom:1px solid rgb(102, 215, 4);
+  border-bottom: 1px solid rgb(102, 215, 4);
   text-align: center;
   white-space: nowrap;
-  
 }

@@ -118,9 +118,16 @@
           <!-- Date of Birth field -->
           <mat-form-field appearance="outline">
             <mat-label>Select Date of Birth</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" />
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="dateOfBirth"
+            />
             <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
@@ -161,13 +168,31 @@
         <!-- Profile Image -->
         <div class="container" style="margin-top: 10px; margin-bottom: 10px">
           <label class="section-label">Profile Image:</label>
-          <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+          />
+        </div>
+
+        <div class="container">
+          <img
+            *ngIf="imagePreview"
+            [src]="imagePreview"
+            alt="Preview"
+            width="150"
+          />
         </div>
 
         <!-- Start button -->
         <div class="btnButton" style="text-align: center; font-weight: bold">
           <button mat-raised-button color="primary" type="submit">Save</button>
-          <button mat-raised-button color="warn" type="button" (click)="onNoClick()">
+          <button
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="onNoClick()"
+          >
             Cancel
           </button>
         </div>
