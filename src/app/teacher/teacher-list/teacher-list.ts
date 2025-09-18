@@ -9,6 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { TeacherForm } from '../teacher-form/teacher-form';
 import { NgIf } from '@angular/common';
+import { TeacherView } from '../teacher-view/teacher-view';
+import { ImageView } from '../image-view/image-view';
 
 @Component({
   selector: 'app-teacher-list',
@@ -19,13 +21,14 @@ import { NgIf } from '@angular/common';
     RouterModule,
     MatIconModule,
     MatButtonModule,
-    NgIf
+    NgIf,
   ],
   templateUrl: './teacher-list.html',
   styleUrl: './teacher-list.css',
 })
 export class TeacherList implements OnInit, AfterViewInit {
   teachers: Teacher[] = [];
+  teacherById: Teacher | null = null;
   displayedColumns: string[] = [
     'teacherId',
     'name',
@@ -86,8 +89,51 @@ export class TeacherList implements OnInit, AfterViewInit {
       height: '600px',
     });
 
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result === true) this.loadAllTeacher();
-    // });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) this.loadAllTeacher();
+    });
+  }
+
+  // Get Teahcer by id
+  getTeacherById(id: number) {
+    this.teacherServ.teacherById(id).subscribe({
+      next: (response) => {
+        this.teacherById = response;
+        console.log('Get Teacher by Id :: ', this.teacherById);
+        //Open dialog after fetching data
+        this.openTeacherView(this.teacherById);
+      },
+      error: (err) => {
+        console.error('Error fetching teacher:', err);
+      },
+    });
+  }
+  // Open Teacher View page
+  openTeacherView(teacher: Teacher) {
+    const dialogRef = this.matDialog.open(TeacherView, {
+      data: this.teacherById,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.loadAllTeacher();
+      }
+    });
+  }
+
+  // Only Image view
+  openOnlyImageView(element:any) {
+    const dialogRef = this.matDialog.open(ImageView, {
+      data: {
+        imageUrl: 'http://localhost:8081' + element.profileImagePath,
+      },
+      width: '600px',
+      height:'500px',
+      panelClass: 'custom-dialog-container'
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.loadAllTeacher();
+      }
+    });
   }
 }

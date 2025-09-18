@@ -1,0 +1,78 @@
+<div class="teacher-view container">
+<div style="text-align: right;">
+    <button mat-raised-button color="warn" (click)="onClick()">&times;</button>
+</div>
+    <div>
+        <img
+        *ngIf="teacher.profileImagePath"
+        [src]="'http://localhost:8081' + teacher.profileImagePath"
+        alt="Profile"
+        width="100"
+      />
+    </div>
+ <!-- Title -->
+  <h2 class="teacher-title">Teacher Details </h2>
+
+  <div class="row">
+    <div class="col-md-5"><p><span>Name :</span> {{teacher.name}}</p></div>
+    <div class="col-md-7"><p><span>Email :</span> {{teacher.email}}</p></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5"><p><span>Mobile :</span> {{teacher.mobile}}</p></div>
+    <div class="col-md-7"><p><span>Date Of Birth :</span> {{teacher.dateOfBirth}}</p></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5"><p><span>Gender :</span> {{teacher.gender}}</p></div>
+    <div class="col-md-7"><p><span>Education :</span> {{teacher.highestEducation}}</p></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5"><p><span>Skills :</span> {{teacher.skills}}</p></div>
+    <div class="col-md-7"><p><span>National Id (NID) :</span> {{teacher.nid}}</p></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5"><p><span>Present Address :</span> {{teacher.presentAddress}}</p></div>
+    <div class="col-md-7"><p><span>Permanent Address :</span> {{teacher.permanentAddress}}</p></div>
+  </div>
+
+</div>
+
+  <!-- <div class="row col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
+    <div class="col-md-9">
+       <div class="row col-md-12"></div>
+    </div>
+
+     <div class="col-md-3">
+        <h1>Photo</h1>
+      
+    </div>
+  <hr>
+  
+     <div class="col-md-12">
+        <div class="header" style="background-color: blue;"><h1 style="text-align: center;color:black">Teacher Details Information</h1></div>
+    
+        <div class="row col-md-12"></div>
+        <div class="col-md-6"><p><span>Name :</span> {{teacher.name}}</p></div>
+        <div class="col-md-6"><p><span>Email :</span> {{teacher.email}}</p></div>
+     </div>
+
+    </div>
+
+    <div class="footer"></div> -->
+
+
+
+
+
+ <!-- <div class="col-md-6"><p><span>Mobile :</span> {{teacher.mobile}}</p></div>
+        <div class="col-md-6"><p><span>Date Of Birth :</span> {{teacher.dateOfBirth}}</p></div>
+        <div class="col-md-6"><p><span>Gender :</span> {{teacher.gender}}</p></div>
+        <div class="col-md-6"><p><span>Education :</span> {{teacher.highestEducation}}</p></div>
+        <div class="col-md-6"><p><span>Skills :</span> {{teacher.skills}}</p></div>
+        <div class="col-md-6"><p><span>National Id (NID) :</span> {{teacher.nid}}</p></div>
+        <div class="col-md-6"><p><span>Presnet Address :</span> {{teacher.presentAddress}}</p></div>
+        <div class="col-md-6"><p><span>Permanent Address :</span> {{teacher.permanentAddress}}</p></div>
+        -->

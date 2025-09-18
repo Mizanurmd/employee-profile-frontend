@@ -1,0 +1,49 @@
+.teacher-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: hsl(114, 73%, 22%);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #3e0709; /* blue underline */
+}
+
+.teacher-view {
+  max-width: 850px;
+  overflow-y: auto;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px 30px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 10px auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.teacher-view .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.teacher-view p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #47032f;
+}
+
+.teacher-view span {
+  font-weight: bold;
+  color: #47032f; /* Bootstrap primary color */
+  margin-right: 6px;
+}
+
+.teacher-view .col-md-5,
+.teacher-view .col-md-7 {
+  flex: 1;
+  text-align: left;
+}

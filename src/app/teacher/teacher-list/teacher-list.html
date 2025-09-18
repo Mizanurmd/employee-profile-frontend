@@ -100,7 +100,9 @@
             [src]="'http://localhost:8081' + element.profileImagePath"
             alt="Profile"
             width="50"
+            (click)="openOnlyImageView(element)"
           />
+
         </td>
       </ng-container>
 
@@ -111,7 +113,7 @@
           <button mat-icon-button color="primary">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="primary">
+          <button mat-icon-button color="primary" (click)="getTeacherById(element.id)">
             <mat-icon>remove_red_eye</mat-icon>
           </button>
           <button mat-icon-button color="warn">
