@@ -52,4 +52,15 @@ export class TeacherService {
 
     return this.http.get<Teacher>(url, { headers });
   }
+
+  // Delete teacher
+
+  deleteTeacherId(id: number): Observable<Teacher> {
+    const url = `${this.baseURl}/${id}`;
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.delete<Teacher>(url, { headers });
+  }
 }
