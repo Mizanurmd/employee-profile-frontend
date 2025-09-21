@@ -1,20 +1,17 @@
 <div class="container p-3">
-  <!-- Dialog Title -->
   <h2 mat-dialog-title class="text-center fw-bold text-danger mb-2">
     Confirm Delete
   </h2>
 
-  <!-- Dialog Content -->
   <mat-dialog-content class="text-center fw-semibold text-dark mb-3">
-    Are you sure you want to delete?
+   <mat-icon color="warn">delete</mat-icon> Are you sure you want to delete
+    <span class="text-primary">{{ data.entityName }}</span>?
   </mat-dialog-content>
 
-  <!-- Dialog Actions -->
   <mat-dialog-actions align="end" class="d-flex justify-content-end">
     <button mat-button class="btn btn-primary me-2" (click)="onCancel()">
       Cancel
     </button>
-
     <button mat-raised-button class="btn btn-danger" (click)="onConfirm()">
       Delete
     </button>

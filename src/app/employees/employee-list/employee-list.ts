@@ -144,15 +144,15 @@ export class EmployeeList implements OnInit, AfterViewInit {
   }
 
   //delete
-  deleteEmployee(emp: Employee): void {
+  deleteEmployee(id: string): void {
     const dialogRef = this.matDialog.open(DialogModal, {
       width: '350px',
-      data: emp,
+      data: {entityName:'Employee'},
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.empService.deleteEmployee(emp.id).subscribe({
+        this.empService.deleteEmployee(id).subscribe({
           next: () => this.loadEmployees(),
           error: (err) => console.error('Error deleting employee:', err),
         });

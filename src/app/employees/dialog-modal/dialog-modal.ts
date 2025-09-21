@@ -22,7 +22,7 @@ export class DialogModal {
   constructor(
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<DialogModal>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: {entityName:string}
   ) {}
 
   openSnackBar(
@@ -41,11 +41,11 @@ export class DialogModal {
 
   onCancel() {
     this.dialogRef.close(false);
-    this.openSnackBar('Employee deleted cancel.');
+    this.openSnackBar(`${this.data.entityName} delete cancelled.`);
   }
 
   onConfirm() {
     this.dialogRef.close(true);
-    this.openSnackBar('Employee deleted successfully.');
+    this.openSnackBar(`${this.data.entityName} deleted successfully.`);
   }
 }
