@@ -17,6 +17,7 @@ import {
   MatSnackBarRef,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { DialogModal } from '../../employees/dialog-modal/dialog-modal';
 
 @Component({
   selector: 'app-teacher-list',
@@ -161,6 +162,22 @@ export class TeacherList implements OnInit, AfterViewInit {
   }
 
   // Delete Teacher By id
+  deleteTeacherById(id: number): void {
+    const dialogRef = this.matDialog.open(DialogModal, {
+      width: '350px',
+      data: { entityName: 'Teacher' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.teacherServ.deleteTeacherId(id).subscribe({
+          next: () => this.loadAllTeacher(),
+          error: (err) => console.error('Error deleting teacher:', err),
+        });
+      }
+    });
+  }
+  /*
   deleteTeacherById(id: number) {
     this.teacherServ.deleteTeacherId(id).subscribe({
       next: (response) => {
@@ -173,4 +190,5 @@ export class TeacherList implements OnInit, AfterViewInit {
       },
     });
   }
+    */
 }

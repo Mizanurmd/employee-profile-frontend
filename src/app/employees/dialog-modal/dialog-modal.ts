@@ -22,7 +22,7 @@ export class DialogModal {
   constructor(
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<DialogModal>,
-    @Inject(MAT_DIALOG_DATA) public data: {entityName:string}
+    @Inject(MAT_DIALOG_DATA) public data: { entityName: string }
   ) {}
 
   openSnackBar(

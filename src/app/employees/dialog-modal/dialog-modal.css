@@ -1,0 +1,7 @@
+mat-dialog-content .mat-icon {
+  background-color: blue;
+  width: 40px;
+  height: 40px;
+  align-content: center;
+  border-radius: 50% !important;
+}
