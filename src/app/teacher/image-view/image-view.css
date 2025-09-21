@@ -1,6 +1,7 @@
-.image-dialog {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  text-align: center;
+.container{
+  max-width: 650px;
+  max-height: 650px;
+
 }
+
 

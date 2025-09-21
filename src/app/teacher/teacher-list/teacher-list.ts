@@ -11,6 +11,12 @@ import { TeacherForm } from '../teacher-form/teacher-form';
 import { NgIf } from '@angular/common';
 import { TeacherView } from '../teacher-view/teacher-view';
 import { ImageView } from '../image-view/image-view';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarRef,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-teacher-list',
@@ -56,7 +62,8 @@ export class TeacherList implements OnInit, AfterViewInit {
   constructor(
     private teacherServ: TeacherService,
     private router: Router,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private snakBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +73,22 @@ export class TeacherList implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+
+  // Open toast
+  openSnackBar(
+    message: string,
+    action: string = 'Close',
+    duration: number = 3000,
+    horizontalPosition: MatSnackBarHorizontalPosition = 'center',
+    verticalPosition: MatSnackBarVerticalPosition = 'top'
+  ) {
+    this.snakBar.open(message, action, {
+      duration,
+      horizontalPosition,
+      verticalPosition,
+    });
+  }
+
   // load all teahcer data
   loadAllTeacher() {
     this.teacherServ
@@ -121,19 +144,33 @@ export class TeacherList implements OnInit, AfterViewInit {
   }
 
   // Only Image view
-  openOnlyImageView(element:any) {
+  openOnlyImageView(element: any) {
     const dialogRef = this.matDialog.open(ImageView, {
       data: {
         imageUrl: 'http://localhost:8081' + element.profileImagePath,
       },
       width: '600px',
-      height:'500px',
-      panelClass: 'custom-dialog-container'
+      height: '500px',
+      panelClass: 'custom-dialog-container',
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
         this.loadAllTeacher();
       }
+    });
+  }
+
+  // Delete Teacher By id
+  deleteTeacherById(id: number) {
+    this.teacherServ.deleteTeacherId(id).subscribe({
+      next: (response) => {
+        this.teacherById = response;
+        this.openSnackBar('Teacher deleted succeessfully.', 'Done');
+      },
+      error: (err) => {
+        console.error('Error fetching teacher:', err);
+        this.openSnackBar('Teacher deleted Failed.', 'Done');
+      },
     });
   }
 }
