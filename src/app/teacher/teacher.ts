@@ -18,6 +18,7 @@ export interface Teacher {
   skills: string[];
   highestEducation: string;
   profileImagePath?: string;
+  activeYN?: boolean;
 }
 
 export interface TeacherRequestDto {

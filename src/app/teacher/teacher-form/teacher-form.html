@@ -186,7 +186,9 @@
 
         <!-- Start button -->
         <div class="btnButton" style="text-align: center; font-weight: bold">
-          <button mat-raised-button color="primary" type="submit">Save</button>
+          <button mat-raised-button color="primary" type="submit">
+              {{ data ? 'Update' : 'Save' }}
+          </button>
           <button
             mat-raised-button
             color="warn"

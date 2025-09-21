@@ -73,4 +73,14 @@ export class TeacherService {
     });
     return this.http.delete<Teacher>(url, { headers });
   }
+
+  // Update Teahcer
+  updateTeacher(id: number, formData: FormData): Observable<Teacher> {
+    const url = `${this.baseURl}/update/${id}`;
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.put<Teacher>(url, formData, { headers });
+  }
 }

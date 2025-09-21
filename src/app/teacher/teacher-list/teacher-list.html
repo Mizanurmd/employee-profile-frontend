@@ -110,7 +110,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button color="primary">
+          <button mat-icon-button color="primary" (click)="updateTeacherData(element)">
             <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button color="primary" (click)="getTeacherById(element.id)">

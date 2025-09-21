@@ -42,6 +42,7 @@ import {
 export class TeacherForm implements OnInit {
   protected readonly value = signal('');
   teacher!: FormGroup;
+  teacherData: Teacher | null;
   selectedFile: File | null = null;
   imagePreview: string | null = null;
   constructor(
@@ -50,7 +51,9 @@ export class TeacherForm implements OnInit {
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: Teacher | null,
     private snakBar: MatSnackBar
-  ) {}
+  ) {
+    this.teacherData = data ? { ...data } : null;
+  }
 
   protected onInput(event: Event) {
     this.value.set((event.target as HTMLInputElement).value);
@@ -130,14 +133,39 @@ export class TeacherForm implements OnInit {
       permanentAddress: [''],
       profileImagePath: [''],
     });
+
+    // Patch the teacher data if it exists (for edit)
+    if (this.teacherData) {
+      this.teacher.patchValue({
+        name: this.teacherData.name,
+        gender: this.teacherData.gender,
+        skills: Array.isArray(this.teacherData.skills) 
+            ? this.teacherData.skills 
+            : (this.teacherData.skills as string)?.split(',') || [],
+    
+        highestEducation: this.teacherData.highestEducation,
+        mobile: this.teacherData.mobile,
+        email: this.teacherData.email,
+        nid: this.teacherData.nid,
+        dateOfBirth: this.teacherData.dateOfBirth
+          ? new Date(this.teacherData.dateOfBirth)
+          : '',
+        presentAddress: this.teacherData.presentAddress,
+        permanentAddress: this.teacherData.permanentAddress,
+        profileImagePath: this.teacherData.profileImagePath,
+      });
+
+       // Show existing image preview
+      if (this.teacherData.profileImagePath) {
+        this.imagePreview = `http://localhost:8081${this.teacherData.profileImagePath}`;
+      }
+    }
   }
 
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      this.selectedFile = file; // store the actual file
-      this.teacher.patchValue({ profileImagePath: file.name }); // optional, just show name
-      // Preview the image
+      this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = () => (this.imagePreview = reader.result as string);
       reader.readAsDataURL(file);
@@ -170,16 +198,33 @@ export class TeacherForm implements OnInit {
       formData.append('file', this.selectedFile, this.selectedFile.name);
     }
 
-    this.teacherServ.saveTeacher(formData).subscribe({
-      next: (response) => {
-        this.openSnackBar('New Teacher added successfully.', 'Ok');
-        this.matDialogRef.close(response);
-      },
-      error: (err) => {
-        console.error('Error saving teacher:', err);
-        this.openSnackBar('New Teacher added failed.', 'Ok');
-      },
-    });
+    if (this.teacherData && this.teacherData.id != null) {
+      // EDIT mode
+      this.teacherServ
+        .updateTeacher(this.teacherData.id, formData)
+        .subscribe({
+          next: (res) => {
+            this.openSnackBar('Teacher updated successfully', 'Ok');
+            this.matDialogRef.close(res);
+          },
+          error: (err) => {
+            console.error('Error updating teacher:', err);
+            this.openSnackBar('Failed to update teacher', 'Ok');
+          },
+        });
+    } else {
+      //Add Teacher
+      this.teacherServ.saveTeacher(formData).subscribe({
+        next: (response) => {
+          this.openSnackBar('New Teacher added successfully.', 'Ok');
+          this.matDialogRef.close(response);
+        },
+        error: (err) => {
+          console.error('Error saving teacher:', err);
+          this.openSnackBar('New Teacher added failed.', 'Ok');
+        },
+      });
+    }
   }
 
   // close Add Teacher form

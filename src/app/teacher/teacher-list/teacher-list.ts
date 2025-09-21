@@ -14,7 +14,6 @@ import { ImageView } from '../image-view/image-view';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
-  MatSnackBarRef,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { DialogModal } from '../../employees/dialog-modal/dialog-modal';
@@ -192,5 +191,24 @@ export class TeacherList implements OnInit, AfterViewInit {
       }
     });
   }
-  
+
+ 
+  // Open dialog and update teacher
+updateTeacherData(teacherData: Teacher) {
+  const dialogRef = this.matDialog.open(TeacherForm, {
+    width: '750px',
+    height: '600px',
+    data: teacherData, // pass current teacher
+  });
+
+  dialogRef.afterClosed().subscribe((formData: FormData | null) => {
+    if (formData && teacherData.id != null) {
+      this.teacherServ.updateTeacher(teacherData.id, formData).subscribe({
+        next: () => this.loadAllTeacher(),
+        error: (err) => console.error('Error updating teacher:', err),
+      });
+    }
+  });
+}
+
 }
