@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable, throwError } from 'rxjs';
 import { Teacher, TeacherPage } from './teacher';
 
 @Injectable({
@@ -57,6 +57,16 @@ export class TeacherService {
 
   deleteTeacherId(id: number): Observable<Teacher> {
     const url = `${this.baseURl}/${id}`;
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.delete<Teacher>(url, { headers });
+  }
+
+  // Soft delete teahcer
+  softDeleteTeacherById(teacherId: string): Observable<Teacher> {
+    const url = `${this.baseURl}/soft-delete/${teacherId}`;
     const token = localStorage.getItem('access_token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,

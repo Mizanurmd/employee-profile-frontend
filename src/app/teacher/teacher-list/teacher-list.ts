@@ -177,18 +177,20 @@ export class TeacherList implements OnInit, AfterViewInit {
       }
     });
   }
-  /*
-  deleteTeacherById(id: number) {
-    this.teacherServ.deleteTeacherId(id).subscribe({
-      next: (response) => {
-        this.teacherById = response;
-        this.openSnackBar('Teacher deleted succeessfully.', 'Done');
-      },
-      error: (err) => {
-        console.error('Error fetching teacher:', err);
-        this.openSnackBar('Teacher deleted Failed.', 'Done');
-      },
+
+  sofeDeleteTeacher(teacherId: string): void {
+    const dialogRef = this.matDialog.open(DialogModal, {
+      width: '350px',
+      data: { entityName: 'Teacher' },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.teacherServ.softDeleteTeacherById(teacherId).subscribe({
+          next: () => this.loadAllTeacher(),
+          error: (err) => console.error('Error deleting teacher:', err),
+        });
+      }
     });
   }
-    */
+  
 }
