@@ -26,7 +26,6 @@ import { DialogModal } from '../../employees/dialog-modal/dialog-modal';
     MatButtonModule,
     RouterModule,
     MatIconModule,
-    MatButtonModule,
     NgIf,
   ],
   templateUrl: './teacher-list.html',

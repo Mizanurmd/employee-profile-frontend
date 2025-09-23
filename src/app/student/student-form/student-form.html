@@ -1,0 +1,275 @@
+<div class="container">
+  <div style="text-align: right; margin-top: 5px">
+    <button mat-raised-button color="warn" (click)="onClick()">&times;</button>
+  </div>
+
+  <div class="container">
+    <h1
+      style="
+        text-align: center;
+        font-weight: bold;
+        color: rgb(10, 104, 24);
+        margin-bottom: 8px;
+      "
+    >
+      Student Form
+    </h1>
+
+    <div class="form">
+      <form [formGroup]="student" (ngSubmit)="onSave()">
+        <!-- First & Last Name -->
+        <div class="container">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input
+              matInput
+              maxlength="50"
+              placeholder="Enter your first name"
+              formControlName="firstName"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input
+              matInput
+              maxlength="50"
+              placeholder="Enter your last name"
+              formControlName="lastName"
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- Father & Mother Name -->
+        <div class="container">
+          <mat-form-field appearance="outline">
+            <mat-label>Father's Name</mat-label>
+            <input
+              matInput
+              maxlength="50"
+              placeholder="Enter your father's name"
+              formControlName="fatherName"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Mother's Name</mat-label>
+            <input
+              matInput
+              maxlength="50"
+              placeholder="Enter your mother's name"
+              formControlName="motherName"
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- Admission Number & DOB -->
+        <div class="container">
+          <mat-form-field appearance="outline">
+            <mat-label>Admission Number</mat-label>
+            <input
+              matInput
+              placeholder="Enter admission number"
+              formControlName="admissionNumber"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Date of Birth</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="dateOfBirth"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <!-- Gender & Email -->
+        <div class="container">
+          <mat-form-field appearance="outline">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option value="MALE">MALE</mat-option>
+              <mat-option value="FEMALE">FEMALE</mat-option>
+              <mat-option value="OTHER">OTHER</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              placeholder="example@gmail.com"
+              formControlName="email"
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- Phone & Section -->
+        <div class="container">
+          <mat-form-field appearance="outline">
+            <mat-label>Mobile</mat-label>
+            <input
+              matInput
+              maxlength="11"
+              placeholder="01608200000"
+              formControlName="phoneNumber"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Section</mat-label>
+            <mat-select formControlName="section">
+              <mat-option *ngFor="let sec of selectedSection" [value]="sec"
+                >{{ sec }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Class & Admission Date -->
+        <div class="container">
+          <mat-form-field appearance="outline">
+            <mat-label>Class</mat-label>
+            <mat-select formControlName="studentClass">
+              <mat-option *ngFor="let cls of selectedClass" [value]="cls"
+                >{{ cls }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Admission Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker2"
+              formControlName="admissionDate"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker2"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <!--  Roll No & Section -->
+        <div class="container">
+          <mat-form-field appearance="outline">
+            <mat-label>Roll NO</mat-label>
+            <input
+              matInput
+              placeholder="Enter Roll Number"
+              formControlName="rollNumber"
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- Dynamic Address Fields -->
+        <div formArrayName="addresses" class="container">
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="addAddress()"
+          >
+            <mat-icon>add</mat-icon> Add Address
+          </button>
+
+          <hr class="divider" />
+
+          <div
+            *ngFor="let addr of addresses.controls; let i = index"
+            [formGroupName]="i"
+            class="address-group"
+          >
+            <div
+              class="container"
+              style="text-align: right; border-radius: 30px"
+            >
+              <button
+                mat-raised-button
+                color="warn"
+                type="button"
+                (click)="removeAddress(i)"
+              >
+                <mat-icon>delete</mat-icon>Remove Address
+              </button>
+            </div>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Street</mat-label>
+              <input matInput formControlName="street" placeholder="Street" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city" placeholder="City" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>State</mat-label>
+              <input matInput formControlName="state" placeholder="State" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Present Address</mat-label>
+              <input
+                matInput
+                formControlName="presentAddress"
+                placeholder="Present Address"
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Permanent Address</mat-label>
+              <input
+                matInput
+                formControlName="permanentAddress"
+                placeholder="Permanent Address"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- End Dynamic Address Fields -->
+
+        <!-- Profile Image -->
+        <div class="container" style="margin-top: 10px; margin-bottom: 10px">
+          <label class="section-label">Profile Image:</label>
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+          />
+        </div>
+
+        <div class="container">
+          <img
+            *ngIf="imagePreview"
+            [src]="imagePreview"
+            alt="Preview"
+            width="150"
+          />
+        </div>
+
+        <!-- Buttons -->
+        <div class="btnButton" style="text-align: center; font-weight: bold">
+          <button mat-raised-button color="primary" type="submit">Save</button>
+          <button
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="onClick()"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

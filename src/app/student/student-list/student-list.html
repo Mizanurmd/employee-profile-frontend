@@ -1,0 +1,152 @@
+<div class="container mat-elevation-z8" style="margin-top: 10px">
+  <a routerLink="/home" class="back-link">
+    <mat-icon>arrow_back</mat-icon>Back
+  </a>
+
+  <!-- Start title -->
+  <div class="title">
+    <h1 style="text-align: center; color: royalblue; font-weight: bold">
+      Student List
+    </h1>
+    <!-- Add Button -->
+    <button mat-raised-button style="margin-bottom: 10px" (click)="openAddStudentForm()">
+      <mat-icon>add</mat-icon>
+      ADD Student
+    </button>
+    <!-- Download  Button -->
+    <button mat-raised-button style="margin-bottom: 10px; margin-left: 8px">
+      <mat-icon>download</mat-icon>Download PDF
+    </button>
+  </div>
+  <!-- End title -->
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" class="full-width-table">
+      <!-- Student Id Column -->
+      <ng-container matColumnDef="studentId">
+        <th mat-header-cell *matHeaderCellDef>Student ID</th>
+        <td mat-cell *matCellDef="let element">{{element.studentIdNo}}</td>
+      </ng-container>
+
+      <!-- Roll Number Column -->
+      <ng-container matColumnDef="rollNumber">
+        <th mat-header-cell *matHeaderCellDef>Roll No</th>
+        <td mat-cell *matCellDef="let element">{{element.rollNumber}}</td>
+      </ng-container>
+
+      <!-- Full Student Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Student Name</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.firstName}} {{element.lastName}}
+        </td>
+      </ng-container>
+
+      <!-- Father Name Column -->
+      <ng-container matColumnDef="fatherName">
+        <th mat-header-cell *matHeaderCellDef>Father's Name</th>
+        <td mat-cell *matCellDef="let element">{{element.fatherName}}</td>
+      </ng-container>
+
+      <!-- Mother Name Column -->
+      <ng-container matColumnDef="motherName">
+        <th mat-header-cell *matHeaderCellDef>Mother's Name</th>
+        <td mat-cell *matCellDef="let element">{{element.motherName}}</td>
+      </ng-container>
+
+      <!-- Admission Number Column -->
+      <ng-container matColumnDef="admissionNumber">
+        <th mat-header-cell *matHeaderCellDef>Admission Number</th>
+        <td mat-cell *matCellDef="let element">{{element.admissionNumber}}</td>
+      </ng-container>
+
+      <!-- Date of Birth Column -->
+      <ng-container matColumnDef="dateOfBirth">
+        <th mat-header-cell *matHeaderCellDef>Birth Date</th>
+        <td mat-cell *matCellDef="let element">{{element.dateOfBirth}}</td>
+      </ng-container>
+
+      <!-- Gender Column -->
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef>Gender</th>
+        <td mat-cell *matCellDef="let element">{{element.gender}}</td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{element.email}}</td>
+      </ng-container>
+
+      <!-- Mobile Column -->
+      <ng-container matColumnDef="mobile">
+        <th mat-header-cell *matHeaderCellDef>Mobile</th>
+        <td mat-cell *matCellDef="let element">{{element.phoneNumber}}</td>
+      </ng-container>
+
+      <!-- Addresses Column -->
+      <ng-container matColumnDef="addresses">
+        <th mat-header-cell *matHeaderCellDef>Addresses</th>
+        <td mat-cell *matCellDef="let element">
+         {{ getAddressString(element.addresses) }}
+        </td>
+      </ng-container>
+
+      <!-- Class Column -->
+      <ng-container matColumnDef="class">
+        <th mat-header-cell *matHeaderCellDef>Class</th>
+        <td mat-cell *matCellDef="let element">{{element.studentClass}}</td>
+      </ng-container>
+
+      <!-- Admission Date Column -->
+      <ng-container matColumnDef="admissionDate">
+        <th mat-header-cell *matHeaderCellDef>Adimission Date</th>
+        <td mat-cell *matCellDef="let element">{{element.admissionDate}}</td>
+      </ng-container>
+
+      <!-- Section Column -->
+      <ng-container matColumnDef="section">
+        <th mat-header-cell *matHeaderCellDef>Section</th>
+        <td mat-cell *matCellDef="let element">{{element.section}}</td>
+      </ng-container>
+
+      <!-- Image Column -->
+      <ng-container matColumnDef="profileImagePath">
+        <th mat-header-cell *matHeaderCellDef>Photo</th>
+        <td mat-cell *matCellDef="let element">
+          <img
+            *ngIf="element.profileImagePath"
+            [src]="'http://localhost:8081' + element.profileImagePath"
+            alt="Profile"
+            width="50"
+          />
+        </td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="primary">
+            <mat-icon>remove_red_eye</mat-icon>
+          </button>
+          <button mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header & Row Definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>
