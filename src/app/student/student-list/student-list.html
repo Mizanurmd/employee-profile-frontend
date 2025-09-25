@@ -9,7 +9,11 @@
       Student List
     </h1>
     <!-- Add Button -->
-    <button mat-raised-button style="margin-bottom: 10px" (click)="openAddStudentForm()">
+    <button
+      mat-raised-button
+      style="margin-bottom: 10px"
+      (click)="openAddStudentForm()"
+    >
       <mat-icon>add</mat-icon>
       ADD Student
     </button>
@@ -61,34 +65,8 @@
 
       <!-- Date of Birth Column -->
       <ng-container matColumnDef="dateOfBirth">
-        <th mat-header-cell *matHeaderCellDef>Birth Date</th>
+        <th mat-header-cell *matHeaderCellDef>Birth Of Date</th>
         <td mat-cell *matCellDef="let element">{{element.dateOfBirth}}</td>
-      </ng-container>
-
-      <!-- Gender Column -->
-      <ng-container matColumnDef="gender">
-        <th mat-header-cell *matHeaderCellDef>Gender</th>
-        <td mat-cell *matCellDef="let element">{{element.gender}}</td>
-      </ng-container>
-
-      <!-- Email Column -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>Email</th>
-        <td mat-cell *matCellDef="let element">{{element.email}}</td>
-      </ng-container>
-
-      <!-- Mobile Column -->
-      <ng-container matColumnDef="mobile">
-        <th mat-header-cell *matHeaderCellDef>Mobile</th>
-        <td mat-cell *matCellDef="let element">{{element.phoneNumber}}</td>
-      </ng-container>
-
-      <!-- Addresses Column -->
-      <ng-container matColumnDef="addresses">
-        <th mat-header-cell *matHeaderCellDef>Addresses</th>
-        <td mat-cell *matCellDef="let element">
-         {{ getAddressString(element.addresses) }}
-        </td>
       </ng-container>
 
       <!-- Class Column -->
@@ -109,6 +87,48 @@
         <td mat-cell *matCellDef="let element">{{element.section}}</td>
       </ng-container>
 
+      <!-- Gender Column -->
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef>Gender</th>
+        <td mat-cell *matCellDef="let element">{{element.gender}}</td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{element.email}}</td>
+      </ng-container>
+
+      <!-- Mobile Column -->
+      <ng-container matColumnDef="mobile">
+        <th mat-header-cell *matHeaderCellDef>Mobile</th>
+        <td mat-cell *matCellDef="let element">{{element.phoneNumber}}</td>
+      </ng-container>
+
+      <!-- Present Addresses Column -->
+      <ng-container matColumnDef="presentAddress">
+        <th mat-header-cell *matHeaderCellDef>Present Address</th>
+        <td mat-cell *matCellDef="let element">
+          {{ getAddressField(element.addresses, 'presentAddress') }}
+        </td>
+      </ng-container>
+
+      <!-- Present Addresses Column -->
+      <ng-container matColumnDef="permanentAddress">
+        <th mat-header-cell *matHeaderCellDef>Permanent Address</th>
+        <td mat-cell *matCellDef="let element">
+          {{ getAddressField(element.addresses, 'permanentAddress') }}
+        </td>
+      </ng-container>
+
+      <!-- City of Addresses Column -->
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef>City</th>
+        <td mat-cell *matCellDef="let element">
+          {{ getAddressField(element.addresses, 'city') }}
+        </td>
+      </ng-container>
+
       <!-- Image Column -->
       <ng-container matColumnDef="profileImagePath">
         <th mat-header-cell *matHeaderCellDef>Photo</th>
@@ -118,6 +138,7 @@
             [src]="'http://localhost:8081' + element.profileImagePath"
             alt="Profile"
             width="50"
+            (click)="openOnlyImageView(element)"
           />
         </td>
       </ng-container>
@@ -126,13 +147,25 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button color="primary">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="updateStudnetData(element)"
+          >
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="primary">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="getStudentById(element.id)"
+          >
             <mat-icon>remove_red_eye</mat-icon>
           </button>
-          <button mat-icon-button color="warn">
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="deleteModal(element.id)"
+          >
             <mat-icon>delete</mat-icon>
           </button>
         </td>

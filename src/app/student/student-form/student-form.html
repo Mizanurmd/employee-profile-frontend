@@ -1,6 +1,6 @@
 <div class="container">
   <div style="text-align: right; margin-top: 5px">
-    <button mat-raised-button color="warn" (click)="onClick()">&times;</button>
+    <button mat-raised-button color="warn" (click)="onCancel()">&times;</button>
   </div>
 
   <div class="container">
@@ -259,12 +259,14 @@
 
         <!-- Buttons -->
         <div class="btnButton" style="text-align: center; font-weight: bold">
-          <button mat-raised-button color="primary" type="submit">Save</button>
+          <button mat-raised-button color="primary" type="submit">
+            {{studentData ? 'Update': 'Save'}}
+          </button>
           <button
             mat-raised-button
             color="warn"
             type="button"
-            (click)="onClick()"
+            (click)="onCancel()"
           >
             Cancel
           </button>

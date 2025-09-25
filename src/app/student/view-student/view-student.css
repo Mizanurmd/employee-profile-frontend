@@ -1,0 +1,84 @@
+.header {
+  margin-top: 5px;
+  margin-bottom: 2px;
+  background-color: #4c1d7b;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: honeydew;
+  border: 2px solid #070f19;
+}
+.footer {
+  margin-top: 1px;
+  margin-bottom: 2px;
+  background-color: #4c1d7b;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: whitesmoke;
+  border-bottom: 2px solid #39050e;
+}
+.body {
+  box-shadow: #070f19;
+  background-color: #d1d8e0;
+  border-radius: 5px;
+  border-top: 2px solid #0d6404;
+  border-bottom: 2px solid #0d6404;
+}
+.imgDiv {
+  text-align: right;
+}
+
+.imgDiv img {
+  margin-top: 5px;
+  margin-right: 20px;
+  border-radius: 10px;
+}
+
+.divider {
+  background-color: rgb(58, 2, 2);
+  height: 3px;
+}
+
+/* .student-view {
+  min-width: 600px;
+  max-width: 100%;
+  max-height:100%;
+  min-height: 600px;
+  overflow-y: auto;
+  overflow-x: auto;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px 30px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 10px auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+} */
+
+.student-view .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.student-view p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.student-view span {
+  font-weight: bold;
+  margin-right: 6px;
+}
+
+.student-view .col-md-5,
+.student-view .col-md-7 {
+  flex: 1;
+  text-align: left;
+}

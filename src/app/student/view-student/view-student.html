@@ -1,0 +1,121 @@
+<div class="student-view container">
+  <div style="text-align: right">
+    <button
+      mat-raised-button
+      color="warn"
+      style="margin-top: 5px; margin-right: 5px"
+      (click)="onCancle()"
+    >
+      &times;
+    </button>
+  </div>
+
+  <!-- Title -->
+  <div class="header">
+    <h2 class="student-title">Student Details</h2>
+  </div>
+
+  <div class="body">
+    <div class="imgDiv">
+      <img
+        *ngIf="student?.profileImagePath"
+        [src]="'http://localhost:8081'+ student?.profileImagePath "
+        alt="Profile"
+        width="100"
+      />
+      <hr class="divider" />
+    </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <p>
+          <span>Full Nmae :</span> {{student?.firstName}} {{student?.lastName}}
+        </p>
+      </div>
+      <div class="col-md-7">
+        <p><span>Student ID (Card NO) :</span>{{student?.studentIdNo}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <p><span>Father's Name :</span> {{student?.fatherName}}</p>
+      </div>
+      <div class="col-md-7">
+        <p><span>Mother's Name :</span> {{student?.motherName}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <p><span>Admission Serial NO :</span> {{student?.admissionNumber}}</p>
+      </div>
+      <div class="col-md-7">
+        <p><span>Section Name :</span> {{student?.section}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <p><span>Date Of Birth :</span> {{student?.dateOfBirth}}</p>
+      </div>
+      <div class="col-md-5">
+        <p><span>Admission Date :</span> {{student?.admissionDate}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <p><span>Class :</span> {{student?.studentClass}}</p>
+      </div>
+      <div class="col-md-7">
+        <p><span>Roll Number :</span> {{student?.rollNumber}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <p><span>Mobile :</span> {{student?.phoneNumber}}</p>
+      </div>
+      <div class="col-md-7">
+        <p><span>Email :</span> {{student?.email}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <p><span>Gender :</span> {{student?.gender}}</p>
+      </div>
+      <div class="col-md-7"></div>
+    </div>
+
+    <div class="row" *ngFor="let addr of student?.addresses">
+      <p><span style="font-weight: bold">Addresses :</span></p>
+      <hr class="divider" />
+      <div class="col-md-5">
+        <p><span>Steet :</span> {{addr.street}}</p>
+      </div>
+      <div class="col-md-7">
+        <p><span>City/State :</span> {{addr.state}}</p>
+      </div>
+    </div>
+    <div class="row" *ngFor="let addr of student?.addresses">
+      <div class="col-md-5">
+        <p><span>Present Address :</span> {{addr.presentAddress}}</p>
+      </div>
+      <div class="col-md-7">
+        <p><span>Permanent address :</span> {{addr.permanentAddress}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button
+      mat-raised-button
+      color="warn"
+      style="margin-bottom: 2px; border-radius: 8px"
+      (click)="onCancle()"
+    >
+      Cancel
+    </button>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -11,7 +11,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -22,6 +22,7 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { StudentDto } from '../student';
 
 @Component({
   selector: 'app-student-form',
@@ -50,7 +51,8 @@ export class StudentForm implements OnInit {
     private studentServ: StudentService,
     private fb: FormBuilder,
     private snakBar: MatSnackBar,
-    private matDialogRef: MatDialogRef<StudentForm>
+    private matDialogRef: MatDialogRef<StudentForm>,
+    @Inject(MAT_DIALOG_DATA) public studentData: StudentDto | null
   ) {}
   selectedClass: String[] = [
     'CLASS_1',
@@ -97,6 +99,7 @@ export class StudentForm implements OnInit {
   }
 
   ngOnInit(): void {
+    // Create the form
     this.student = this.fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
@@ -114,8 +117,51 @@ export class StudentForm implements OnInit {
       addresses: this.fb.array([]),
       profileImagePath: [''],
     });
-    // Start with 1 empty address row
-    this.addAddress();
+
+    // Add Student case → start with 1 empty address row
+    if (!this.studentData) {
+      this.addAddress();
+    }
+
+    // Update Student case
+    if (this.studentData) {
+      this.student.patchValue({
+        firstName: this.studentData.firstName,
+        lastName: this.studentData.lastName,
+        fatherName: this.studentData.fatherName,
+        motherName: this.studentData.motherName,
+        admissionNumber: this.studentData.admissionNumber,
+        dateOfBirth: this.studentData.dateOfBirth
+          ? new Date(this.studentData.dateOfBirth)
+          : '',
+        gender: this.studentData.gender,
+        email: this.studentData.email,
+        phoneNumber: this.studentData.phoneNumber,
+        studentClass: this.studentData.studentClass,
+        admissionDate: this.studentData.admissionDate
+          ? new Date(this.studentData.admissionDate)
+          : '',
+        section: this.studentData.section,
+        rollNumber: this.studentData.rollNumber,
+      });
+
+      // Populate addresses
+      const addressFormArray = this.student.get('addresses') as FormArray;
+      addressFormArray.clear();
+
+      if (this.studentData.addresses?.length > 0) {
+        this.studentData.addresses.forEach((addr) => {
+          addressFormArray.push(this.createAddress(addr)); // 👈 simplified
+        });
+      } else {
+        this.addAddress();
+      }
+
+      // Show existing image preview
+      if (this.studentData.profileImagePath) {
+        this.imagePreview = `http://localhost:8081${this.studentData.profileImagePath}`;
+      }
+    }
   }
 
   // Get addresses form array
@@ -124,15 +170,17 @@ export class StudentForm implements OnInit {
   }
 
   // Create one address form group
-  private createAddress(): FormGroup {
+  private createAddress(addr?: any): FormGroup {
     return this.fb.group({
-      street: ['', Validators.required],
-      city: ['', Validators.required],
-      state: [''],
-      presentAddress: [''],
-      permanentAddress: [''],
+      addressId: [addr?.addressId || null],
+      street: [addr?.street || '', Validators.required],
+      city: [addr?.city || '', Validators.required],
+      state: [addr?.state || ''],
+      presentAddress: [addr?.presentAddress || ''],
+      permanentAddress: [addr?.permanentAddress || ''],
     });
   }
+
   // Add new address row
   addAddress(): void {
     this.addresses.push(this.createAddress());
@@ -142,6 +190,8 @@ export class StudentForm implements OnInit {
   removeAddress(index: number): void {
     this.addresses.removeAt(index);
   }
+
+  
 
   // file seletec
   onFileSelected(event: Event) {
@@ -154,7 +204,7 @@ export class StudentForm implements OnInit {
     }
   }
   //save student
-  onSave(): void {
+ onSave(): void {
     if (this.student.invalid) {
       this.openSnackBar('Please fill all required fields.', 'Ok');
       return;
@@ -162,14 +212,12 @@ export class StudentForm implements OnInit {
 
     const studentPayload = { ...this.student.value };
 
-    // Format dates
+    // Convert dates to ISO format for backend
     if (studentPayload.dateOfBirth) {
-      const dob = new Date(studentPayload.dateOfBirth);
-      studentPayload.dateOfBirth = dob.toLocaleDateString('en-GB');
+      studentPayload.dateOfBirth = new Date(studentPayload.dateOfBirth).toLocaleDateString('en-GB');
     }
     if (studentPayload.admissionDate) {
-      const ad = new Date(studentPayload.admissionDate);
-      studentPayload.admissionDate = ad.toLocaleDateString('en-GB');
+      studentPayload.admissionDate = new Date(studentPayload.admissionDate).toLocaleDateString('en-GB');
     }
 
     const formData = new FormData();
@@ -179,20 +227,35 @@ export class StudentForm implements OnInit {
       formData.append('file', this.selectedFile, this.selectedFile.name);
     }
 
-    this.studentServ.saveStudent(formData).subscribe({
-      next: (response) => {
-        this.openSnackBar('New Student added successfully.', 'Ok');
-        this.matDialogRef.close(response);
-      },
-      error: (err) => {
-        console.error('Error saving student:', err);
-        this.openSnackBar('New Student add failed.', 'Ok');
-      },
-    });
+    if (this.studentData && this.studentData.id != null) {
+      // Update student
+      this.studentServ.updateStudent(this.studentData.id, formData).subscribe({
+        next: response => {
+          this.openSnackBar('Student updated successfully.', 'Ok');
+          this.matDialogRef.close(response);
+        },
+        error: err => {
+          console.error('Error updating student:', err);
+          this.openSnackBar('Student update failed.', 'Ok');
+        }
+      });
+    } else {
+      // Add new student
+      this.studentServ.saveStudent(formData).subscribe({
+        next: response => {
+          this.openSnackBar('New Student added successfully.', 'Ok');
+          this.matDialogRef.close(response);
+        },
+        error: err => {
+          console.error('Error saving student:', err);
+          this.openSnackBar('New Student add failed.', 'Ok');
+        }
+      });
+    }
   }
 
   // Cancel
-  onClick(): void {
+  onCancel(): void {
     this.matDiologRef.close();
   }
 

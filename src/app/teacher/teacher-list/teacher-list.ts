@@ -134,6 +134,8 @@ export class TeacherList implements OnInit, AfterViewInit {
   openTeacherView(teacher: Teacher) {
     const dialogRef = this.matDialog.open(TeacherView, {
       data: this.teacherById,
+       width: '850px',
+      height: '600px',
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {

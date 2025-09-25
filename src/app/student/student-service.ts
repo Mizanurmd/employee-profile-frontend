@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StudentDto, StudentPage } from './student';
 import { Observable } from 'rxjs';
+import { ApiResponse } from '../../apiRespons';
 
 @Injectable({
   providedIn: 'root',
@@ -40,5 +41,34 @@ export class StudentService {
       Authorization: `Bearer ${token}`,
     });
     return this.http.post<StudentDto>(url, formData, { headers });
+  }
+
+  // Delete student
+  studentById(id: number): Observable<ApiResponse<StudentDto>> {
+    const url = `${this.baseURl}/${id}`;
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<ApiResponse<StudentDto>>(url, { headers });
+  }
+
+  // Delete student
+  deleteStudent(id: number): Observable<StudentDto> {
+    const url = `${this.baseURl}/${id}`;
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.delete<StudentDto>(url, { headers });
+  }
+  // update student
+  updateStudent(id: number, formData: FormData): Observable<StudentDto> {
+    const url = `${this.baseURl}/update/${id}`;
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.put<StudentDto>(url, formData, { headers });
   }
 }

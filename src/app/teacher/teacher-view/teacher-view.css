@@ -8,7 +8,7 @@
   border-bottom: 2px solid #3e0709; /* blue underline */
 }
 
-.teacher-view {
+/* .teacher-view {
   max-width: 850px;
   overflow-y: auto;
   overflow-y: auto;
@@ -18,7 +18,7 @@
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   margin: 10px auto;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
+} */
 
 .teacher-view .row {
   display: flex;
