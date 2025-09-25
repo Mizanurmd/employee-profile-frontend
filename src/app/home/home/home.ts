@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { EmployeeList } from '../../employees/employee-list/employee-list';
 import { EmployeeForm } from '../../employees/employee-form/employee-form';
 import { MatDialog } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
@@ -10,15 +9,24 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf, NgSwitch } from '@angular/common';
+import { EmployeeList } from "../../employees/employee-list/employee-list";
+import { TeacherList } from "../../teacher/teacher-list/teacher-list";
+import { StudentList } from "../../student/student-list/student-list";
 
 @Component({
   selector: 'app-home',
-  imports: [MatToolbarModule, EmployeeList, RouterModule, NgIf],
+  imports: [MatToolbarModule, RouterModule, EmployeeList, TeacherList, StudentList, CommonModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
+  selectedEntity: 'teacher' | 'student' | 'employee' | 'course' | null = null;
+
+showEntity(entity: 'teacher' | 'student' | 'employee' | 'course') {
+  this.selectedEntity = entity;
+}
+
   role: string | null = null;
   constructor(
     private matDialog: MatDialog,

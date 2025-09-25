@@ -15,11 +15,13 @@
             <i class="pi pi-chevron-up"></i>
           </ng-template>
         </div>
-        <div *ngIf="isExpanded" class="submenu">
-          <a routerLink="/teacher" class="submenu-item">Teacher</a>
-          <a routerLink="/student" class="submenu-item">Student</a>
-          <a routerLink="/course" class="submenu-item">Course</a>
-        </div>
+       <div *ngIf="isExpanded" class="submenu">
+  <a class="submenu-item" (click)="showEntity('employee')">Employee</a>
+  <a class="submenu-item" (click)="showEntity('teacher')">Teacher</a>
+  <a class="submenu-item" (click)="showEntity('student')">Student</a>
+  <a class="submenu-item" (click)="showEntity('course')">Course</a>
+</div>
+
       </div>
 
       <!-- Static Menu -->
@@ -36,10 +38,24 @@
 <div style="background-color: #1e0f6a;"></div>
   <!-- Start Main content -->
   <main class="main">
+    <div class="marquee-container">
+    <div class="marquee-content">
+      Md. Mizanur Rahman(Full Stack Java Developer) Computer Network Systems
+      (CNS) Limited, Dhaka, Bangladesh, at Plot No. 323 and 326, Block E,
+      Bashundhara.
+    </div>
+  </div>
   
-      <app-employee-list></app-employee-list>
+      <!-- <app-employee-list></app-employee-list> -->
 
     <hr class="divider" />
+    <div [ngSwitch]="selectedEntity">
+    <app-employee-list *ngSwitchCase="'employee'"></app-employee-list>
+    <app-teacher-list *ngSwitchCase="'teacher'"></app-teacher-list>
+    <app-student-list *ngSwitchCase="'student'"></app-student-list>
+    <app-student-list *ngSwitchCase="'course'"></app-student-list>
+  
+  </div>
   </main>
 
   <!-- End Main content -->
