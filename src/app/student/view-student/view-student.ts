@@ -1,12 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { StudentDto } from '../student';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-view-student',
-  imports: [MatButtonModule, NgIf, NgFor],
+  imports: [MatButtonModule, CommonModule],
   templateUrl: './view-student.html',
   styleUrl: './view-student.css',
 })

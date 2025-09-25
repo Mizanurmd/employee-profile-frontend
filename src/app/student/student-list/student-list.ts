@@ -6,7 +6,7 @@ import { StudentDto } from '../student';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { AddressDto } from '../address';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentForm } from '../student-form/student-form';
@@ -29,7 +29,7 @@ import { ImageView } from '../../teacher/image-view/image-view';
     MatButtonModule,
     MatPaginatorModule,
     FormsModule,
-    NgIf,
+    CommonModule,
   ],
   templateUrl: './student-list.html',
   styleUrl: './student-list.css',
@@ -59,7 +59,7 @@ export class StudentList implements OnInit {
   ];
   dataSource = new MatTableDataSource<StudentDto>([]);
   page: number = 0;
-  size: number = 10;
+  size: number = 5;
   sortBy: string = 'id';
   sortDir: string = 'asc';
   @ViewChild(MatPaginator) paginator!: MatPaginator;

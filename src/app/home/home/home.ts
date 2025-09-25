@@ -9,23 +9,37 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { CommonModule, NgIf, NgSwitch } from '@angular/common';
-import { EmployeeList } from "../../employees/employee-list/employee-list";
-import { TeacherList } from "../../teacher/teacher-list/teacher-list";
-import { StudentList } from "../../student/student-list/student-list";
+import { CommonModule } from '@angular/common';
+import { EmployeeList } from '../../employees/employee-list/employee-list';
+import { TeacherList } from '../../teacher/teacher-list/teacher-list';
+import { StudentList } from '../../student/student-list/student-list';
+import { Dashboard } from '../../dashboard/dashboard';
+
+
+
 
 @Component({
   selector: 'app-home',
-  imports: [MatToolbarModule, RouterModule, EmployeeList, TeacherList, StudentList, CommonModule],
+  imports: [
+    MatToolbarModule,
+    RouterModule,
+    EmployeeList,
+    TeacherList,
+    StudentList,
+    CommonModule,
+    Dashboard
+
+  ],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
-  selectedEntity: 'teacher' | 'student' | 'employee' | 'course' | null = null;
+selectedEntity: 'teacher' | 'student' | 'employee' | 'course' | null = null;
 
-showEntity(entity: 'teacher' | 'student' | 'employee' | 'course') {
-  this.selectedEntity = entity;
-}
+
+  showEntity(entity: 'teacher' | 'student' | 'employee' | 'course') {
+    this.selectedEntity = entity;
+  }
 
   role: string | null = null;
   constructor(
@@ -38,12 +52,11 @@ showEntity(entity: 'teacher' | 'student' | 'employee' | 'course') {
     this.role = this.authServ.getRole();
   }
 
-   isExpanded: boolean = false;
-// toggle menu
+  isExpanded: boolean = false;
+  // toggle menu
   toggleMenu() {
     this.isExpanded = !this.isExpanded;
   }
-
 
   openEmployeeForm(): void {
     const dialogRef = this.matDialog.open(EmployeeForm);

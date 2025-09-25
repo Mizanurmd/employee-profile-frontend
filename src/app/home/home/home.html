@@ -1,10 +1,9 @@
 <div class="container">
-  <!-- Start Sidebar -->
+  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-header">DASHBOARD</div>
 
     <nav class="menu">
-      <!-- Toggle Menu -->
       <div>
         <div (click)="toggleMenu()" class="menu-item">
           <span>Management</span>
@@ -15,48 +14,56 @@
             <i class="pi pi-chevron-up"></i>
           </ng-template>
         </div>
-       <div *ngIf="isExpanded" class="submenu">
-  <a class="submenu-item" (click)="showEntity('employee')">Employee</a>
-  <a class="submenu-item" (click)="showEntity('teacher')">Teacher</a>
-  <a class="submenu-item" (click)="showEntity('student')">Student</a>
-  <a class="submenu-item" (click)="showEntity('course')">Course</a>
-</div>
 
+        <div *ngIf="isExpanded" class="submenu">
+          <a class="submenu-item" (click)="showEntity('employee')">Employee</a>
+          <a class="submenu-item" (click)="showEntity('teacher')">Teacher</a>
+          <a class="submenu-item" (click)="showEntity('student')">Student</a>
+          <a class="submenu-item" (click)="showEntity('course')">Course</a>
+        </div>
       </div>
-
-      <!-- Static Menu -->
-      <a routerLink="/dashboard" class="menu-item">Dashboard</a>
+<!-- 
+      <a class="menu-item" (click)="showEntity('dashboard')">Dashboard</a> -->
       <a routerLink="/report" class="menu-item">Reports</a>
       <a routerLink="/settings" class="menu-item">Settings</a>
-
-      <!-- Logout -->
-      <button class="menu-item btn btn-danger"  (click)="logout()">Logout</button>
+      <button class="menu-item btn btn-danger" (click)="logout()">
+        Logout
+      </button>
     </nav>
   </aside>
 
-  <!-- End Sidebar -->
-<div style="background-color: #1e0f6a;"></div>
-  <!-- Start Main content -->
+  <!-- Main Content -->
   <main class="main">
-    <div class="marquee-container">
-    <div class="marquee-content">
-      Md. Mizanur Rahman(Full Stack Java Developer) Computer Network Systems
-      (CNS) Limited, Dhaka, Bangladesh, at Plot No. 323 and 326, Block E,
-      Bashundhara.
+    <!-- Header -->
+    <div class="header">
+      <!-- Marquee -->
+      <div class="marquee-content">
+        Md. Mizanur Rahman (Full Stack Java Developer) Computer Network Systems
+        (CNS) Limited, Dhaka, Bangladesh.
+      </div>
+      <!-- end Marquee -->
     </div>
-  </div>
-  
-      <!-- <app-employee-list></app-employee-list> -->
+    <!-- End Herader -->
 
-    <hr class="divider" />
-    <div [ngSwitch]="selectedEntity">
-    <app-employee-list *ngSwitchCase="'employee'"></app-employee-list>
-    <app-teacher-list *ngSwitchCase="'teacher'"></app-teacher-list>
-    <app-student-list *ngSwitchCase="'student'"></app-student-list>
-    <app-student-list *ngSwitchCase="'course'"></app-student-list>
-  
-  </div>
+ <div [ngSwitch]="selectedEntity" class="entity-container">
+  <app-employee-list *ngSwitchCase="'employee'"></app-employee-list>
+  <app-teacher-list *ngSwitchCase="'teacher'"></app-teacher-list>
+  <app-student-list *ngSwitchCase="'student'"></app-student-list>
+  <app-student-list *ngSwitchCase="'course'"></app-student-list>
+
+  <!-- Default dashboard -->
+ <!-- <p *ngSwitchDefault="">this home page</p> -->
+ <app-dashboard *ngSwitchDefault></app-dashboard>
+
+</div>
+
+
+
+
   </main>
 
-  <!-- End Main content -->
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 My Company. All rights reserved.</p>
+  </footer>
 </div>
