@@ -7,15 +7,21 @@ import { TeacherList } from './teacher/teacher-list/teacher-list';
 import { StudentList } from './student/student-list/student-list';
 import { EmployeeList } from './employees/employee-list/employee-list';
 import { Dashboard } from './dashboard/dashboard';
+import { CourseList } from './courses/course-list/course-list';
 
 export const routes: Routes = [
   { path: 'register', component: Register },
   { path: 'login', component: Login },
   { path: 'home', component: Home, canActivate: [AuthGuardService] },
-   { path: 'dashboard', component: Dashboard, canActivate: [AuthGuardService] },
-  { path: 'employee', component: EmployeeList, canActivate: [AuthGuardService] },
+  { path: 'dashboard', component: Dashboard, canActivate: [AuthGuardService] },
+  {
+    path: 'employee',
+    component: EmployeeList,
+    canActivate: [AuthGuardService],
+  },
   { path: 'teacher', component: TeacherList, canActivate: [AuthGuardService] },
   { path: 'student', component: StudentList, canActivate: [AuthGuardService] },
+  { path: 'course', component: CourseList, canActivate: [AuthGuardService] },
   { path: 'logout', redirectTo: '/login' },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' },

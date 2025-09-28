@@ -1,0 +1,24 @@
+.form {
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+mat-form-field {
+  width: 48%;
+  margin-left: 2%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+.btnButton button{
+  margin-bottom: 20px;
+}
+button[mat-raised-button] {
+  margin-left: 8px;
+  font-weight: 600;
+  border-radius: 15px;
+  color: whitesmoke;
+  padding: 4px 14px;
+  text-decoration: none;
+}
+
+

@@ -22,7 +22,7 @@
           <a class="submenu-item" (click)="showEntity('course')">Course</a>
         </div>
       </div>
-<!-- 
+      <!-- 
       <a class="menu-item" (click)="showEntity('dashboard')">Dashboard</a> -->
       <a routerLink="/report" class="menu-item">Reports</a>
       <a routerLink="/settings" class="menu-item">Settings</a>
@@ -45,21 +45,16 @@
     </div>
     <!-- End Herader -->
 
- <div [ngSwitch]="selectedEntity" class="entity-container">
-  <app-employee-list *ngSwitchCase="'employee'"></app-employee-list>
-  <app-teacher-list *ngSwitchCase="'teacher'"></app-teacher-list>
-  <app-student-list *ngSwitchCase="'student'"></app-student-list>
-  <app-student-list *ngSwitchCase="'course'"></app-student-list>
+    <div [ngSwitch]="selectedEntity" class="entity-container">
+      <app-employee-list *ngSwitchCase="'employee'"></app-employee-list>
+      <app-teacher-list *ngSwitchCase="'teacher'"></app-teacher-list>
+      <app-student-list *ngSwitchCase="'student'"></app-student-list>
+      <app-course-list *ngSwitchCase="'course'"></app-course-list>
 
-  <!-- Default dashboard -->
- <!-- <p *ngSwitchDefault="">this home page</p> -->
- <app-dashboard *ngSwitchDefault></app-dashboard>
-
-</div>
-
-
-
-
+      <!-- Default dashboard -->
+      <!-- <p *ngSwitchDefault="">this home page</p> -->
+      <app-dashboard *ngSwitchDefault></app-dashboard>
+    </div>
   </main>
 
   <!-- Footer -->

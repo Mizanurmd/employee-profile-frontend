@@ -19,6 +19,7 @@ export enum StudentClass {
 
 export interface StudentDto {
   id?: number;
+   studentId: number;
   studentIdNo?: string;
   firstName: string;
   lastName: string;

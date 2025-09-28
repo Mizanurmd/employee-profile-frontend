@@ -14,6 +14,7 @@ import { EmployeeList } from '../../employees/employee-list/employee-list';
 import { TeacherList } from '../../teacher/teacher-list/teacher-list';
 import { StudentList } from '../../student/student-list/student-list';
 import { Dashboard } from '../../dashboard/dashboard';
+import { CourseList } from "../../courses/course-list/course-list";
 
 
 
@@ -27,9 +28,9 @@ import { Dashboard } from '../../dashboard/dashboard';
     TeacherList,
     StudentList,
     CommonModule,
-    Dashboard
-
-  ],
+    Dashboard,
+    CourseList
+],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

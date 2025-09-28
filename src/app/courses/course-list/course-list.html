@@ -1,0 +1,83 @@
+<div class="container mat-elevation-z8" style="margin-top: 10px">
+  <!-- <a routerLink="/home" class="back-link">
+    <mat-icon>arrow_back</mat-icon>Back
+  </a> -->
+
+  <!-- Start title -->
+  <div class="title">
+    <h1 style="text-align: center; color: royalblue; font-weight: bold">
+      Course List
+    </h1>
+    <!-- Add Button -->
+    <button
+      mat-raised-button
+      style="margin-bottom: 10px"
+      (click)="openAddCourseForm()"
+    >
+      <mat-icon>add</mat-icon>
+      ADD Course
+    </button>
+    <!-- Download  Button -->
+    <button mat-raised-button style="margin-bottom: 10px; margin-left: 8px">
+      <mat-icon>download</mat-icon>Download PDF
+    </button>
+  </div>
+  <!-- End title -->
+  <div class="table-wrapper col-md-12" style="width: 1120px;">
+    <table mat-table [dataSource]="dataSource">
+      <!-- Student Id Column -->
+      <ng-container matColumnDef="courseId">
+        <th mat-header-cell *matHeaderCellDef>Course ID</th>
+        <td mat-cell *matCellDef="let element">{{element.courseId}}</td>
+      </ng-container>
+
+      <!-- Roll Number Column -->
+      <ng-container matColumnDef="courseName">
+        <th mat-header-cell *matHeaderCellDef>Course Name</th>
+        <td mat-cell *matCellDef="let element">{{element.courseName}}</td>
+      </ng-container>
+
+      <!-- Full Student Name Column -->
+      <ng-container matColumnDef="courseDescription">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.firstName}} {{element.courseDescription}}
+        </td>
+      </ng-container>
+
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            color="primary"
+           (click)="openEditCourseForm()"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="primary"
+         
+          >
+            <mat-icon>remove_red_eye</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+          (click)="deleteCourse(element.courseId)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header & Row Definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+</div>

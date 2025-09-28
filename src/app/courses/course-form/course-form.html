@@ -1,0 +1,69 @@
+<div class="container">
+  <div style="text-align: right; margin-top: 5px">
+    <button mat-raised-button color="warn" (click)="onCancel()">&times;</button>
+  </div>
+
+  <div class="container">
+    <h1
+      style="
+        text-align: center;
+        font-weight: bold;
+        color: rgb(10, 104, 24);
+        margin-bottom: 8px;
+      "
+    >
+      Course Form
+    </h1>
+
+    <div class="form">
+      <form [formGroup]="courseForm" (ngSubmit)="onSave()">
+        <!-- Couser Name & description -->
+        <div class="container">
+          <mat-form-field appearance="outline">
+            <mat-label>Course Name</mat-label>
+            <input
+              matInput
+              maxlength="50"
+              placeholder="Enter your first name"
+              formControlName="courseName"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <input
+              matInput
+              maxlength="50"
+              placeholder="Enter your last name"
+              formControlName="courseDescription"
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- Father & Mother Name -->
+        <div class="container">
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="studentId">
+              <mat-option *ngFor="let stu of students" [value]="stu.id">
+                {{ stu.firstName }} {{ stu.fatherName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Buttons -->
+        <div class="btnButton" style="text-align: center; font-weight: bold">
+          <button mat-raised-button color="primary" type="submit">save</button>
+          <button
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="onCancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

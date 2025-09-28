@@ -156,7 +156,7 @@ export class StudentList implements OnInit {
               this.openSnackBar('Student Deleted succesfully.', 'Ok');
           },
           error: (err) => {
-            console.error('Error deleting teacher:', err),
+            console.error('Error deleting Student:', err),
               this.openSnackBar('Student Deleted failed.', 'Ok');
           },
         });
