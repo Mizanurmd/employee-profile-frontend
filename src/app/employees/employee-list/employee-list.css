@@ -5,6 +5,9 @@
   padding-bottom: 10px;
   font-weight: bold;
 }
+.col{
+  margin-bottom: 8px;
+}
 .table-wrapper {
   max-height: 400px;
   overflow-x: auto;
@@ -32,3 +35,4 @@ table td {
   background-color: blue;
   border: none;
 }
+

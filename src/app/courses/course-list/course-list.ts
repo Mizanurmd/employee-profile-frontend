@@ -68,8 +68,8 @@ export class CourseList implements OnInit {
   // Add course Modal form
   openAddCourseForm() {
     const matDiologRef = this.matDialog.open(CourseForm, {
-      width: '750px',
-      height: '600px',
+      width: '650px',
+      height: '350px',
       data: { students: this.students },
     });
     matDiologRef.afterClosed().subscribe((res) => {
@@ -80,14 +80,13 @@ export class CourseList implements OnInit {
   // Edit course Modal form
   openEditCourseForm() {
     const matDiologRef = this.matDialog.open(CourseForm, {
-      width: '750px',
-      height: '600px',
+      width: '650px',
+      height: '350px',
     });
     matDiologRef.afterClosed().subscribe((res) => {
       if (res === true) this.loadAllCourse();
     });
   }
-
 
   // Get all students
   loadAllStudent() {

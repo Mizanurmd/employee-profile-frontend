@@ -1,4 +1,4 @@
-<div class="container mat-elevation-z8">
+<div class="container mat-elevation-z8" style="margin-top: 10px">
   <div class="header container">
     <h1>EMPLOYEE PROFILE LIST</h1>
 
@@ -28,7 +28,7 @@
   <hr class="divider" />
   <!-- Search Form -->
 
-  <div class="container">
+  <div class="container mat-elevation-z8">
     <form [formGroup]="searchForm" (ngSubmit)="search()" class="row g-2 mb-3">
       <div class="col">
         <input
@@ -64,7 +64,7 @@
   </div>
 
   <!-- Employee Table -->
-  <div class="table-wrapper">
+  <div class="table-wrapper mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" class="full-width-table">
       <!-- Columns -->
       <ng-container matColumnDef="name">
