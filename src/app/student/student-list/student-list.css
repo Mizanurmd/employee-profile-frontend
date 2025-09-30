@@ -1,4 +1,4 @@
-.back-link {
+/* .back-link {
   text-decoration: none;
   color: inherit;
   display: inline-flex;
@@ -6,16 +6,18 @@
   font-weight: bold;
   margin-top: 10px;
   color: rgb(50, 50, 194);
-}
+} */
 
 .table-wrapper {
   max-height: 400px;
   overflow-x: auto;
   overflow-y: auto;
+  border: 2px;
+  border-color: #13a0b6;
 }
 
 table th {
-  background-color: black;
+  background-color: #13a0b6;
   color: whitesmoke;
   font-weight: bold;
   text-align: center;
@@ -33,6 +35,6 @@ button[mat-raised-button] {
   border-radius: 15px;
   color: whitesmoke;
   padding: 4px 14px;
-  background-color: rgb(53, 53, 189);
+  background-color: #13a0b6;
   text-decoration: none;
 }
