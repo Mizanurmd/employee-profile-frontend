@@ -62,7 +62,8 @@ export class TeacherList implements OnInit, AfterViewInit {
     private teacherServ: TeacherService,
     private router: Router,
     private matDialog: MatDialog,
-    private snakBar: MatSnackBar
+    private snakBar: MatSnackBar,
+  
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +72,12 @@ export class TeacherList implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  // Got to home
+ //Go to home
+  goToHome() {
+    this.router.navigate(['/home']);
   }
 
   // Open toast

@@ -1,11 +1,8 @@
-.back-link {
-  text-decoration: none;
-  color: inherit;
-  display: inline-flex;
-  align-items: center;
-  font-weight: bold;
-  margin-top: 10px;
-  color: rgb(50, 50, 194);
+.mat-elevation-z8{
+  margin-left: 10px;
+  width: 1830px;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 /* Raised button */

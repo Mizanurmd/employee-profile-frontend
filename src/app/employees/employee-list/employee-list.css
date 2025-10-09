@@ -1,3 +1,9 @@
+.mat-elevation-z8{
+  margin-left: 10px;
+  width: 1830px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
 .header h1 {
   text-align: center;
   color: rgb(14, 81, 125);

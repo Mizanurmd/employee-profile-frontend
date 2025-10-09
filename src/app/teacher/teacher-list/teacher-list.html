@@ -1,7 +1,9 @@
-<div class="container mat-elevation-z8">
-  <!-- <a routerLink="/home" class="back-link">
-    <mat-icon>arrow_back</mat-icon>Back
-  </a> -->
+<div class="mat-elevation-z8">
+  <!-- Add Button -->
+  <button mat-raised-button color="accent" style="margin-left: 10px;border-radius: 12px;" (click)="goToHome()">
+      <mat-icon>arrow_back</mat-icon>
+    Back
+  </button>
 
   <!-- Start title -->
   <div class="title">
@@ -23,7 +25,7 @@
     </button>
   </div>
   <!-- End title -->
-  <div class="table-wrapper container">
+  <div class="table-wrapper">
     <table mat-table [dataSource]="dataSource" class="full-width-table">
       <!-- Teacher Id Column -->
       <ng-container matColumnDef="teacherId">

@@ -15,15 +15,15 @@
           </ng-template>
         </div>
 
-        <div *ngIf="isExpanded" class="submenu">
-          <a class="submenu-item" (click)="showEntity('employee')">Employee</a>
-          <a class="submenu-item" (click)="showEntity('teacher')">Teacher</a>
-          <a class="submenu-item" (click)="showEntity('student')">Student</a>
-          <a class="submenu-item" (click)="showEntity('course')">Course</a>
-        </div>
+
+        <a routerLink="/employee"  class="menu-item" routerLinkActive="active">Employee</a>
+        <a routerLink="/teacher"  class="menu-item" routerLinkActive="active">Teacher</a>
+        <a routerLink="/student"  class="menu-item" routerLinkActive="active">Student</a>
+        <a routerLink="/course"  class="menu-item" routerLinkActive="active">Course</a>
+
+
       </div>
-      <!-- 
-      <a class="menu-item" (click)="showEntity('dashboard')">Dashboard</a> -->
+  
       <a routerLink="/report" class="menu-item">Reports</a>
       <a routerLink="/settings" class="menu-item">Settings</a>
       <button class="menu-item btn btn-danger" (click)="logout()">
@@ -38,27 +38,28 @@
     <div class="header">
       <!-- Marquee -->
       <div class="marquee-content">
-        Md. Mizanur Rahman (Full Stack Java Developer) Computer Network Systems
-        (CNS) Limited, Dhaka, Bangladesh.
+        Md. Mizanur Rahman (Full Stack Java Developer) Addie Software
+        (ADDIE SOFT) Limited, Dhaka, Bangladesh.
       </div>
       <!-- end Marquee -->
     </div>
     <!-- End Herader -->
 
-    <div [ngSwitch]="selectedEntity" class="entity-container">
+    <!-- <div [ngSwitch]="selectedEntity" class="entity-container">
       <app-employee-list *ngSwitchCase="'employee'"></app-employee-list>
       <app-teacher-list *ngSwitchCase="'teacher'"></app-teacher-list>
       <app-student-list *ngSwitchCase="'student'"></app-student-list>
-      <app-course-list *ngSwitchCase="'course'"></app-course-list>
+      <app-course-list *ngSwitchCase="'course'"></app-course-list> -->
 
-      <!-- Default dashboard -->
-      <!-- <p *ngSwitchDefault="">this home page</p> -->
-      <app-dashboard *ngSwitchDefault></app-dashboard>
-    </div>
+    <!-- Default dashboard -->
+    <!-- <p *ngSwitchDefault="">this home page</p>
+  <app-dashboard *ngSwitchDefault></app-dashboard>
+    </div> -->
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
-    <p>© 2025 My Company. All rights reserved.</p>
-  </footer>
+
 </div>
+<footer class="footer">
+  <p>© 2025 Md.Mizanur Rahman. All rights reserved.</p>
+</footer>

@@ -3,7 +3,7 @@ import { StudentService } from '../student-service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { StudentDto } from '../student';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule} from '@angular/common';
@@ -66,13 +66,18 @@ export class StudentList implements OnInit {
   constructor(
     private studentServ: StudentService,
     private matDialog: MatDialog,
-    private snakBar: MatSnackBar
+    private snakBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.loadAllStudent();
   }
 
+   //Go to home
+  goToHome() {
+    this.router.navigate(['/home']);
+  }
   // Open toast
   openSnackBar(
     message: string,

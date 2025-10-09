@@ -7,7 +7,12 @@
   margin-top: 10px;
   color: rgb(50, 50, 194);
 } */
-
+.mat-elevation-z8{
+  margin-left: 10px;
+  width: 1830px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
 .table-wrapper {
   max-height: 400px;
   overflow-x: auto;
@@ -30,11 +35,11 @@ table td {
   white-space: nowrap;
 }
 
-button[mat-raised-button] {
+/* button[mat-raised-button] {
   font-weight: 600;
   border-radius: 15px;
   color: whitesmoke;
   padding: 4px 14px;
   background-color: #13a0b6;
   text-decoration: none;
-}
+} */

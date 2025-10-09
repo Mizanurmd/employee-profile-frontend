@@ -14,6 +14,8 @@ import { DialogModal } from '../dialog-modal/dialog-modal';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-employee-list',
   standalone: true,
@@ -26,8 +28,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatIconModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatProgressBarModule
-  ],
+    MatProgressBarModule,
+
+],
   templateUrl: './employee-list.html',
   styleUrls: ['./employee-list.css'],
 })
@@ -61,7 +64,8 @@ export class EmployeeList implements OnInit, AfterViewInit {
   constructor(
     private empService: EmployeeService,
     private matDialog: MatDialog,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router :Router,
   ) {
     this.searchForm = this.fb.group({
       name: [''],
@@ -69,6 +73,11 @@ export class EmployeeList implements OnInit, AfterViewInit {
       email: [''],
       subject: [''],
     });
+  }
+
+  //Go to home
+  goToHome() {
+    this.router.navigate(['/home']);
   }
 
   ngOnInit(): void {
