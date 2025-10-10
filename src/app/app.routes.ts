@@ -8,6 +8,7 @@ import { StudentList } from './student/student-list/student-list';
 import { EmployeeList } from './employees/employee-list/employee-list';
 import { Dashboard } from './dashboard/dashboard';
 import { CourseList } from './courses/course-list/course-list';
+import { AgentRegisterList } from './agent_Register/agent-register-list/agent-register-list';
 
 export const routes: Routes = [
   { path: 'register', component: Register },
@@ -22,6 +23,7 @@ export const routes: Routes = [
   { path: 'teacher', component: TeacherList, canActivate: [AuthGuardService] },
   { path: 'student', component: StudentList, canActivate: [AuthGuardService] },
   { path: 'course', component: CourseList, canActivate: [AuthGuardService] },
+  { path: 'agent-register', component: AgentRegisterList, canActivate: [AuthGuardService] },
   { path: 'logout', redirectTo: '/login' },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' },
