@@ -27,59 +27,126 @@
     </div>
 
     <div class="row">
-      <div class="col-md-5">
-        <p>
-          <span>Full Nmae :</span> {{student?.firstName}} {{student?.lastName}}
-        </p>
-      </div>
-      <div class="col-md-7">
-        <p><span>Student ID (Card NO) :</span>{{student?.studentIdNo}}</p>
-      </div>
+      <!-- Step-1 -->
+       <div class="col-md-12 d-flex my-3">
+    <div class="col-md-3 fw-bold">
+     Full Name
+    </div>
+    <div class="col-md-3">
+      :{{student?.firstName}} {{student?.lastName}}
     </div>
 
-    <div class="row">
-      <div class="col-md-5">
-        <p><span>Father's Name :</span> {{student?.fatherName}}</p>
-      </div>
-      <div class="col-md-7">
-        <p><span>Mother's Name :</span> {{student?.motherName}}</p>
-      </div>
+    <div class="col-md-3 fw-bold">
+      Student ID
     </div>
-    <div class="row">
-      <div class="col-md-5">
-        <p><span>Admission Serial NO :</span> {{student?.admissionNumber}}</p>
-      </div>
-      <div class="col-md-7">
-        <p><span>Section Name :</span> {{student?.section}}</p>
-      </div>
+    <div class="col-md-3">
+     : {{student?.studentIdNo}}
+    </div>
+  </div>
+
+    <!-- step-2 -->
+       <div class="col-md-12 d-flex my-3">
+    <div class="col-md-3 fw-bold">
+     Father's Name
+    </div>
+    <div class="col-md-3">
+      : {{student?.fatherName}}
     </div>
 
-    <div class="row">
-      <div class="col-md-5">
-        <p><span>Date Of Birth :</span> {{student?.dateOfBirth}}</p>
-      </div>
-      <div class="col-md-5">
-        <p><span>Admission Date :</span> {{student?.admissionDate}}</p>
-      </div>
+    <div class="col-md-3 fw-bold">
+      Mother's Name
+    </div>
+    <div class="col-md-3">
+     : {{student?.motherName}}
+    </div>
+  </div>
+   <!-- step-3 -->
+       <div class="col-md-12 d-flex my-3">
+    <div class="col-md-3 fw-bold">
+     Addminssion Serial No
+    </div>
+    <div class="col-md-3">
+      : {{student?.admissionNumber}}
     </div>
 
-    <div class="row">
-      <div class="col-md-5">
-        <p><span>Class :</span> {{student?.studentClass}}</p>
-      </div>
-      <div class="col-md-7">
-        <p><span>Roll Number :</span> {{student?.rollNumber}}</p>
-      </div>
+    <div class="col-md-3 fw-bold">
+      Section Name
+    </div>
+    <div class="col-md-3">
+     : {{student?.section}}
+    </div>
+  </div>
+
+ <!-- step-4 -->
+       <div class="col-md-12 d-flex my-3">
+    <div class="col-md-3 fw-bold">
+    Date of Birth
+    </div>
+    <div class="col-md-3">
+      : {{student?.dateOfBirth}}
     </div>
 
-    <div class="row">
-      <div class="col-md-5">
-        <p><span>Mobile :</span> {{student?.phoneNumber}}</p>
-      </div>
-      <div class="col-md-7">
-        <p><span>Email :</span> {{student?.email}}</p>
-      </div>
+    <div class="col-md-3 fw-bold">
+      Addminssion Date
     </div>
+    <div class="col-md-3">
+     : {{student?.admissionDate}}
+    </div>
+  </div>
+   <!-- step-5 -->
+       <div class="col-md-12 d-flex my-3">
+    <div class="col-md-3 fw-bold">
+    Class Name
+    </div>
+    <div class="col-md-3">
+      : {{student?.studentClass}}
+    </div>
+
+    <div class="col-md-3 fw-bold">
+      Roll No
+    </div>
+    <div class="col-md-3">
+     : {{student?.rollNumber}}
+    </div>
+  </div>
+
+   <!-- step-6 -->
+       <div class="col-md-12 d-flex my-3">
+    <div class="col-md-3 fw-bold">
+    Guardian's Mobile
+    </div>
+    <div class="col-md-3">
+      :  {{student?.phoneNumber}}
+    </div>
+
+    <div class="col-md-3 fw-bold">
+      Guardian's Email
+    </div>
+    <div class="col-md-3">
+     : {{student?.email}}
+    </div>
+  </div>
+   <!-- step-7 -->
+       <div class="col-md-12 d-flex my-3">
+    <div class="col-md-3 fw-bold">
+   Gender
+    </div>
+    <div class="col-md-3">
+      :  {{student?.gender}}
+    </div>
+
+    <div class="col-md-3 fw-bold">
+      Guardian's Email
+    </div>
+    <div class="col-md-3">
+     : {{student?.email}}
+    </div>
+  </div>
+
+  
+    </div>
+
+
 
     <div class="row">
       <div class="col-md-5">

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { EmployeeForm } from '../../employees/employee-form/employee-form';
 import { MatDialog } from '@angular/material/dialog';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthServiceService } from '../../service/auth-service.service';
 import {
   MatSnackBar,
@@ -35,6 +35,7 @@ import { CourseList } from "../../courses/course-list/course-list";
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
+   email!:string;
 selectedEntity: 'teacher' | 'student' | 'employee' | 'course' | null = null;
 
 
@@ -46,11 +47,19 @@ selectedEntity: 'teacher' | 'student' | 'employee' | 'course' | null = null;
   constructor(
     private matDialog: MatDialog,
     private authServ: AuthServiceService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+     private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.role = this.authServ.getRole();
+   this.email = history.state?.email;
+
+    if (!this.email) {
+      this.email = localStorage.getItem('email') || '';
+    }
+    console.log('Email in Home:', this.email);
+
   }
 
   isExpanded: boolean = false;

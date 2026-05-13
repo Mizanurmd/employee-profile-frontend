@@ -15,6 +15,8 @@ export interface Employee {
   imageName?: string;
   imageType?: string;
   imageSize?: number[] |null;
+  startDate?:Date;
+  endDate?:Date;
 }
 
 

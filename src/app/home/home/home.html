@@ -1,7 +1,8 @@
 <div class="container">
   <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-header">DASHBOARD</div>
+  <aside class="sidebar card">
+
+    <div class="sidebar-header">DASHBOARD <p>{{email}}</p></div>
 
     <nav class="menu">
       <div>
@@ -37,6 +38,7 @@
   <main class="main">
     <!-- Header -->
     <div class="header">
+      <p>{{email}}</p>
       <!-- Marquee -->
       <div class="marquee-content">
         Md. Mizanur Rahman (Full Stack Java Developer) Addie Software
@@ -45,22 +47,11 @@
       <!-- end Marquee -->
     </div>
     <!-- End Herader -->
-
-    <!-- <div [ngSwitch]="selectedEntity" class="entity-container">
-      <app-employee-list *ngSwitchCase="'employee'"></app-employee-list>
-      <app-teacher-list *ngSwitchCase="'teacher'"></app-teacher-list>
-      <app-student-list *ngSwitchCase="'student'"></app-student-list>
-      <app-course-list *ngSwitchCase="'course'"></app-course-list> -->
-
-    <!-- Default dashboard -->
-    <!-- <p *ngSwitchDefault="">this home page</p>
-  <app-dashboard *ngSwitchDefault></app-dashboard>
-    </div> -->
   </main>
 
   <!-- Footer -->
 
 </div>
-<footer class="footer">
+<!-- <footer class="footer card">
   <p>© 2025 Md.Mizanur Rahman. All rights reserved.</p>
-</footer>
+</footer> -->

@@ -187,8 +187,8 @@ export class StudentList implements OnInit {
   openStudentView(student: StudentDto) {
     const dialogRef = this.matDialog.open(ViewStudent, {
       data: student,
-      width: '850px',
-      height: '600px',
+      width: '1250px',
+      height: '650px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {

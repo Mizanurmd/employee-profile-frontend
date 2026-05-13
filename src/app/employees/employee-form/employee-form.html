@@ -146,6 +146,46 @@
         </div>
       </div>
 
+      <!-- Start Date  -->
+      <div class="form-row" style="align-items: center">
+        <mat-form-field appearance="outline">
+          <mat-label>Start Date*</mat-label>
+          <input matInput [matDatepicker]="startDate" formControlName="startDate" />
+          <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+          <mat-datepicker #startDate></mat-datepicker>
+          <mat-error *ngIf="employeeForm.get('startDate')?.hasError('required')">
+            Birth Date is required
+          </mat-error>
+          <mat-error *ngIf="
+    employeeForm.hasError('dateRangeInvalid') &&
+    employeeForm.get('startDate')?.touched
+  ">
+            Start Date cannot be earlier than Start Date
+          </mat-error>
+
+        </mat-form-field>
+
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap" class="endDate">
+          <mat-form-field appearance="outline">
+            <mat-label>End Date*</mat-label>
+            <input matInput [matDatepicker]="endDate" formControlName="endDate" />
+            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate></mat-datepicker>
+            <mat-error *ngIf="employeeForm.get('endDate')?.hasError('required')">
+              Start Date is required
+            </mat-error>
+            <mat-error *ngIf="
+    employeeForm.hasError('dateRangeInvalid') &&
+    employeeForm.get('endDate')?.touched
+  ">
+              End Date cannot be earlier than Start Date
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+      </div>
+
       <!-- Profile Image -->
       <div class="form-row" style="align-items: center; margin-top: 10px; margin-bottom: 20px">
         <label class="section-label">Profile Image:</label>

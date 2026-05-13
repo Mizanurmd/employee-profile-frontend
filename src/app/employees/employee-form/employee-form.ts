@@ -25,6 +25,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import {dateRangeValidationCheck } from '../../helper/helper';
 
 @Component({
   selector: 'app-employee-form',
@@ -121,8 +122,14 @@ export class EmployeeForm implements OnInit {
       gender: ['', Validators.required],
       skills: [[]],
       highestEducation: ['', Validators.required],
+       startDate: ['', [Validators.required]],
+       endDate: ['', [Validators.required]],
       profileImage: [null],
-    });
+    },
+    {
+    validators: dateRangeValidationCheck('startDate', 'endDate')
+  }
+  );
 
     // Only patch form if editing (data has an ID)
     if (this.data && this.data.id) {
