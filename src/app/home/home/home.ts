@@ -24,12 +24,8 @@ import { CourseList } from "../../courses/course-list/course-list";
   imports: [
     MatToolbarModule,
     RouterModule,
-    EmployeeList,
-    TeacherList,
-    StudentList,
     CommonModule,
-    Dashboard,
-    CourseList
+
 ],
   templateUrl: './home.html',
   styleUrl: './home.css',
