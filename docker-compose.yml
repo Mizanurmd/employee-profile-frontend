@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+
+  angular-app:
+
+    container_name: employee-profile-frontend
+
+    build:
+      context: .
+
+      dockerfile: Dockerfile
+
+    image: employee-profile-frontend:latest
+
+    ports:
+      - "4200:80"
+
+    restart: unless-stopped
